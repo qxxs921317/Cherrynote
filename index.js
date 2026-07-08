@@ -1,5 +1,16 @@
 import { extension_settings, getContext } from "../../../extensions.js";
-import { saveSettingsDebounced, eventSource, event_types } from "../../../../script.js";
+import {
+    saveSettingsDebounced,
+    eventSource,
+    event_types,
+    extension_prompt_types as ST_extension_prompt_types,
+    extension_prompt_roles as ST_extension_prompt_roles,
+} from "../../../../script.js";
+
+// ST 버전에 따라 위 import가 undefined일 수 있어서 폴백 상수를 준비해둠
+// (일반적으로 IN_CHAT = 1, SYSTEM role = 0)
+const extension_prompt_types = ST_extension_prompt_types || { IN_PROMPT: 0, IN_CHAT: 1, BEFORE_PROMPT: 2 };
+const extension_prompt_roles = ST_extension_prompt_roles || { SYSTEM: 0, USER: 1, ASSISTANT: 2 };
 
 const EXT_NAME = "cherry-note-extension";
 const PROMPT_KEY = `${EXT_NAME}_note`;
@@ -43,11 +54,17 @@ function injectPrompt(text) {
     context.setExtensionPrompt(
         PROMPT_KEY,
         trimmed,
-        context.extension_prompt_types.IN_CHAT,
+        extension_prompt_types.IN_CHAT,
         0,
         false,
-        context.extension_prompt_roles.SYSTEM,
+        extension_prompt_roles.SYSTEM,
     );
+
+    console.log(`[cherry-note] injected (len=${trimmed.length}):`, {
+        position: extension_prompt_types.IN_CHAT,
+        role: extension_prompt_roles.SYSTEM,
+        text: trimmed,
+    });
 }
 
 // ---------- 저장 로직 (자동저장 + 수동저장 겸용, 안전장치 포함) ----------
