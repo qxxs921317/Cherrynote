@@ -240,16 +240,35 @@ function makeDraggable($el, storageKey) {
     return () => didDrag;
 }
 
+function clampToViewport($el, x, y) {
+    const maxX = Math.max(0, window.innerWidth - $el.outerWidth());
+    const maxY = Math.max(0, window.innerHeight - $el.outerHeight());
+    return {
+        x: Math.max(0, Math.min(x, maxX)),
+        y: Math.max(0, Math.min(y, maxY)),
+    };
+}
+
 function restorePosition($el, storageKey, defaultRight = 20, defaultBottom = 90) {
     const saved = localStorage.getItem(storageKey);
     if (saved) {
         try {
             const { x, y } = JSON.parse(saved);
-            $el.css({ left: `${x}px`, top: `${y}px`, right: "auto", bottom: "auto" });
+            const clamped = clampToViewport($el, x, y);
+            $el.css({ left: `${clamped.x}px`, top: `${clamped.y}px`, right: "auto", bottom: "auto" });
             return;
         } catch (e) { /* fallthrough */ }
     }
     $el.css({ right: `${defaultRight}px`, bottom: `${defaultBottom}px` });
+}
+
+function reclampIconToViewport($el, storageKey) {
+    // right/bottom 기본값으로 있는 경우(left/top 미설정)는 애초에 반응형이라 스킵
+    if ($el.css("left") === "auto") return;
+    const rect = $el[0].getBoundingClientRect();
+    const clamped = clampToViewport($el, rect.left, rect.top);
+    $el.css({ left: `${clamped.x}px`, top: `${clamped.y}px` });
+    localStorage.setItem(storageKey, JSON.stringify({ x: clamped.x, y: clamped.y }));
 }
 
 // ---------- UI 생성 ----------
@@ -298,8 +317,9 @@ function buildUI() {
         doSave(true);
     });
 
-    // 창 크기 변할 때 패널이 화면 밖으로 안 나가게
+    // 창 크기 변할 때 아이콘/패널이 화면 밖으로 안 나가게
     $(window).on("resize", () => {
+        reclampIconToViewport($icon, "cherry-note-icon-pos");
         if (!$panel.hasClass("cherry-note-hidden")) {
             positionPanelNearIcon();
         }
