@@ -1,24 +1,14 @@
 import { extension_settings, getContext } from "../../../extensions.js";
-import {
-    saveSettingsDebounced,
-    eventSource,
-    event_types,
-    extension_prompt_types as ST_extension_prompt_types,
-    extension_prompt_roles as ST_extension_prompt_roles,
-} from "../../../../script.js";
+import { saveSettingsDebounced, eventSource, event_types } from "../../../../script.js";
 
-// ST 버전에 따라 위 import가 undefined일 수 있어서 폴백 상수를 준비해둠
-// (일반적으로 IN_CHAT = 1, SYSTEM role = 0)
-const extension_prompt_types = ST_extension_prompt_types || { IN_PROMPT: 0, IN_CHAT: 1, BEFORE_PROMPT: 2 };
-const extension_prompt_roles = ST_extension_prompt_roles || { SYSTEM: 0, USER: 1, ASSISTANT: 2 };
-
-const EXT_NAME = "cherry-note-extension";
-const PROMPT_KEY = `${EXT_NAME}_note`;
+const EXT_NAME = "cherry-note-extension"; // 저장 데이터 호환을 위해 내부 키는 유지 (표시 이름만 Aggressive Notepad로 변경)
 const SAVE_DELAY_MS = 1000;
+const NOTE_TAG = "system_override_note";
 
 let saveTimer = null;
 let currentAvatar = null; // 현재 메모가 속한 캐릭터의 아바타 파일명
 let isDirty = false;
+let currentNoteBlock = ""; // <system_override_note>로 감싼, 주입 준비된 텍스트
 
 // ---------- 저장소 헬퍼 ----------
 
@@ -42,29 +32,76 @@ function getCurrentAvatar() {
     return character?.avatar || null;
 }
 
-// ---------- 프롬프트 주입 ----------
+// ---------- 프롬프트 주입 (진짜 맨 끝 강제 삽입) ----------
+// setExtensionPrompt(depth 기반)는 ST가 히스토리를 "조립하는 단계"에 참여하는 방식이라
+// 그 뒤에 Post-History Instructions(Jailbreak)나 다른 확장이 더 붙으면 밀려남.
+// 그래서 여기서는 API로 보내기 직전, 완전히 조립된 최종 프롬프트를 가로채서
+// 배열/문자열 맨 끝에 직접 붙인다.
 
-function injectPrompt(text) {
-    const context = getContext();
-    if (typeof context.setExtensionPrompt !== "function") return;
-
+function buildNoteBlock(text) {
     const trimmed = (text || "").trim();
+    if (!trimmed) return "";
+    return `<${NOTE_TAG}>\n${trimmed}\n</${NOTE_TAG}>`;
+}
 
-    // IN_CHAT + depth 0 = 실제 프롬프트에서 생성 직전, 즉 "맨 끝"에 가깝게 삽입됨
-    context.setExtensionPrompt(
-        PROMPT_KEY,
-        trimmed,
-        extension_prompt_types.IN_CHAT,
-        0,
-        false,
-        extension_prompt_roles.SYSTEM,
-    );
+function updateNoteBlock(text) {
+    currentNoteBlock = buildNoteBlock(text);
+}
 
-    console.log(`[cherry-note] injected (len=${trimmed.length}):`, {
-        position: extension_prompt_types.IN_CHAT,
-        role: extension_prompt_roles.SYSTEM,
-        text: trimmed,
-    });
+function isInjectionAllowed() {
+    // 그룹챗 미지원 + 메모 없으면 스킵
+    const context = getContext();
+    if (context.groupId) return false;
+    if (!currentNoteBlock) return false;
+    return true;
+}
+
+// Chat Completion (Gemini/Vertex, Claude API, OpenAI 등 채팅형 API 연결)
+function onChatCompletionPromptReady(eventData) {
+    try {
+        if (!eventData || eventData.dryRun) return;
+        if (!isInjectionAllowed()) return;
+        if (!Array.isArray(eventData.chat)) return;
+
+        eventData.chat.push({ role: "system", content: currentNoteBlock });
+        console.log(`[Aggressive Notepad] chat-completion 맨 끝에 주입됨 (len=${currentNoteBlock.length})`);
+    } catch (e) {
+        console.error("[Aggressive Notepad] chat-completion 주입 실패:", e);
+    }
+}
+
+// Text Completion (KoboldAI, 로컬 모델, 텍스트 완성형 API 연결)
+function onTextCompletionPromptReady(eventData) {
+    try {
+        if (!eventData) return;
+        if (!isInjectionAllowed()) return;
+
+        if (typeof eventData.prompt === "string") {
+            eventData.prompt = eventData.prompt + "\n" + currentNoteBlock + "\n";
+            console.log(`[Aggressive Notepad] text-completion 맨 끝에 주입됨 (len=${currentNoteBlock.length})`);
+        }
+    } catch (e) {
+        console.error("[Aggressive Notepad] text-completion 주입 실패:", e);
+    }
+}
+
+function registerInjectionHooks() {
+    if (event_types.CHAT_COMPLETION_PROMPT_READY) {
+        eventSource.on(event_types.CHAT_COMPLETION_PROMPT_READY, onChatCompletionPromptReady);
+    } else {
+        console.warn("[Aggressive Notepad] CHAT_COMPLETION_PROMPT_READY 이벤트를 찾을 수 없음 - Chat Completion 주입이 동작하지 않을 수 있음");
+    }
+
+    // ST 버전에 따라 이름이 다를 수 있어 후보를 순서대로 시도
+    const textEventName = event_types.GENERATE_AFTER_COMBINE_PROMPTS
+        || event_types.TEXT_COMPLETION_PROMPT_READY
+        || event_types.GENERATE_AFTER_DATA;
+
+    if (textEventName) {
+        eventSource.on(textEventName, onTextCompletionPromptReady);
+    } else {
+        console.warn("[Aggressive Notepad] Text Completion용 이벤트를 찾지 못함 - 콘솔에서 event_types 이름 확인 필요");
+    }
 }
 
 // ---------- 저장 로직 (자동저장 + 수동저장 겸용, 안전장치 포함) ----------
@@ -82,7 +119,7 @@ function doSave(showFeedback = true) {
     const notes = getNotesStore();
     notes[avatarNow] = text;
     saveSettingsDebounced();
-    injectPrompt(text);
+    updateNoteBlock(text);
     isDirty = false;
 
     if (showFeedback) {
@@ -142,7 +179,7 @@ function loadNoteForCurrentCharacter() {
         nameEl.text(character?.name ? `📝 ${character.name}` : "캐릭터를 선택해주세요");
     }
 
-    injectPrompt(isGroup ? "" : text);
+    updateNoteBlock(isGroup ? "" : text);
 }
 
 function setGroupChatState(isGroup) {
@@ -219,13 +256,13 @@ function restorePosition($el, storageKey, defaultRight = 20, defaultBottom = 90)
 
 function buildUI() {
     const html = `
-    <div id="cherry-note-icon" title="작가노트">🍒</div>
+    <div id="cherry-note-icon" title="Aggressive Notepad">🍒</div>
     <div id="cherry-note-panel" class="cherry-note-hidden">
         <div id="cherry-note-header">
             <span id="cherry-note-char-name">📝</span>
             <span id="cherry-note-close">✕</span>
         </div>
-        <textarea id="cherry-note-textarea" placeholder="여기에 적으면 프롬프트 맨 끝에 살짝 스며들어요..."></textarea>
+        <textarea id="cherry-note-textarea" placeholder="여기 적으면 진짜 맨 끝에 강제로 박아넣어요..."></textarea>
         <div id="cherry-note-footer">
             <span id="cherry-note-status"></span>
             <button id="cherry-note-save-btn">저장하기 💾</button>
@@ -303,6 +340,7 @@ function positionPanelNearIcon() {
 
 jQuery(async () => {
     buildUI();
+    registerInjectionHooks();
 
     eventSource.on(event_types.CHAT_CHANGED, () => {
         loadNoteForCurrentCharacter();
