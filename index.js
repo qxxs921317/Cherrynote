@@ -190,10 +190,11 @@ function setGroupChatState(isGroup) {
 
 // ---------- 드래그 가능한 플로팅 아이콘 ----------
 
-function makeDraggable($el, storageKey) {
+function makeDraggable($el, storageKey, onTap) {
     let isDragging = false;
     let didDrag = false;
     let startX = 0, startY = 0, origX = 0, origY = 0;
+    const DRAG_THRESHOLD = 8;
 
     function onPointerDown(e) {
         isDragging = true;
@@ -212,7 +213,7 @@ function makeDraggable($el, storageKey) {
         const point = e.touches ? e.touches[0] : e;
         const dx = point.clientX - startX;
         const dy = point.clientY - startY;
-        if (Math.abs(dx) > 3 || Math.abs(dy) > 3) didDrag = true;
+        if (Math.abs(dx) > DRAG_THRESHOLD || Math.abs(dy) > DRAG_THRESHOLD) didDrag = true;
 
         let newX = origX + dx;
         let newY = origY + dy;
@@ -228,16 +229,20 @@ function makeDraggable($el, storageKey) {
     function onPointerUp() {
         if (!isDragging) return;
         isDragging = false;
-        const rect = $el[0].getBoundingClientRect();
-        localStorage.setItem(storageKey, JSON.stringify({ x: rect.left, y: rect.top }));
+
+        if (didDrag) {
+            const rect = $el[0].getBoundingClientRect();
+            localStorage.setItem(storageKey, JSON.stringify({ x: rect.left, y: rect.top }));
+        } else {
+            // 이동이 거의 없었으면 탭으로 간주 (touchstart에서 preventDefault했기 때문에
+            // 브라우저가 만들어주는 합성 click 이벤트를 모바일에서는 기대할 수 없어서 직접 처리)
+            onTap?.();
+        }
     }
 
     $el.on("mousedown touchstart", onPointerDown);
     $(document).on("mousemove touchmove", onPointerMove);
     $(document).on("mouseup touchend", onPointerUp);
-
-    // 클릭과 드래그 구분해서 반환 (드래그 직후엔 클릭 무시)
-    return () => didDrag;
 }
 
 function clampToViewport($el, x, y) {
@@ -295,15 +300,14 @@ function buildUI() {
 
     restorePosition($icon, "cherry-note-icon-pos");
 
-    const wasDragged = makeDraggable($icon, "cherry-note-icon-pos");
-
-    $icon.on("click", () => {
-        if (wasDragged()) return; // 드래그 끝난 직후 클릭 이벤트 무시
+    function togglePanel() {
         $panel.toggleClass("cherry-note-hidden");
         if (!$panel.hasClass("cherry-note-hidden")) {
             positionPanelNearIcon();
         }
-    });
+    }
+
+    makeDraggable($icon, "cherry-note-icon-pos", togglePanel);
 
     $("#cherry-note-close").on("click", () => {
         $panel.addClass("cherry-note-hidden");
