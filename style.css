@@ -1,0 +1,177 @@
+/* 🍒 체리&솔티 작가노트 - 귀엽고 화려한 플로팅 메모 */
+
+#cherry-note-icon {
+    position: fixed;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fbc2eb 100%);
+    box-shadow: 0 4px 16px rgba(255, 105, 180, 0.45), 0 0 0 3px rgba(255, 255, 255, 0.6) inset;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    cursor: grab;
+    z-index: 9999;
+    user-select: none;
+    touch-action: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    animation: cherry-note-float 3s ease-in-out infinite;
+}
+
+#cherry-note-icon:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 20px rgba(255, 105, 180, 0.6), 0 0 0 3px rgba(255, 255, 255, 0.8) inset;
+}
+
+#cherry-note-icon:active {
+    cursor: grabbing;
+    animation-play-state: paused;
+}
+
+@keyframes cherry-note-float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-4px); }
+}
+
+#cherry-note-panel {
+    position: fixed;
+    width: 280px;
+    max-width: 90vw;
+    background: linear-gradient(160deg, #fff0f6 0%, #ffe8f3 40%, #f3e8ff 100%);
+    border: 2px solid #ffc2e2;
+    border-radius: 18px;
+    box-shadow: 0 8px 28px rgba(219, 112, 175, 0.35);
+    z-index: 9998;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    backdrop-filter: blur(6px);
+    transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+#cherry-note-panel.cherry-note-hidden {
+    display: none;
+}
+
+#cherry-note-panel.cherry-note-disabled {
+    opacity: 0.6;
+}
+
+#cherry-note-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: #b3467c;
+    padding: 2px 4px;
+}
+
+#cherry-note-char-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 210px;
+}
+
+#cherry-note-close {
+    cursor: pointer;
+    color: #d88bb0;
+    font-size: 14px;
+    padding: 2px 6px;
+    border-radius: 8px;
+    transition: background 0.15s ease;
+}
+
+#cherry-note-close:hover {
+    background: rgba(255, 182, 213, 0.4);
+}
+
+#cherry-note-textarea {
+    width: 100%;
+    min-height: 120px;
+    max-height: 40vh;
+    resize: vertical;
+    border: 1.5px solid #ffd3e8;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.75);
+    color: #7a3b5e;
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 8px 10px;
+    box-sizing: border-box;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+#cherry-note-textarea:focus {
+    border-color: #ff8fc0;
+    box-shadow: 0 0 0 3px rgba(255, 143, 192, 0.2);
+}
+
+#cherry-note-textarea::placeholder {
+    color: #d9a6c2;
+}
+
+#cherry-note-textarea:disabled {
+    background: rgba(230, 230, 230, 0.5);
+    color: #999;
+}
+
+#cherry-note-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2px;
+}
+
+#cherry-note-status {
+    font-size: 11px;
+    color: #c05f92;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+#cherry-note-save-btn {
+    background: linear-gradient(135deg, #ff9a9e, #fbc2eb);
+    border: none;
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #ffffff;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(255, 105, 180, 0.35);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+#cherry-note-save-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 105, 180, 0.5);
+}
+
+#cherry-note-save-btn:active {
+    transform: translateY(0px);
+}
+
+#cherry-note-save-btn:disabled {
+    background: #ddd;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+/* 모바일 대응 */
+@media (max-width: 480px) {
+    #cherry-note-panel {
+        width: 240px;
+    }
+
+    #cherry-note-icon {
+        width: 46px;
+        height: 46px;
+        font-size: 20px;
+    }
+}
