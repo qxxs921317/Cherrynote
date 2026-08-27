@@ -373,10 +373,6 @@ function buildSettingsPanel() {
                 <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
             </div>
             <div class="inline-drawer-content">
-                <button id="cherry-note-wand-toggle" class="menu_button cherry-note-wand-btn">
-                    🪄 Cherry Note: ${config.floatingEnabled ? "ON" : "OFF"}
-                </button>
-
                 <label for="cherry-note-icon-theme-select">플로팅 아이콘 디자인</label>
                 <select id="cherry-note-icon-theme-select" class="text_pole">${iconOptions}</select>
 
@@ -390,15 +386,6 @@ function buildSettingsPanel() {
     const $target = $("#extensions_settings2").length ? $("#extensions_settings2") : $("#extensions_settings");
     $target.append(html);
 
-    $("#cherry-note-wand-toggle").on("click", function () {
-        const config = getConfig();
-        const enabled = !config.floatingEnabled;
-        config.floatingEnabled = enabled;
-        saveConfig();
-        applyFloatingVisibility(enabled);
-        $(this).text(`🪄 Cherry Note: ${enabled ? "ON" : "OFF"}`);
-    });
-
     $("#cherry-note-icon-theme-select").on("change", function () {
         const themeId = $(this).val();
         getConfig().iconTheme = themeId;
@@ -411,6 +398,30 @@ function buildSettingsPanel() {
         getConfig().panelTheme = themeId;
         saveConfig();
         applyPanelTheme(themeId);
+    });
+}
+
+// ---------- 상단 요술봉(확장) 메뉴에 ON/OFF 토글 항목 추가 ----------
+
+function buildExtensionsMenuToggle() {
+    const config = getConfig();
+
+    const html = `
+    <div id="cherry-note-menu-toggle" class="list-group-item flex-container flexGap5 interactable" tabindex="0">
+        <i class="fa-solid fa-wand-magic-sparkles"></i>
+        <span id="cherry-note-menu-toggle-label">Cherry Note: ${config.floatingEnabled ? "ON" : "OFF"}</span>
+    </div>
+    `;
+
+    $("#extensionsMenu").append(html);
+
+    $("#cherry-note-menu-toggle").on("click", () => {
+        const cfg = getConfig();
+        const enabled = !cfg.floatingEnabled;
+        cfg.floatingEnabled = enabled;
+        saveConfig();
+        applyFloatingVisibility(enabled);
+        $("#cherry-note-menu-toggle-label").text(`Cherry Note: ${enabled ? "ON" : "OFF"}`);
     });
 }
 
@@ -505,6 +516,7 @@ function positionPanelNearIcon() {
 jQuery(async () => {
     buildUI();
     buildSettingsPanel();
+    buildExtensionsMenuToggle();
     registerInjectionHooks();
 
     eventSource.on(event_types.CHAT_CHANGED, () => {

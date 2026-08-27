@@ -433,6 +433,11 @@
     text-align: center;
 }
 
+#cherry-note-menu-toggle i {
+    width: 20px;
+    text-align: center;
+}
+
 /* 모바일 대응 */
 @media (max-width: 480px) {
     #cherry-note-panel {
