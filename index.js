@@ -409,7 +409,7 @@ function buildExtensionsMenuToggle() {
     const html = `
     <div id="cherry-note-menu-toggle" class="list-group-item flex-container flexGap5 interactable" tabindex="0">
         <i class="fa-solid fa-wand-magic-sparkles"></i>
-        <span id="cherry-note-menu-toggle-label">Cherry Note: ${config.floatingEnabled ? "ON" : "OFF"}</span>
+        <span id="cherry-note-menu-toggle-label">Notepad: ${config.floatingEnabled ? "ON" : "OFF"}</span>
     </div>
     `;
 
@@ -421,7 +421,7 @@ function buildExtensionsMenuToggle() {
         cfg.floatingEnabled = enabled;
         saveConfig();
         applyFloatingVisibility(enabled);
-        $("#cherry-note-menu-toggle-label").text(`Cherry Note: ${enabled ? "ON" : "OFF"}`);
+        $("#cherry-note-menu-toggle-label").text(`Notepad: ${enabled ? "ON" : "OFF"}`);
     });
 }
 
@@ -438,7 +438,7 @@ function buildUI() {
         <textarea id="cherry-note-textarea" placeholder="여기 적으면 진짜 맨 끝에 강제로 박아넣어요..."></textarea>
         <div id="cherry-note-footer">
             <span id="cherry-note-status"></span>
-            <button id="cherry-note-save-btn">저장하기 💾</button>
+            <button id="cherry-note-save-btn" title="저장하기">💾</button>
         </div>
     </div>
     `;
