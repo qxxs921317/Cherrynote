@@ -5,6 +5,14 @@ const EXT_NAME = "cherry-note-extension"; // 저장 데이터 호환을 위해 �
 const SAVE_DELAY_MS = 1000;
 const NOTE_TAG = "system_override_note";
 
+const ICON_THEMES = [
+    { id: "cherry", label: "🍒 체리", emoji: "🍒" },
+    { id: "white", label: "📝 심플 화이트", emoji: "📝" },
+    { id: "memo", label: "🗒️ 메모지", emoji: "🗒️" },
+    { id: "dark", label: "🖊️ 미니멀 다크", emoji: "🖊️" },
+    { id: "mint", label: "🌿 민트 리프", emoji: "🌿" },
+];
+
 const PANEL_THEMES = [
     { id: "pink", label: "🍒 체리 핑크" },
     { id: "mint", label: "🌿 민트" },
@@ -13,16 +21,9 @@ const PANEL_THEMES = [
     { id: "sunset", label: "🌅 선셋" },
 ];
 
-const BUTTON_THEMES = [
-    { id: "pink", label: "핑크" },
-    { id: "mint", label: "민트" },
-    { id: "gold", label: "골드" },
-    { id: "mono", label: "모노" },
-];
-
 const DEFAULT_CONFIG = {
+    iconTheme: "cherry",
     panelTheme: "pink",
-    buttonTheme: "pink",
     floatingEnabled: true,
 };
 
@@ -317,15 +318,16 @@ function reclampIconToViewport($el, storageKey) {
 
 // ---------- 테마 적용 ----------
 
-function applyPanelTheme(themeId) {
+function applyIconTheme(themeId) {
     const $icon = $("#cherry-note-icon");
-    const $panel = $("#cherry-note-panel");
-    $icon.attr("data-theme", themeId);
-    $panel.attr("data-theme", themeId);
+    const theme = ICON_THEMES.find((t) => t.id === themeId) || ICON_THEMES[0];
+    $icon.attr("data-icon-theme", theme.id);
+    $icon.text(theme.emoji);
 }
 
-function applyButtonTheme(themeId) {
-    $("#cherry-note-save-btn").attr("data-btn-theme", themeId);
+function applyPanelTheme(themeId) {
+    const $panel = $("#cherry-note-panel");
+    $panel.attr("data-theme", themeId);
 }
 
 function applyFloatingVisibility(enabled) {
@@ -341,8 +343,8 @@ function applyFloatingVisibility(enabled) {
 
 function applyAllThemes() {
     const config = getConfig();
+    applyIconTheme(config.iconTheme);
     applyPanelTheme(config.panelTheme);
-    applyButtonTheme(config.buttonTheme);
     applyFloatingVisibility(config.floatingEnabled);
 }
 
@@ -351,12 +353,12 @@ function applyAllThemes() {
 function buildSettingsPanel() {
     const config = getConfig();
 
-    const panelOptions = PANEL_THEMES.map(
-        (t) => `<option value="${t.id}" ${t.id === config.panelTheme ? "selected" : ""}>${t.label}</option>`
+    const iconOptions = ICON_THEMES.map(
+        (t) => `<option value="${t.id}" ${t.id === config.iconTheme ? "selected" : ""}>${t.label}</option>`
     ).join("");
 
-    const buttonOptions = BUTTON_THEMES.map(
-        (t) => `<option value="${t.id}" ${t.id === config.buttonTheme ? "selected" : ""}>${t.label}</option>`
+    const panelOptions = PANEL_THEMES.map(
+        (t) => `<option value="${t.id}" ${t.id === config.panelTheme ? "selected" : ""}>${t.label}</option>`
     ).join("");
 
     const html = `
@@ -372,11 +374,11 @@ function buildSettingsPanel() {
                     <span>화면에 플로팅 버튼 표시</span>
                 </label>
 
-                <label for="cherry-note-panel-theme-select">패널 테마</label>
-                <select id="cherry-note-panel-theme-select" class="text_pole">${panelOptions}</select>
+                <label for="cherry-note-icon-theme-select">플로팅 아이콘 디자인</label>
+                <select id="cherry-note-icon-theme-select" class="text_pole">${iconOptions}</select>
 
-                <label for="cherry-note-button-theme-select">저장 버튼 테마</label>
-                <select id="cherry-note-button-theme-select" class="text_pole">${buttonOptions}</select>
+                <label for="cherry-note-panel-theme-select">패널 테마 (저장 버튼 색상 포함)</label>
+                <select id="cherry-note-panel-theme-select" class="text_pole">${panelOptions}</select>
             </div>
         </div>
     </div>
@@ -392,18 +394,18 @@ function buildSettingsPanel() {
         applyFloatingVisibility(enabled);
     });
 
+    $("#cherry-note-icon-theme-select").on("change", function () {
+        const themeId = $(this).val();
+        getConfig().iconTheme = themeId;
+        saveConfig();
+        applyIconTheme(themeId);
+    });
+
     $("#cherry-note-panel-theme-select").on("change", function () {
         const themeId = $(this).val();
         getConfig().panelTheme = themeId;
         saveConfig();
         applyPanelTheme(themeId);
-    });
-
-    $("#cherry-note-button-theme-select").on("change", function () {
-        const themeId = $(this).val();
-        getConfig().buttonTheme = themeId;
-        saveConfig();
-        applyButtonTheme(themeId);
     });
 }
 
