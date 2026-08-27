@@ -163,6 +163,160 @@
     cursor: not-allowed;
 }
 
+#cherry-note-icon.cherry-note-force-hidden {
+    display: none !important;
+}
+
+/* ========================================================= */
+/* 🎨 패널 테마 (data-theme 속성으로 전환)                     */
+/* ========================================================= */
+
+/* --- 민트 --- */
+#cherry-note-icon[data-theme="mint"] {
+    background: linear-gradient(135deg, #a8edea 0%, #c2f9d4 50%, #b8f2e6 100%);
+    box-shadow: 0 4px 16px rgba(56, 178, 150, 0.4), 0 0 0 3px rgba(255, 255, 255, 0.6) inset;
+}
+#cherry-note-icon[data-theme="mint"]:hover {
+    box-shadow: 0 6px 20px rgba(56, 178, 150, 0.55), 0 0 0 3px rgba(255, 255, 255, 0.8) inset;
+}
+#cherry-note-panel[data-theme="mint"] {
+    background: linear-gradient(160deg, #f0fffa 0%, #e3fbf0 40%, #e8fdf5 100%);
+    border-color: #9fe8cf;
+    box-shadow: 0 8px 28px rgba(60, 179, 137, 0.28);
+}
+#cherry-note-panel[data-theme="mint"] #cherry-note-header { color: #21876a; }
+#cherry-note-panel[data-theme="mint"] #cherry-note-close { color: #4fb894; }
+#cherry-note-panel[data-theme="mint"] #cherry-note-close:hover { background: rgba(159, 232, 207, 0.4); }
+#cherry-note-panel[data-theme="mint"] #cherry-note-textarea {
+    border-color: #bdf0dd; color: #1f6e57; background: rgba(255, 255, 255, 0.8);
+}
+#cherry-note-panel[data-theme="mint"] #cherry-note-textarea:focus {
+    border-color: #5fd6ac; box-shadow: 0 0 0 3px rgba(95, 214, 172, 0.2);
+}
+#cherry-note-panel[data-theme="mint"] #cherry-note-textarea::placeholder { color: #8fcdba; }
+#cherry-note-panel[data-theme="mint"] #cherry-note-status { color: #2f9678; }
+
+/* --- 라벤더 --- */
+#cherry-note-icon[data-theme="lavender"] {
+    background: linear-gradient(135deg, #d8b4fe 0%, #e0c3fc 50%, #c9a0f8 100%);
+    box-shadow: 0 4px 16px rgba(147, 90, 220, 0.4), 0 0 0 3px rgba(255, 255, 255, 0.6) inset;
+}
+#cherry-note-icon[data-theme="lavender"]:hover {
+    box-shadow: 0 6px 20px rgba(147, 90, 220, 0.55), 0 0 0 3px rgba(255, 255, 255, 0.8) inset;
+}
+#cherry-note-panel[data-theme="lavender"] {
+    background: linear-gradient(160deg, #faf5ff 0%, #f3e8ff 40%, #ede4fb 100%);
+    border-color: #d3b6f5;
+    box-shadow: 0 8px 28px rgba(147, 90, 220, 0.28);
+}
+#cherry-note-panel[data-theme="lavender"] #cherry-note-header { color: #6b3fa0; }
+#cherry-note-panel[data-theme="lavender"] #cherry-note-close { color: #9c72c9; }
+#cherry-note-panel[data-theme="lavender"] #cherry-note-close:hover { background: rgba(211, 182, 245, 0.4); }
+#cherry-note-panel[data-theme="lavender"] #cherry-note-textarea {
+    border-color: #ddc4f7; color: #5b3785; background: rgba(255, 255, 255, 0.8);
+}
+#cherry-note-panel[data-theme="lavender"] #cherry-note-textarea:focus {
+    border-color: #b586ef; box-shadow: 0 0 0 3px rgba(181, 134, 239, 0.2);
+}
+#cherry-note-panel[data-theme="lavender"] #cherry-note-textarea::placeholder { color: #c3a3e0; }
+#cherry-note-panel[data-theme="lavender"] #cherry-note-status { color: #7d4bb8; }
+
+/* --- 미드나잇 다크 --- */
+#cherry-note-icon[data-theme="dark"] {
+    background: linear-gradient(135deg, #434966 0%, #2b2e4a 50%, #1a1c2e 100%);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.55), 0 0 0 3px rgba(255, 255, 255, 0.15) inset;
+}
+#cherry-note-icon[data-theme="dark"]:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7), 0 0 0 3px rgba(255, 255, 255, 0.25) inset;
+}
+#cherry-note-panel[data-theme="dark"] {
+    background: linear-gradient(160deg, #22243a 0%, #1c1e30 40%, #16182a 100%);
+    border-color: #3d4166;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5);
+}
+#cherry-note-panel[data-theme="dark"] #cherry-note-header { color: #c7cbf5; }
+#cherry-note-panel[data-theme="dark"] #cherry-note-close { color: #8b90c2; }
+#cherry-note-panel[data-theme="dark"] #cherry-note-close:hover { background: rgba(139, 144, 194, 0.25); }
+#cherry-note-panel[data-theme="dark"] #cherry-note-textarea {
+    border-color: #3d4166; color: #dcdfff; background: rgba(0, 0, 0, 0.25);
+}
+#cherry-note-panel[data-theme="dark"] #cherry-note-textarea:focus {
+    border-color: #7b82d6; box-shadow: 0 0 0 3px rgba(123, 130, 214, 0.25);
+}
+#cherry-note-panel[data-theme="dark"] #cherry-note-textarea::placeholder { color: #6c709c; }
+#cherry-note-panel[data-theme="dark"] #cherry-note-textarea:disabled {
+    background: rgba(255, 255, 255, 0.05); color: #6c709c;
+}
+#cherry-note-panel[data-theme="dark"] #cherry-note-status { color: #9aa0e8; }
+
+/* --- 선셋 --- */
+#cherry-note-icon[data-theme="sunset"] {
+    background: linear-gradient(135deg, #ff9966 0%, #ff5e62 50%, #ffa751 100%);
+    box-shadow: 0 4px 16px rgba(255, 94, 98, 0.45), 0 0 0 3px rgba(255, 255, 255, 0.6) inset;
+}
+#cherry-note-icon[data-theme="sunset"]:hover {
+    box-shadow: 0 6px 20px rgba(255, 94, 98, 0.6), 0 0 0 3px rgba(255, 255, 255, 0.8) inset;
+}
+#cherry-note-panel[data-theme="sunset"] {
+    background: linear-gradient(160deg, #fff4ed 0%, #ffe8dc 40%, #ffe0d6 100%);
+    border-color: #ffb28a;
+    box-shadow: 0 8px 28px rgba(255, 94, 98, 0.28);
+}
+#cherry-note-panel[data-theme="sunset"] #cherry-note-header { color: #c74a2e; }
+#cherry-note-panel[data-theme="sunset"] #cherry-note-close { color: #e37850; }
+#cherry-note-panel[data-theme="sunset"] #cherry-note-close:hover { background: rgba(255, 178, 138, 0.4); }
+#cherry-note-panel[data-theme="sunset"] #cherry-note-textarea {
+    border-color: #ffc9a8; color: #8a3b23; background: rgba(255, 255, 255, 0.8);
+}
+#cherry-note-panel[data-theme="sunset"] #cherry-note-textarea:focus {
+    border-color: #ff8a5c; box-shadow: 0 0 0 3px rgba(255, 138, 92, 0.2);
+}
+#cherry-note-panel[data-theme="sunset"] #cherry-note-textarea::placeholder { color: #e0a686; }
+#cherry-note-panel[data-theme="sunset"] #cherry-note-status { color: #d1603a; }
+
+/* ========================================================= */
+/* 🔘 저장 버튼 테마 (data-btn-theme 속성으로 전환)             */
+/* ========================================================= */
+
+#cherry-note-save-btn[data-btn-theme="mint"] {
+    background: linear-gradient(135deg, #6fd8ae, #a8edea);
+    box-shadow: 0 2px 8px rgba(56, 178, 150, 0.35);
+}
+#cherry-note-save-btn[data-btn-theme="mint"]:hover { box-shadow: 0 4px 12px rgba(56, 178, 150, 0.5); }
+
+#cherry-note-save-btn[data-btn-theme="gold"] {
+    background: linear-gradient(135deg, #f6c453, #f9a825);
+    box-shadow: 0 2px 8px rgba(249, 168, 37, 0.4);
+}
+#cherry-note-save-btn[data-btn-theme="gold"]:hover { box-shadow: 0 4px 12px rgba(249, 168, 37, 0.55); }
+
+#cherry-note-save-btn[data-btn-theme="mono"] {
+    background: linear-gradient(135deg, #6b6f85, #3f4256);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+#cherry-note-save-btn[data-btn-theme="mono"]:hover { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); }
+
+/* ========================================================= */
+/* ⚙️ 확장 설정 패널 (테마 선택 / 플로팅 on-off)                */
+/* ========================================================= */
+
+.cherry-note-settings-block .inline-drawer-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 6px 2px 10px;
+}
+
+.cherry-note-settings-block label.checkbox_label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.cherry-note-settings-block select {
+    margin-bottom: 4px;
+}
+
 /* 모바일 대응 */
 @media (max-width: 480px) {
     #cherry-note-panel {

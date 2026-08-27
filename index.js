@@ -5,10 +5,49 @@ const EXT_NAME = "cherry-note-extension"; // 저장 데이터 호환을 위해 �
 const SAVE_DELAY_MS = 1000;
 const NOTE_TAG = "system_override_note";
 
+const PANEL_THEMES = [
+    { id: "pink", label: "🍒 체리 핑크" },
+    { id: "mint", label: "🌿 민트" },
+    { id: "lavender", label: "💜 라벤더" },
+    { id: "dark", label: "🌙 미드나잇" },
+    { id: "sunset", label: "🌅 선셋" },
+];
+
+const BUTTON_THEMES = [
+    { id: "pink", label: "핑크" },
+    { id: "mint", label: "민트" },
+    { id: "gold", label: "골드" },
+    { id: "mono", label: "모노" },
+];
+
+const DEFAULT_CONFIG = {
+    panelTheme: "pink",
+    buttonTheme: "pink",
+    floatingEnabled: true,
+};
+
 let saveTimer = null;
 let currentAvatar = null; // 현재 메모가 속한 캐릭터의 아바타 파일명
 let isDirty = false;
 let currentNoteBlock = ""; // <system_override_note>로 감싼, 주입 준비된 텍스트
+
+// ---------- 설정(테마/플로팅 on-off) 헬퍼 ----------
+
+function getConfig() {
+    if (!extension_settings[EXT_NAME]) {
+        extension_settings[EXT_NAME] = {};
+    }
+    if (!extension_settings[EXT_NAME].config) {
+        extension_settings[EXT_NAME].config = { ...DEFAULT_CONFIG };
+    }
+    // 이전 버전 호환: 누락된 필드 채워넣기
+    extension_settings[EXT_NAME].config = { ...DEFAULT_CONFIG, ...extension_settings[EXT_NAME].config };
+    return extension_settings[EXT_NAME].config;
+}
+
+function saveConfig() {
+    saveSettingsDebounced();
+}
 
 // ---------- 저장소 헬퍼 ----------
 
@@ -276,6 +315,98 @@ function reclampIconToViewport($el, storageKey) {
     localStorage.setItem(storageKey, JSON.stringify({ x: clamped.x, y: clamped.y }));
 }
 
+// ---------- 테마 적용 ----------
+
+function applyPanelTheme(themeId) {
+    const $icon = $("#cherry-note-icon");
+    const $panel = $("#cherry-note-panel");
+    $icon.attr("data-theme", themeId);
+    $panel.attr("data-theme", themeId);
+}
+
+function applyButtonTheme(themeId) {
+    $("#cherry-note-save-btn").attr("data-btn-theme", themeId);
+}
+
+function applyFloatingVisibility(enabled) {
+    const $icon = $("#cherry-note-icon");
+    const $panel = $("#cherry-note-panel");
+    if (enabled) {
+        $icon.removeClass("cherry-note-force-hidden");
+    } else {
+        $icon.addClass("cherry-note-force-hidden");
+        $panel.addClass("cherry-note-hidden"); // 아이콘 끄면 패널도 닫아둠
+    }
+}
+
+function applyAllThemes() {
+    const config = getConfig();
+    applyPanelTheme(config.panelTheme);
+    applyButtonTheme(config.buttonTheme);
+    applyFloatingVisibility(config.floatingEnabled);
+}
+
+// ---------- 확장 설정 패널(테마 선택 / 플로팅 on-off) ----------
+
+function buildSettingsPanel() {
+    const config = getConfig();
+
+    const panelOptions = PANEL_THEMES.map(
+        (t) => `<option value="${t.id}" ${t.id === config.panelTheme ? "selected" : ""}>${t.label}</option>`
+    ).join("");
+
+    const buttonOptions = BUTTON_THEMES.map(
+        (t) => `<option value="${t.id}" ${t.id === config.buttonTheme ? "selected" : ""}>${t.label}</option>`
+    ).join("");
+
+    const html = `
+    <div class="cherry-note-settings-block">
+        <div class="inline-drawer">
+            <div class="inline-drawer-toggle inline-drawer-header">
+                <b>🍒 Aggressive Notepad</b>
+                <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
+            </div>
+            <div class="inline-drawer-content">
+                <label class="checkbox_label" for="cherry-note-floating-toggle">
+                    <input id="cherry-note-floating-toggle" type="checkbox" ${config.floatingEnabled ? "checked" : ""} />
+                    <span>화면에 플로팅 버튼 표시</span>
+                </label>
+
+                <label for="cherry-note-panel-theme-select">패널 테마</label>
+                <select id="cherry-note-panel-theme-select" class="text_pole">${panelOptions}</select>
+
+                <label for="cherry-note-button-theme-select">저장 버튼 테마</label>
+                <select id="cherry-note-button-theme-select" class="text_pole">${buttonOptions}</select>
+            </div>
+        </div>
+    </div>
+    `;
+
+    const $target = $("#extensions_settings2").length ? $("#extensions_settings2") : $("#extensions_settings");
+    $target.append(html);
+
+    $("#cherry-note-floating-toggle").on("change", function () {
+        const enabled = $(this).is(":checked");
+        getConfig().floatingEnabled = enabled;
+        saveConfig();
+        applyFloatingVisibility(enabled);
+    });
+
+    $("#cherry-note-panel-theme-select").on("change", function () {
+        const themeId = $(this).val();
+        getConfig().panelTheme = themeId;
+        saveConfig();
+        applyPanelTheme(themeId);
+    });
+
+    $("#cherry-note-button-theme-select").on("change", function () {
+        const themeId = $(this).val();
+        getConfig().buttonTheme = themeId;
+        saveConfig();
+        applyButtonTheme(themeId);
+    });
+}
+
 // ---------- UI 생성 ----------
 
 function buildUI() {
@@ -328,6 +459,8 @@ function buildUI() {
             positionPanelNearIcon();
         }
     });
+
+    applyAllThemes();
 }
 
 function positionPanelNearIcon() {
@@ -364,6 +497,7 @@ function positionPanelNearIcon() {
 
 jQuery(async () => {
     buildUI();
+    buildSettingsPanel();
     registerInjectionHooks();
 
     eventSource.on(event_types.CHAT_CHANGED, () => {
