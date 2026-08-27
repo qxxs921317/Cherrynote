@@ -274,6 +274,46 @@
 #cherry-note-panel[data-theme="sunset"] #cherry-note-textarea::placeholder { color: #e0a686; }
 #cherry-note-panel[data-theme="sunset"] #cherry-note-status { color: #d1603a; }
 
+/* --- 심플 화이트 메모 (플랫, 그림자/블러 없음) --- */
+#cherry-note-panel[data-theme="white"] {
+    background: #ffffff;
+    border: 1px solid #e4e4e4;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    backdrop-filter: none;
+}
+#cherry-note-panel[data-theme="white"] #cherry-note-header {
+    color: #333333;
+    border-bottom: 1px solid #eeeeee;
+    padding-bottom: 6px;
+}
+#cherry-note-panel[data-theme="white"] #cherry-note-close { color: #999999; }
+#cherry-note-panel[data-theme="white"] #cherry-note-close:hover { background: rgba(0, 0, 0, 0.05); }
+#cherry-note-panel[data-theme="white"] #cherry-note-textarea {
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    background: #fafafa;
+    color: #444444;
+}
+#cherry-note-panel[data-theme="white"] #cherry-note-textarea:focus {
+    border-color: #bbbbbb;
+    box-shadow: none;
+}
+#cherry-note-panel[data-theme="white"] #cherry-note-textarea::placeholder { color: #aaaaaa; }
+#cherry-note-panel[data-theme="white"] #cherry-note-status { color: #888888; }
+#cherry-note-panel[data-theme="white"] #cherry-note-save-btn {
+    background: #ffffff;
+    border: 1px solid #cccccc;
+    color: #333333;
+    box-shadow: none;
+    border-radius: 4px;
+}
+#cherry-note-panel[data-theme="white"] #cherry-note-save-btn:hover {
+    background: #f5f5f5;
+    box-shadow: none;
+    transform: none;
+}
+
 /* ========================================================= */
 /* 🍒 플로팅 아이콘 디자인 (data-icon-theme 속성으로 전환)      */
 /* ========================================================= */
@@ -313,6 +353,30 @@
 }
 #cherry-note-icon[data-icon-theme="mint"]:hover {
     box-shadow: 0 6px 18px rgba(56, 178, 150, 0.55), 0 0 0 3px rgba(255, 255, 255, 0.8) inset;
+}
+
+#cherry-note-icon[data-icon-theme="butterfly"] {
+    background: linear-gradient(135deg, #6dd5fa 0%, #2980b9 100%);
+    box-shadow: 0 4px 14px rgba(41, 128, 185, 0.45), 0 0 0 3px rgba(255, 255, 255, 0.35) inset;
+}
+#cherry-note-icon[data-icon-theme="butterfly"]:hover {
+    box-shadow: 0 6px 18px rgba(41, 128, 185, 0.6), 0 0 0 3px rgba(255, 255, 255, 0.5) inset;
+}
+
+#cherry-note-icon[data-icon-theme="shootingstar"] {
+    background: linear-gradient(135deg, #232946 0%, #3f4a7d 60%, #6a5acd 100%);
+    box-shadow: 0 4px 14px rgba(35, 41, 70, 0.55), 0 0 0 2px rgba(255, 255, 255, 0.15) inset;
+}
+#cherry-note-icon[data-icon-theme="shootingstar"]:hover {
+    box-shadow: 0 6px 18px rgba(35, 41, 70, 0.7), 0 0 0 2px rgba(255, 255, 255, 0.25) inset;
+}
+
+#cherry-note-icon[data-icon-theme="galaxy"] {
+    background: linear-gradient(135deg, #1e1541 0%, #4b2e83 50%, #8e44ad 100%);
+    box-shadow: 0 4px 14px rgba(78, 46, 131, 0.55), 0 0 0 2px rgba(255, 255, 255, 0.15) inset;
+}
+#cherry-note-icon[data-icon-theme="galaxy"]:hover {
+    box-shadow: 0 6px 18px rgba(78, 46, 131, 0.7), 0 0 0 2px rgba(255, 255, 255, 0.25) inset;
 }
 
 /* ========================================================= */
@@ -362,6 +426,11 @@
 
 .cherry-note-settings-block select {
     margin-bottom: 4px;
+}
+
+.cherry-note-wand-btn {
+    width: 100%;
+    text-align: center;
 }
 
 /* 모바일 대응 */

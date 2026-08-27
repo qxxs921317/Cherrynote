@@ -11,6 +11,9 @@ const ICON_THEMES = [
     { id: "memo", label: "🗒️ 메모지", emoji: "🗒️" },
     { id: "dark", label: "🖊️ 미니멀 다크", emoji: "🖊️" },
     { id: "mint", label: "🌿 민트 리프", emoji: "🌿" },
+    { id: "butterfly", label: "🦋 버터플라이", emoji: "🦋" },
+    { id: "shootingstar", label: "🌠 슈팅스타", emoji: "🌠" },
+    { id: "galaxy", label: "🌌 갤럭시", emoji: "🌌" },
 ];
 
 const PANEL_THEMES = [
@@ -19,6 +22,7 @@ const PANEL_THEMES = [
     { id: "lavender", label: "💜 라벤더" },
     { id: "dark", label: "🌙 미드나잇" },
     { id: "sunset", label: "🌅 선셋" },
+    { id: "white", label: "🤍 심플 화이트 메모" },
 ];
 
 const DEFAULT_CONFIG = {
@@ -369,10 +373,9 @@ function buildSettingsPanel() {
                 <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
             </div>
             <div class="inline-drawer-content">
-                <label class="checkbox_label" for="cherry-note-floating-toggle">
-                    <input id="cherry-note-floating-toggle" type="checkbox" ${config.floatingEnabled ? "checked" : ""} />
-                    <span>화면에 플로팅 버튼 표시</span>
-                </label>
+                <button id="cherry-note-wand-toggle" class="menu_button cherry-note-wand-btn">
+                    🪄 Cherry Note: ${config.floatingEnabled ? "ON" : "OFF"}
+                </button>
 
                 <label for="cherry-note-icon-theme-select">플로팅 아이콘 디자인</label>
                 <select id="cherry-note-icon-theme-select" class="text_pole">${iconOptions}</select>
@@ -387,11 +390,13 @@ function buildSettingsPanel() {
     const $target = $("#extensions_settings2").length ? $("#extensions_settings2") : $("#extensions_settings");
     $target.append(html);
 
-    $("#cherry-note-floating-toggle").on("change", function () {
-        const enabled = $(this).is(":checked");
-        getConfig().floatingEnabled = enabled;
+    $("#cherry-note-wand-toggle").on("click", function () {
+        const config = getConfig();
+        const enabled = !config.floatingEnabled;
+        config.floatingEnabled = enabled;
         saveConfig();
         applyFloatingVisibility(enabled);
+        $(this).text(`🪄 Cherry Note: ${enabled ? "ON" : "OFF"}`);
     });
 
     $("#cherry-note-icon-theme-select").on("change", function () {
