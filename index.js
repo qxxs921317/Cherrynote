@@ -20,6 +20,9 @@ const ICON_THEMES = [
     { id: "digi", label: "📁 디지 스티커 폴더", html: () => PX.folder(18) },
     { id: "dual", label: "🎮 핑크 듀얼 게임기", html: () => `<span class="cn-ic-du-scr">${PX.heart("#f07ab4", 5, false)}</span><span class="cn-ic-du-hinge"></span><span class="cn-ic-du-scr"></span>` },
     { id: "letter", label: "💌 러브레터 봉투", html: () => PX.envelope(20, "#fbd6c2") },
+    { id: "sage", label: "🎀 세이지 리본 배지", html: () => SVG.bow("#4e5a2a", 19, 6) },
+    { id: "pinkreceipt", label: "🧾 핑크 미니 영수증", html: () => '<span class="cn-ic-pr-paper"><i></i><i></i><b></b></span>' },
+    { id: "cafe", label: "🍒 체리 카페 깅엄", html: () => `<span class="cn-ic-cf-inner">${SVG.cherry(15)}</span>` },
 ];
 
 const PANEL_THEMES = [
@@ -35,7 +38,24 @@ const PANEL_THEMES = [
     { id: "digi", label: "📁 디지 스티커 (픽셀)" },
     { id: "dual", label: "🎮 핑크 듀얼 (픽셀)" },
     { id: "letter", label: "💌 러브레터 (픽셀)" },
+    { id: "sage", label: "🎀 세이지 영수증" },
+    { id: "pinkreceipt", label: "🧾 핑크 영수증" },
+    { id: "cafe", label: "🍒 체리 카페 영수증" },
 ];
+
+// ---------- 영수증 테마용 선 그림 (SVG) ----------
+
+const BOW_PATHS = '<path d="M40 22 C28 6, 6 6, 9 19 C11 29, 30 27, 40 22 Z"/><path d="M40 22 C52 6, 74 6, 71 19 C69 29, 50 27, 40 22 Z"/><path d="M40 22 C35 36, 28 48, 18 60"/><path d="M40 22 C46 36, 52 46, 60 58"/>';
+const RIBBON_CORNER = '<path d="M6 44 C4 24, 14 8, 34 6 C46 5, 50 14, 42 18 C34 22, 30 10, 40 6 C48 3, 56 6, 58 10" stroke="#f29ac0" stroke-width="3.5"/><path d="M6 44 C4 24, 14 8, 34 6" stroke="#fde0ec" stroke-width="1.1"/><rect x="2" y="2" width="7" height="7" transform="rotate(45 5.5 5.5)" fill="#c9427e" stroke="none"/>';
+
+const SVG = {
+    bow: (color, w = 30, sw = 4, knot = false) =>
+        `<svg class="cn-px" width="${w}" height="${Math.round((w * 64) / 80)}" viewBox="0 0 80 64" fill="none" stroke="${color}" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${BOW_PATHS}${knot ? `<circle cx="40" cy="22" r="4" fill="${color}"/>` : ""}</svg>`,
+    ribbon: (cls) =>
+        `<svg class="cn-pr-rb ${cls}" width="60" height="50" viewBox="0 0 60 50" fill="none" stroke-linecap="round" aria-hidden="true">${RIBBON_CORNER}</svg>`,
+    cherry: (w = 30) =>
+        `<svg class="cn-px" width="${w}" height="${w}" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 5 C18 14, 13 20, 11 25" stroke="#3e7a45" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M20 5 C22 13, 26 18, 28 23" stroke="#3e7a45" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M20 5 C24 2, 31 3, 33 7 C28 10, 22 9, 20 5 Z" fill="#6fbf73"/><circle cx="11" cy="30" r="7" fill="#d8323f"/><circle cx="28" cy="28" r="7" fill="#e14552"/><circle cx="8.5" cy="27.5" r="1.8" fill="#ffffff" opacity="0.8"/><circle cx="25.5" cy="25.5" r="1.8" fill="#ffffff" opacity="0.8"/></svg>`,
+};
 
 // ---------- 픽셀 아이콘 (SVG) ----------
 
@@ -285,7 +305,138 @@ const PANEL_TEMPLATES = {
         keepStatus: true,
         retro: true,
     },
+    sage: {
+        html: () => `
+            <span class="cn-sg-bow">${SVG.bow("#4e5a2a", 70, 3.2, true)}</span>
+            <div class="cn-sg-head"><span class="cn-sg-kicker">Secret</span><span class="cn-sg-title">Memo</span></div>
+            <div class="cn-sg-body">
+                <div class="cn-sg-sub">For the next scene, with love!</div>
+                <div class="cn-sg-rule"></div>
+                <div id="cherry-note-header" class="cn-sg-meta">
+                    <span class="cn-sg-field"><b>FOR</b><span id="cherry-note-char-name"></span></span>
+                    <span class="cn-sg-field"><b>DATE</b><span class="cn-saved-date" data-fmt="short"></span></span>
+                </div>
+                <div class="cn-sg-rule"></div>
+                <div class="cn-sg-cols"><span>ITEM</span><span>QTY</span></div>
+                <div class="cn-sg-paper"><span class="cn-sg-watermark">${SVG.bow("#b7a99b", 130, 1.6)}</span>${TEXTAREA_HTML}</div>
+                <div class="cn-sg-rule"></div>
+                <div class="cn-sg-total">${SVG.bow("#4e5a2a", 30, 5)}<span class="cn-sg-totalwrap"><span class="cn-sg-script">Total:</span><span class="cn-count-chars">0자</span></span></div>
+                <div class="cn-sg-rule"></div>
+                <div class="cn-sg-method">Order Method:</div>
+                <div id="cherry-note-footer" class="cn-sg-opts">
+                    <button id="cherry-note-save-btn" class="cn-sg-opt" title="저장하기"><i></i><span>Save</span></button>
+                    <button class="cn-sg-opt cn-close" title="닫기"><i></i><span>Close</span></button>
+                </div>
+                <span id="cherry-note-status"></span>
+            </div>`,
+        name: (n) => n,
+        saved: () => "saved ♡",
+        receipt: true,
+    },
+    pinkreceipt: {
+        html: () => `
+            ${SVG.ribbon("tl")}${SVG.ribbon("tr")}${SVG.ribbon("bl")}${SVG.ribbon("br")}
+            <div class="cn-pr-frame">
+                <div class="cn-pr-title">Memo</div>
+                <div class="cn-pr-sub">A LITTLE NOTE FOR THE NEXT TURN!</div>
+                <div class="cn-pr-rule"></div>
+                <div id="cherry-note-header" class="cn-pr-meta">
+                    <span><b>FOR:</b><span id="cherry-note-char-name"></span></span>
+                    <span><b>DATE:</b><span class="cn-saved-date" data-fmt="dot"></span></span>
+                </div>
+                <div class="cn-pr-rule"></div>
+                <div class="cn-pr-cols"><span>ITEM</span><span>QTY</span><span>PRICE</span></div>
+                ${TEXTAREA_HTML}
+                <div class="cn-pr-rule"></div>
+                <div class="cn-pr-total"><span class="cn-pr-script">Total:</span><span class="cn-count-chars">0자</span></div>
+                <div class="cn-pr-rule"></div>
+                <div id="cherry-note-footer" class="cn-pr-opts">
+                    <button id="cherry-note-save-btn" class="cn-pr-opt cn-pr-save" title="저장하기">SAVE</button>
+                    <button class="cn-pr-opt cn-close" title="닫기">♡ CLOSE</button>
+                </div>
+                <span id="cherry-note-status"></span>
+                <div class="cn-pr-deliver">UPON NEXT REPLY, DELIVERED THROUGH:</div>
+                <div class="cn-pr-code"><div class="cn-barcode"></div><span class="cn-count-score">000000</span></div>
+            </div>`,
+        name: (n) => n,
+        saved: () => "♥ saved!",
+        receipt: true,
+    },
+    cafe: {
+        html: () => `
+            <div class="cn-cf-edge cn-cf-top"></div>
+            <div class="cn-cf-paper">
+                <div class="cn-cf-head">${SVG.cherry(30)}<span class="cn-cf-title">Cherry Note Café</span><span class="cn-cf-tag">MEMO TO GO · SINCE 2026</span></div>
+                <div class="cn-cf-rule"></div>
+                <div id="cherry-note-header" class="cn-cf-rows">
+                    <span class="cn-cf-row"><span>TABLE</span><span id="cherry-note-char-name"></span></span>
+                    <span class="cn-cf-row"><span>DATE</span><span class="cn-saved-date" data-fmt="full"></span></span>
+                    <span class="cn-cf-row"><span>ORDER</span><span>#<span class="cn-count-score">000000</span></span></span>
+                </div>
+                <div class="cn-cf-rule"></div>
+                <div class="cn-cf-row cn-cf-bold"><span>QTY&nbsp;&nbsp;ITEM</span><span>AMT</span></div>
+                ${TEXTAREA_HTML}
+                <div class="cn-cf-rule"></div>
+                <div class="cn-cf-row cn-cf-total"><span>TOTAL</span><span class="cn-count-chars">0자</span></div>
+                <div class="cn-cf-row"><span>PAYMENT</span><span class="cn-cf-love">♥ LOVE</span></div>
+                <div class="cn-cf-rule cn-cf-double"></div>
+                <div id="cherry-note-footer" class="cn-cf-btns">
+                    <button id="cherry-note-save-btn" class="cn-cf-btn cn-cf-primary" title="저장하기">[ SAVE ]</button>
+                    <button class="cn-cf-btn cn-close" title="닫기">[ CLOSE ]</button>
+                </div>
+                <span id="cherry-note-status"></span>
+                <div class="cn-cf-thanks">THANK YOU ♥ COME AGAIN</div>
+                <div class="cn-cf-code"><div class="cn-barcode"></div><span class="cn-count-score">000000</span></div>
+            </div>
+            <div class="cn-cf-edge cn-cf-bottom"></div>
+            <div class="cn-cf-stamp"><div><span>♥ ♥ ♥</span><b>SAVED</b><span class="cn-saved-date" data-fmt="time"></span></div></div>`,
+        name: (n) => n,
+        saved: () => "saved",
+        receipt: true,
+    },
 };
+
+// ---------- 저장 시각 / 바코드 ----------
+
+let lastSavedAt = null; // ISO 문자열
+
+function formatSavedDate(iso, fmt) {
+    if (!iso) return fmt === "time" ? "--:--" : "—";
+    const d = new Date(iso);
+    if (isNaN(d)) return "—";
+    const p = (n) => String(n).padStart(2, "0");
+    const md = `${p(d.getMonth() + 1)}.${p(d.getDate())}`;
+    const hm = `${p(d.getHours())}:${p(d.getMinutes())}`;
+    if (fmt === "time") return hm;
+    if (fmt === "dot") return `${md} · ${hm}`;
+    if (fmt === "full") return `${d.getFullYear()}.${md} ${hm}`;
+    return `${md} ${hm}`;
+}
+
+function renderSavedDate() {
+    $("#cherry-note-panel .cn-saved-date").each((_, el) => {
+        el.textContent = formatSavedDate(lastSavedAt, el.dataset.fmt);
+    });
+    $("#cherry-note-panel").toggleClass("cn-has-saved", !!lastSavedAt);
+}
+
+// 메모 내용으로 만드는 바코드 (내용이 바뀌면 모양도 바뀜)
+function renderBarcode(text) {
+    const $codes = $("#cherry-note-panel .cn-barcode");
+    if (!$codes.length) return;
+    let seed = parseInt(hashString(text || "cherry").slice(0, 8), 36) || 1;
+    const rand = () => {
+        seed = (seed * 1103515245 + 12345) % 2147483648;
+        return seed / 2147483648;
+    };
+    let html = "";
+    for (let i = 0; i < 38; i++) {
+        const w = 1 + Math.floor(rand() * 3);
+        const gap = 1 + Math.floor(rand() * 2);
+        html += `<i style="width:${w}px;margin-right:${gap}px"></i>`;
+    }
+    $codes.html(html);
+}
 
 function getPanelTemplate(themeId) {
     return PANEL_TEMPLATES[themeId] || PANEL_TEMPLATES.default;
@@ -361,10 +512,13 @@ async function readNoteFile(avatar) {
         cache: "no-store",
         headers: getRequestHeaders(),
     });
-    if (res.status === 404) return "";
+    if (res.status === 404) return { text: "", updatedAt: null };
     if (!res.ok) throw new Error(`읽기 실패 (HTTP ${res.status})`);
     const data = await res.json();
-    return typeof data?.text === "string" ? data.text : "";
+    return {
+        text: typeof data?.text === "string" ? data.text : "",
+        updatedAt: typeof data?.updatedAt === "string" ? data.updatedAt : null,
+    };
 }
 
 async function writeNoteFile(avatar, text, { keepalive = false } = {}) {
@@ -528,7 +682,11 @@ function doSave(showFeedback = true, { keepalive = false } = {}) {
 
     return queueWrite(avatar, text, { keepalive })
         .then(() => {
-            if (showFeedback && avatar === currentAvatar) showSavedFeedback();
+            if (avatar === currentAvatar) {
+                lastSavedAt = new Date().toISOString();
+                renderSavedDate();
+                if (showFeedback) showSavedFeedback();
+            }
         })
         .catch((e) => {
             console.error("[Aggressive Notepad] 저장 실패:", e);
@@ -599,6 +757,7 @@ function updateCounter() {
     });
     const pct = Math.min(100, (len / (INJECT_SEGMENTS * CHARS_PER_SEGMENT)) * 100);
     $("#cherry-note-panel .cn-progress-fill").css("width", `${pct}%`);
+    renderBarcode($("#cherry-note-textarea").val() || "");
 }
 
 // ---------- 캐릭터/챗 전환 시 메모 불러오기 ----------
@@ -636,6 +795,8 @@ async function loadNoteInternal() {
 
     updateNoteBlock("");
     $("#cherry-note-textarea").val("");
+    lastSavedAt = null;
+    renderSavedDate();
 
     let text = "";
     if (avatar) {
@@ -644,7 +805,9 @@ async function loadNoteInternal() {
         $("#cherry-note-save-btn").prop("disabled", true);
         let failed = false;
         try {
-            text = await readNoteFile(avatar);
+            const data = await readNoteFile(avatar);
+            text = data.text;
+            lastSavedAt = data.updatedAt;
         } catch (e) {
             failed = true;
             console.error("[Aggressive Notepad] 메모 불러오기 실패:", e);
@@ -663,6 +826,7 @@ async function loadNoteInternal() {
     $("#cherry-note-textarea").val(text);
     setGroupChatState(isGroup || !avatar);
     updateCounter();
+    renderSavedDate();
 
     if (isGroup) {
         charNameState = { kind: "group", name: "" };
@@ -795,6 +959,7 @@ function applyPanelTheme(themeId) {
     $panel.attr("data-theme", themeId);
     $panel.removeClass("cn-expanded");
     $panel.toggleClass("cn-retro", !!tpl.retro);
+    $panel.toggleClass("cn-receipt", !!tpl.receipt);
     $panel.html(tpl.html());
 
     if (hadContent) {
@@ -806,6 +971,7 @@ function applyPanelTheme(themeId) {
 
     renderCharName();
     updateCounter();
+    renderSavedDate();
 
     if (!$panel.hasClass("cherry-note-hidden")) {
         positionPanelNearIcon();
@@ -990,7 +1156,19 @@ function positionPanelNearIcon() {
 
 // ---------- 초기화 ----------
 
+function loadBundledFontCss() {
+    try {
+        const href = new URL("./fonts/receipt-fonts.css", import.meta.url).href;
+        if (!document.querySelector(`link[href="${href}"]`)) {
+            $("<link>", { rel: "stylesheet", href }).appendTo("head");
+        }
+    } catch (e) {
+        console.warn("[Aggressive Notepad] 영수증 폰트 CSS 로드 실패:", e);
+    }
+}
+
 jQuery(async () => {
+    loadBundledFontCss();
     buildUI();
     buildSettingsPanel();
     buildExtensionsMenuToggle();

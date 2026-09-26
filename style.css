@@ -1614,3 +1614,560 @@
     box-shadow: 2px 2px 0 #e8b9a3;
 }
 #cherry-note-icon[data-icon-theme="letter"]:hover { box-shadow: 3px 3px 0 #e8b9a3; }
+
+/* ========================================================= */
+/* 🧾 영수증 테마 3종 (sage / pinkreceipt / cafe)               */
+/*    폰트: fonts/receipt-fonts.css (JS가 자동으로 불러옴)      */
+/* ========================================================= */
+
+#cherry-note-panel.cn-receipt {
+    width: 300px;
+    backdrop-filter: none;
+    font-family: "CN Gowun Batang", serif;
+}
+#cherry-note-panel.cn-receipt * { box-sizing: border-box; }
+#cherry-note-panel.cn-receipt button {
+    margin: 0;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+#cherry-note-panel.cn-receipt #cherry-note-textarea {
+    display: block;
+    width: 100%;
+    min-height: 90px;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    font-family: "CN Gowun Batang", serif;
+    font-size: 13px;
+    line-height: 1.75;
+}
+#cherry-note-panel.cn-receipt #cherry-note-textarea:focus { box-shadow: none; }
+#cherry-note-panel.cn-receipt .cn-barcode {
+    display: flex;
+    height: 26px;
+    overflow: hidden;
+}
+#cherry-note-panel.cn-receipt .cn-barcode i {
+    display: block;
+    height: 100%;
+    flex-shrink: 0;
+    background: currentColor;
+}
+
+/* ---------------- 07 세이지 영수증 ---------------- */
+#cherry-note-panel[data-theme="sage"] {
+    background: none;
+    border: 14px solid transparent;
+    border-image: url("assets/scallop-sage.svg") 14 fill round;
+    border-radius: 0;
+    padding: 0 6px 2px;
+    gap: 0;
+    box-shadow: none;
+    filter: drop-shadow(0 8px 14px rgba(78, 90, 42, 0.18));
+    color: #3f4722;
+}
+#cherry-note-panel[data-theme="sage"] .cn-sg-bow {
+    position: absolute;
+    left: -30px;
+    top: -30px;
+    pointer-events: none;
+}
+#cherry-note-panel[data-theme="sage"] .cn-sg-head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: -34px;
+}
+#cherry-note-panel[data-theme="sage"] .cn-sg-kicker {
+    position: relative;
+    z-index: 1;
+    margin: 0 0 -18px 40px;
+    font-family: "CN Cormorant", serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: #4e5a2a;
+}
+#cherry-note-panel[data-theme="sage"] .cn-sg-title {
+    font-family: "CN Pinyon", cursive;
+    font-size: 58px;
+    line-height: 1.1;
+    color: #e7ebcf;
+    -webkit-text-stroke: 1.3px #4e5a2a;
+    text-shadow: 2px 3px 0 #4e5a2a;
+}
+#cherry-note-panel[data-theme="sage"] .cn-sg-body { display: flex; flex-direction: column; gap: 7px; }
+#cherry-note-panel[data-theme="sage"] .cn-sg-sub {
+    font-family: "CN Cormorant", serif;
+    font-size: 18px;
+    font-weight: 500;
+    text-align: center;
+}
+#cherry-note-panel[data-theme="sage"] .cn-sg-rule { border-top: 1.5px dashed #5e6a3a; }
+#cherry-note-panel[data-theme="sage"] #cherry-note-header {
+    padding: 0;
+    gap: 8px;
+    align-items: baseline;
+    font-size: 12px;
+    font-weight: 400;
+    color: #3f4722;
+}
+#cherry-note-panel[data-theme="sage"] .cn-sg-field { display: flex; align-items: baseline; gap: 6px; min-width: 0; }
+#cherry-note-panel[data-theme="sage"] .cn-sg-field b {
+    font-family: "CN Cormorant", serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+#cherry-note-panel[data-theme="sage"] .cn-sg-field > span {
+    border-bottom: 1px dotted #5e6a3a;
+    padding: 0 4px;
+    white-space: nowrap;
+}
+#cherry-note-panel[data-theme="sage"] #cherry-note-char-name { max-width: 100px; }
+#cherry-note-panel[data-theme="sage"] .cn-sg-cols {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 8px;
+    font-family: "CN Cormorant", serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+#cherry-note-panel[data-theme="sage"] .cn-sg-paper { position: relative; }
+#cherry-note-panel[data-theme="sage"] .cn-sg-watermark {
+    position: absolute;
+    left: 50%;
+    top: 10px;
+    transform: translateX(-50%);
+    opacity: 0.35;
+    pointer-events: none;
+}
+#cherry-note-panel[data-theme="sage"] #cherry-note-textarea {
+    position: relative;
+    height: 112px;
+    padding: 4px 8px;
+    color: #3f4722;
+}
+#cherry-note-panel[data-theme="sage"] #cherry-note-textarea::placeholder { color: #b3b28f; }
+#cherry-note-panel[data-theme="sage"] .cn-sg-total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 6px;
+}
+#cherry-note-panel[data-theme="sage"] .cn-sg-totalwrap { display: flex; align-items: baseline; gap: 10px; }
+#cherry-note-panel[data-theme="sage"] .cn-sg-script {
+    font-family: "CN Pinyon", cursive;
+    font-size: 26px;
+    color: #e7ebcf;
+    -webkit-text-stroke: 0.8px #4e5a2a;
+    text-shadow: 1px 2px 0 #4e5a2a;
+}
+#cherry-note-panel[data-theme="sage"] .cn-count-chars { font-size: 14px; font-weight: 700; }
+#cherry-note-panel[data-theme="sage"] .cn-sg-method {
+    font-family: "CN Cormorant", serif;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+}
+#cherry-note-panel[data-theme="sage"] #cherry-note-footer {
+    justify-content: center;
+    gap: 22px;
+    padding: 0 0 2px;
+}
+#cherry-note-panel[data-theme="sage"] .cn-sg-opt {
+    width: auto;
+    height: auto;
+    padding: 0;
+    background: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: inherit;
+}
+#cherry-note-panel[data-theme="sage"] .cn-sg-opt:hover { transform: translateY(-1px); }
+#cherry-note-panel[data-theme="sage"] .cn-sg-opt:disabled { background: none; opacity: 0.4; transform: none; }
+#cherry-note-panel[data-theme="sage"] .cn-sg-opt i {
+    display: block;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    border: 1.5px solid #4e5a2a;
+}
+#cherry-note-panel[data-theme="sage"].cn-has-saved:not(.cn-dirty) #cherry-note-save-btn i {
+    background: #4e5a2a;
+    box-shadow: inset 0 0 0 2px #f8f4ec;
+}
+#cherry-note-panel[data-theme="sage"] .cn-sg-opt span {
+    font-family: "CN Pinyon", cursive;
+    font-size: 24px;
+    line-height: 1.2;
+    color: #e7ebcf;
+    -webkit-text-stroke: 0.7px #4e5a2a;
+    text-shadow: 1px 1.5px 0 #4e5a2a;
+}
+#cherry-note-panel[data-theme="sage"] #cherry-note-status { display: none; }
+
+/* ---------------- 08 핑크 영수증 ---------------- */
+#cherry-note-panel[data-theme="pinkreceipt"] {
+    background: #fff7fa;
+    border: 1.5px solid #e9a3c4;
+    border-radius: 0;
+    padding: 9px;
+    gap: 0;
+    box-shadow: 0 10px 22px rgba(201, 66, 126, 0.16);
+    color: #8c3a62;
+}
+#cherry-note-panel[data-theme="pinkreceipt"] .cn-pr-rb { position: absolute; pointer-events: none; }
+#cherry-note-panel[data-theme="pinkreceipt"] .cn-pr-rb.tl { left: -6px; top: -6px; }
+#cherry-note-panel[data-theme="pinkreceipt"] .cn-pr-rb.tr { right: -6px; top: -6px; transform: scaleX(-1); }
+#cherry-note-panel[data-theme="pinkreceipt"] .cn-pr-rb.bl { left: -6px; bottom: -6px; transform: scaleY(-1); }
+#cherry-note-panel[data-theme="pinkreceipt"] .cn-pr-rb.br { right: -6px; bottom: -6px; transform: scale(-1, -1); }
+#cherry-note-panel[data-theme="pinkreceipt"] .cn-pr-frame {
+    border: 1px solid #efb6cf;
+    padding: 14px 14px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+#cherry-note-panel[data-theme="pinkreceipt"] .cn-pr-title {
+    font-family: "CN Pinyon", cursive;
+    font-size: 52px;
+    line-height: 1;
+    color: #e0679e;
+    text-align: center;
+    text-shadow: 1.5px 1.5px 0 #fbd0e2;
+}
+#cherry-note-panel[data-theme="pinkreceipt"] .cn-pr-sub {
+    font-family: "CN Cormorant", serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: #c9427e;
+    text-align: center;
+}
+#cherry-note-panel[data-theme="pinkreceipt"] .cn-pr-rule { border-top: 1px solid #e9a3c4; }
+#cherry-note-panel[data-theme="pinkreceipt"] #cherry-note-header {
+    padding: 0;
+    gap: 8px;
+    align-items: baseline;
+    font-size: 11.5px;
+    font-weight: 400;
+    color: #a0567a;
+}
+#cherry-note-panel[data-theme="pinkreceipt"] .cn-pr-meta > span { display: flex; align-items: baseline; gap: 5px; min-width: 0; white-space: nowrap; }
+#cherry-note-panel[data-theme="pinkreceipt"] .cn-pr-meta b {
+    font-family: "CN Cormorant", serif;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+#cherry-note-panel[data-theme="pinkreceipt"] #cherry-note-char-name { max-width: 100px; }
+#cherry-note-panel[data-theme="pinkreceipt"] .cn-pr-cols {
+    display: flex;
+    justify-content: space-between;
+    font-family: "CN Cormorant", serif;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #c9427e;
+}
+#cherry-note-panel[data-theme="pinkreceipt"] #cherry-note-textarea {
+    height: 118px;
+    padding: 2px;
+    color: #8c3a62;
+}
+#cherry-note-panel[data-theme="pinkreceipt"] #cherry-note-textarea::placeholder { color: #e2aac4; }
+#cherry-note-panel[data-theme="pinkreceipt"] .cn-pr-total {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 10px;
+}
+#cherry-note-panel[data-theme="pinkreceipt"] .cn-pr-script {
+    font-family: "CN Pinyon", cursive;
+    font-size: 28px;
+    line-height: 1;
+    color: #e0679e;
+}
+#cherry-note-panel[data-theme="pinkreceipt"] .cn-count-chars { font-size: 14px; font-weight: 700; }
+#cherry-note-panel[data-theme="pinkreceipt"] #cherry-note-footer {
+    justify-content: center;
+    gap: 22px;
+    padding: 0;
+}
+#cherry-note-panel[data-theme="pinkreceipt"] .cn-pr-opt {
+    width: auto;
+    height: auto;
+    padding: 2px 4px;
+    background: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-family: "CN Cormorant", serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #a0567a;
+}
+#cherry-note-panel[data-theme="pinkreceipt"] .cn-pr-opt:hover { transform: translateY(-1px); }
+#cherry-note-panel[data-theme="pinkreceipt"] .cn-pr-save { font-weight: 700; color: #c9427e; }
+#cherry-note-panel[data-theme="pinkreceipt"] .cn-pr-save::before { content: "♡"; }
+#cherry-note-panel[data-theme="pinkreceipt"].cn-has-saved:not(.cn-dirty) .cn-pr-save::before { content: "♥"; }
+#cherry-note-panel[data-theme="pinkreceipt"] .cn-pr-save:disabled { background: none; opacity: 0.4; transform: none; }
+#cherry-note-panel[data-theme="pinkreceipt"] #cherry-note-status {
+    margin: -4px 0;
+    font-size: 11px;
+    color: #e0679e;
+    text-align: center;
+}
+#cherry-note-panel[data-theme="pinkreceipt"] .cn-pr-deliver {
+    margin-top: 2px;
+    font-family: "CN Cormorant", serif;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #c9427e;
+    text-align: center;
+}
+#cherry-note-panel[data-theme="pinkreceipt"] .cn-pr-code {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    color: #e0679e;
+}
+#cherry-note-panel[data-theme="pinkreceipt"] .cn-pr-code .cn-count-score {
+    font-family: "CN Cormorant", serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: #c9427e;
+}
+
+/* ---------------- 09 체리 카페 ---------------- */
+#cherry-note-panel[data-theme="cafe"] {
+    background: none;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    gap: 0;
+    box-shadow: none;
+    filter: drop-shadow(0 8px 12px rgba(120, 20, 30, 0.2));
+    font-family: "CN Nanum Coding", monospace;
+    color: #3a2a2a;
+}
+#cherry-note-panel[data-theme="cafe"] .cn-cf-edge { height: 9px; }
+#cherry-note-panel[data-theme="cafe"] .cn-cf-top {
+    background:
+        linear-gradient(45deg, #fffdf8 6px, transparent 0) 0 100% / 12px 12px repeat-x,
+        linear-gradient(315deg, #fffdf8 6px, transparent 0) 0 100% / 12px 12px repeat-x;
+}
+#cherry-note-panel[data-theme="cafe"] .cn-cf-bottom {
+    background:
+        linear-gradient(135deg, #fffdf8 6px, transparent 0) 0 0 / 12px 12px repeat-x,
+        linear-gradient(225deg, #fffdf8 6px, transparent 0) 0 0 / 12px 12px repeat-x;
+}
+#cherry-note-panel[data-theme="cafe"] .cn-cf-paper {
+    background: #fffdf8;
+    padding: 10px 16px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+#cherry-note-panel[data-theme="cafe"] .cn-cf-head { display: flex; flex-direction: column; align-items: center; }
+#cherry-note-panel[data-theme="cafe"] .cn-cf-title {
+    font-family: "CN Pinyon", cursive;
+    font-size: 34px;
+    line-height: 1.1;
+    color: #c8323f;
+}
+#cherry-note-panel[data-theme="cafe"] .cn-cf-tag { font-size: 10.5px; letter-spacing: 2px; color: #9a5a5a; }
+#cherry-note-panel[data-theme="cafe"] .cn-cf-rule { border-top: 1.5px dashed #c9a9a4; }
+#cherry-note-panel[data-theme="cafe"] .cn-cf-rule.cn-cf-double { border-top: 3px double #c9a9a4; }
+#cherry-note-panel[data-theme="cafe"] #cherry-note-header {
+    padding: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 3px;
+    font-size: 12px;
+    font-weight: 400;
+    color: inherit;
+}
+#cherry-note-panel[data-theme="cafe"] .cn-cf-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 12px;
+}
+#cherry-note-panel[data-theme="cafe"] #cherry-note-char-name { max-width: 170px; }
+#cherry-note-panel[data-theme="cafe"] .cn-cf-bold { font-weight: 700; }
+#cherry-note-panel[data-theme="cafe"] .cn-cf-total { font-size: 13px; font-weight: 700; }
+#cherry-note-panel[data-theme="cafe"] .cn-cf-love { color: #c8323f; }
+#cherry-note-panel[data-theme="cafe"] #cherry-note-textarea {
+    height: 116px;
+    padding: 0;
+    font-family: "CN Nanum Coding", monospace;
+    font-size: 12.5px;
+    line-height: 1.7;
+    color: #3a2a2a;
+}
+#cherry-note-panel[data-theme="cafe"] #cherry-note-textarea::placeholder { color: #c4aaa6; }
+#cherry-note-panel[data-theme="cafe"] #cherry-note-footer {
+    justify-content: center;
+    gap: 10px;
+    padding: 0;
+}
+#cherry-note-panel[data-theme="cafe"] .cn-cf-btn {
+    width: auto;
+    height: 26px;
+    padding: 0 14px;
+    display: block;
+    background: transparent;
+    border: 1.5px solid #c9a9a4;
+    border-radius: 13px;
+    box-shadow: none;
+    font-family: "CN Nanum Coding", monospace;
+    font-size: 12px;
+    line-height: 1;
+    color: #6a4a4a;
+}
+#cherry-note-panel[data-theme="cafe"] .cn-cf-btn:hover { transform: translateY(-1px); }
+#cherry-note-panel[data-theme="cafe"] .cn-cf-btn:active { transform: translateY(1px); }
+#cherry-note-panel[data-theme="cafe"] .cn-cf-primary {
+    background: #c8323f;
+    border-color: #c8323f;
+    font-weight: 700;
+    color: #fffdf8;
+}
+#cherry-note-panel[data-theme="cafe"] .cn-cf-primary:disabled { background: #d9b3b6; border-color: #d9b3b6; transform: none; }
+#cherry-note-panel[data-theme="cafe"] #cherry-note-status { display: none; }
+#cherry-note-panel[data-theme="cafe"] .cn-cf-thanks {
+    margin-top: 2px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: #6a4a4a;
+    text-align: center;
+}
+#cherry-note-panel[data-theme="cafe"] .cn-cf-code {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    color: #3a2a2a;
+}
+#cherry-note-panel[data-theme="cafe"] .cn-cf-code .cn-barcode { height: 24px; }
+#cherry-note-panel[data-theme="cafe"] .cn-cf-code .cn-count-score { font-size: 10px; letter-spacing: 3px; color: #6a4a4a; }
+#cherry-note-panel[data-theme="cafe"] .cn-cf-stamp {
+    position: absolute;
+    right: 6px;
+    bottom: 14px;
+    width: 76px;
+    height: 76px;
+    border: 2.5px solid #d8323f;
+    border-radius: 50%;
+    transform: rotate(-14deg);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.85;
+    color: #d8323f;
+    pointer-events: none;
+}
+#cherry-note-panel[data-theme="cafe"].cn-has-saved:not(.cn-dirty) .cn-cf-stamp {
+    display: flex;
+    animation: cn-stamp-in 0.35s cubic-bezier(0.2, 1.6, 0.4, 1);
+}
+#cherry-note-panel[data-theme="cafe"] .cn-cf-stamp > div {
+    width: 64px;
+    height: 64px;
+    border: 1px solid #d8323f;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+}
+#cherry-note-panel[data-theme="cafe"] .cn-cf-stamp span { font-size: 9px; }
+#cherry-note-panel[data-theme="cafe"] .cn-cf-stamp b {
+    font-family: "CN Cormorant", serif;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    line-height: 1;
+}
+@keyframes cn-stamp-in {
+    from { transform: rotate(-14deg) scale(1.8); opacity: 0; }
+    to { transform: rotate(-14deg) scale(1); opacity: 0.85; }
+}
+
+/* ---------------- 영수증 플로팅 버튼 ---------------- */
+#cherry-note-icon[data-icon-theme="sage"] {
+    box-sizing: border-box;
+    background: none;
+    border: 5px solid transparent;
+    border-image: url("assets/scallop-sage.svg") 14 fill round;
+    border-radius: 0;
+    box-shadow: none;
+    filter: drop-shadow(0 2px 3px rgba(78, 90, 42, 0.25));
+}
+#cherry-note-icon[data-icon-theme="sage"]:hover { box-shadow: none; }
+
+#cherry-note-icon[data-icon-theme="pinkreceipt"] {
+    box-sizing: border-box;
+    background: #ffe4ef;
+    border: 2px solid #e0679e;
+    border-radius: 8px;
+    box-shadow: 0 3px 8px rgba(224, 103, 158, 0.35);
+}
+#cherry-note-icon[data-icon-theme="pinkreceipt"] .cn-ic-pr-paper {
+    width: 18px;
+    height: 22px;
+    box-sizing: border-box;
+    background: #ffffff;
+    border: 1px solid #e0679e;
+    padding: 3px 2px 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+#cherry-note-icon[data-icon-theme="pinkreceipt"] .cn-ic-pr-paper i { display: block; height: 1px; background: #e0679e; }
+#cherry-note-icon[data-icon-theme="pinkreceipt"] .cn-ic-pr-paper i + i { background: #f5b6d2; }
+#cherry-note-icon[data-icon-theme="pinkreceipt"] .cn-ic-pr-paper b {
+    display: block;
+    height: 5px;
+    background: repeating-linear-gradient(90deg, #e0679e 0 1px, transparent 1px 2px, #e0679e 2px 4px, transparent 4px 5px);
+}
+
+#cherry-note-icon[data-icon-theme="cafe"] {
+    box-sizing: border-box;
+    border-radius: 50%;
+    border: 2px solid #c8323f;
+    background-color: #ffffff;
+    background-image: linear-gradient(90deg, rgba(216, 58, 72, 0.45) 50%, transparent 50%), linear-gradient(rgba(216, 58, 72, 0.45) 50%, transparent 50%);
+    background-size: 8px 8px;
+    box-shadow: 0 2px 5px rgba(120, 20, 30, 0.25);
+}
+#cherry-note-icon[data-icon-theme="cafe"] .cn-ic-cf-inner {
+    width: 22px;
+    height: 22px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    background: #fffdf8;
+    border: 1px solid #c8323f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 480px) {
+    #cherry-note-panel.cn-receipt { width: 280px; }
+}

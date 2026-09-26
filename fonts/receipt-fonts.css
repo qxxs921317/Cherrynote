@@ -1,0 +1,44 @@
+/* Receipt theme fonts (SIL OFL 1.1): Pinyon Script, Cormorant Garamond, Gowun Batang, Nanum Gothic Coding.
+   Subset to Latin + Hangul. Licenses: receipt/LICENSES.txt */
+@font-face {
+    font-family: "CN Pinyon";
+    src: url("./receipt/PinyonScript-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "CN Cormorant";
+    src: url("./receipt/CormorantGaramond-VF.woff2") format("woff2");
+    font-weight: 300 700;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "CN Gowun Batang";
+    src: url("./receipt/GowunBatang-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "CN Gowun Batang";
+    src: url("./receipt/GowunBatang-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "CN Nanum Coding";
+    src: url("./receipt/NanumGothicCoding-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "CN Nanum Coding";
+    src: url("./receipt/NanumGothicCoding-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
