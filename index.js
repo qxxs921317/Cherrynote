@@ -1,5 +1,5 @@
 import { extension_settings, getContext } from "../../../extensions.js";
-import { saveSettingsDebounced, eventSource, event_types } from "../../../../script.js";
+import { saveSettingsDebounced, eventSource, event_types, getRequestHeaders } from "../../../../script.js";
 
 const EXT_NAME = "cherry-note-extension"; // 저장 데이터 호환을 위해 내부 키는 유지 (표시 이름만 Aggressive Notepad로 변경)
 const SAVE_DELAY_MS = 1000;
@@ -14,6 +14,9 @@ const ICON_THEMES = [
     { id: "butterfly", label: "🦋 버터플라이", emoji: "🦋" },
     { id: "shootingstar", label: "🌠 슈팅스타", emoji: "🌠" },
     { id: "galaxy", label: "🌌 갤럭시", emoji: "🌌" },
+    { id: "arcade", label: "🕹️ 픽셀 체리 카트리지", html: () => PX.cherry(18) },
+    { id: "pastelos", label: "💿 파스텔 OS 미니창", html: () => `<span class="cn-ic-po-bar"><i></i><i></i></span><span class="cn-ic-po-body">${PX.heart("#f27bb0", 14, false)}</span>` },
+    { id: "classic", label: "🪟 클래식 98 버튼", html: () => PX.note(20) },
 ];
 
 const PANEL_THEMES = [
@@ -23,7 +26,151 @@ const PANEL_THEMES = [
     { id: "dark", label: "🌙 미드나잇" },
     { id: "sunset", label: "🌅 선셋" },
     { id: "white", label: "🤍 심플 화이트 메모" },
+    { id: "arcade", label: "🕹️ 체리 아케이드 (픽셀)" },
+    { id: "pastelos", label: "💿 파스텔 OS (픽셀)" },
+    { id: "classic", label: "🪟 클래식 다이얼로그 (픽셀)" },
 ];
+
+// ---------- 픽셀 아이콘 (SVG) ----------
+
+const PX_HEART_RECTS = '<rect x="1" y="0" width="2" height="1"/><rect x="4" y="0" width="2" height="1"/><rect x="0" y="1" width="7" height="2"/><rect x="1" y="3" width="5" height="1"/><rect x="2" y="4" width="3" height="1"/><rect x="3" y="5" width="1" height="1"/>';
+
+const PX = {
+    heart: (fill, w = 14, highlight = true) =>
+        `<svg class="cn-px" width="${w}" height="${Math.round((w * 6) / 7)}" viewBox="0 0 7 6" shape-rendering="crispEdges" fill="${fill}" aria-hidden="true">${PX_HEART_RECTS}${highlight ? '<rect x="1" y="1" width="1" height="1" fill="#ffffff"/>' : ""}</svg>`,
+    halfHeart: (fill, empty, w = 14) =>
+        `<svg class="cn-px" width="${w}" height="${Math.round((w * 6) / 7)}" viewBox="0 0 7 6" shape-rendering="crispEdges" aria-hidden="true"><g fill="${fill}"><rect x="1" y="0" width="2" height="1"/><rect x="0" y="1" width="4" height="2"/><rect x="1" y="3" width="3" height="1"/><rect x="2" y="4" width="2" height="1"/><rect x="3" y="5" width="1" height="1"/></g><g fill="${empty}"><rect x="4" y="0" width="2" height="1"/><rect x="4" y="1" width="3" height="2"/><rect x="4" y="3" width="2" height="1"/><rect x="4" y="4" width="1" height="1"/></g></svg>`,
+    x: (fill, w = 10) =>
+        `<svg class="cn-px" width="${w}" height="${w}" viewBox="0 0 5 5" shape-rendering="crispEdges" fill="${fill}" aria-hidden="true"><rect x="0" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="3" y="1" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/></svg>`,
+    arrow: (dir, w = 7) =>
+        `<svg class="cn-px" width="${w}" height="${Math.round((w * 3) / 5)}" viewBox="0 0 5 3" shape-rendering="crispEdges" fill="#ffffff" aria-hidden="true">${dir === "up"
+            ? '<rect x="2" y="0" width="1" height="1"/><rect x="1" y="1" width="3" height="1"/><rect x="0" y="2" width="5" height="1"/>'
+            : '<rect x="0" y="0" width="5" height="1"/><rect x="1" y="1" width="3" height="1"/><rect x="2" y="2" width="1" height="1"/>'}</svg>`,
+    cherry: (w = 18) =>
+        `<svg class="cn-px" width="${w}" height="${w}" viewBox="0 0 12 12" shape-rendering="crispEdges" aria-hidden="true"><g fill="#7bd389"><rect x="7" y="0" width="3" height="1"/><rect x="8" y="1" width="2" height="1"/></g><g fill="#2f7a47"><rect x="6" y="1" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="4" y="3" width="1" height="2"/><rect x="3" y="5" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="8" y="3" width="1" height="2"/></g><g fill="#ff4d8d"><rect x="2" y="6" width="3" height="1"/><rect x="1" y="7" width="5" height="3"/><rect x="2" y="10" width="3" height="1"/><rect x="7" y="5" width="3" height="1"/><rect x="6" y="6" width="5" height="3"/><rect x="7" y="9" width="3" height="1"/></g><g fill="#d12e6f"><rect x="5" y="8" width="1" height="2"/><rect x="4" y="10" width="1" height="1"/><rect x="10" y="7" width="1" height="2"/><rect x="9" y="9" width="1" height="1"/></g><g fill="#ffffff"><rect x="2" y="7" width="1" height="1"/><rect x="7" y="6" width="1" height="1"/></g></svg>`,
+    note: (w = 20) =>
+        `<svg class="cn-px" width="${w}" height="${w}" viewBox="0 0 12 12" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="1" width="8" height="10" fill="#3a2d4a"/><rect x="2" y="2" width="6" height="8" fill="#ffffff"/><g fill="#f06fae"><rect x="3" y="4" width="4" height="1"/><rect x="3" y="6" width="4" height="1"/><rect x="3" y="8" width="2" height="1"/></g><g fill="#ff8cc0"><rect x="9" y="2" width="2" height="1"/><rect x="8" y="3" width="2" height="1"/><rect x="7" y="4" width="2" height="1"/><rect x="6" y="5" width="2" height="1"/></g><rect x="10" y="2" width="1" height="1" fill="#c2186e"/><rect x="5" y="6" width="1" height="1" fill="#3a2d4a"/></svg>`,
+    cd: () =>
+        '<svg class="cn-px" width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="12" fill="#e6e0ff" stroke="#a99be6" stroke-width="1.5"/><circle cx="13" cy="13" r="8" fill="#fbe3f1"/><circle cx="13" cy="13" r="3.5" fill="#ffffff" stroke="#a99be6" stroke-width="1.5"/></svg>',
+};
+
+// ---------- 패널 템플릿 (테마마다 마크업이 다름) ----------
+// 공통으로 꼭 있어야 하는 id: cherry-note-char-name / cherry-note-textarea / cherry-note-status / cherry-note-save-btn
+// .cn-close = 패널 닫기, .cn-expand = 입력창 크게/작게
+// .cn-count-score / .cn-count-chars / .cn-inject-bar = 글자 수 표시
+
+const NOTE_PLACEHOLDER = "여기 적으면 진짜 맨 끝에 강제로 박아넣어요...";
+const TEXTAREA_HTML = `<textarea id="cherry-note-textarea" placeholder="${NOTE_PLACEHOLDER}"></textarea>`;
+const INJECT_SEGMENTS = 10;
+const CHARS_PER_SEGMENT = 30;
+
+function formatTime(d = new Date()) {
+    const h = d.getHours();
+    const m = String(d.getMinutes()).padStart(2, "0");
+    return `${h % 12 || 12}:${m} ${h < 12 ? "AM" : "PM"}`;
+}
+
+const PANEL_TEMPLATES = {
+    default: {
+        html: () => `
+            <div id="cherry-note-header">
+                <span id="cherry-note-char-name">📝</span>
+                <span id="cherry-note-close" class="cn-close">✕</span>
+            </div>
+            ${TEXTAREA_HTML}
+            <div id="cherry-note-footer">
+                <span id="cherry-note-status"></span>
+                <button id="cherry-note-save-btn" title="저장하기">💾</button>
+            </div>`,
+        name: (n) => `📝 ${n}`,
+        saved: () => "저장됨 ✓",
+    },
+    arcade: {
+        html: () => `
+            <div class="cn-ar-top">
+                <span class="cn-ar-spacer"></span>
+                <span class="cn-ar-dots">${PX.heart("#ffe3f0", 10, false)}${PX.heart("#ffe3f0", 12, false)}${PX.heart("#ffe3f0", 10, false)}</span>
+                <button class="cn-ar-close cn-close" title="닫기">${PX.x("#ffffff", 10)}</button>
+            </div>
+            <div class="cn-ar-screen">
+                <div id="cherry-note-header" class="cn-ar-hud">
+                    <span class="cn-ar-name">${PX.cherry(18)}<span id="cherry-note-char-name"></span></span>
+                    <span class="cn-ar-hearts">${PX.heart("#e83e8c")}${PX.heart("#e83e8c")}<span class="cn-ar-heart-full">${PX.heart("#e83e8c")}</span><span class="cn-ar-heart-half">${PX.halfHeart("#e83e8c", "#fbd1e4")}</span></span>
+                </div>
+                ${TEXTAREA_HTML}
+                <div id="cherry-note-footer" class="cn-ar-foot">
+                    <span id="cherry-note-status"></span>
+                    <span class="cn-ar-score">SCORE: <span class="cn-count-score">000000</span></span>
+                </div>
+                <div class="cn-ar-ground"></div>
+            </div>
+            <div class="cn-ar-controls">
+                <span class="cn-ar-dpad"><span>${PX.arrow("up")}</span><span>${PX.arrow("down")}</span></span>
+                <span class="cn-ar-grill"><i></i><i></i><i></i><i></i><i></i></span>
+                <button id="cherry-note-save-btn" title="저장하기">${PX.heart("#ffe0ef", 21)}</button>
+            </div>`,
+        name: (n) => n,
+        saved: () => "♥ SAVED!",
+    },
+    pastelos: {
+        html: () => `
+            <div id="cherry-note-header" class="cn-po-titlebar">
+                <span class="cn-po-title">${PX.heart("#f27bb0", 14)}<b>Note.exe</b></span>
+                <span class="cn-po-winbtns">
+                    <button class="cn-po-wb cn-close" title="최소화"><i class="cn-po-min"></i></button>
+                    <button class="cn-po-wb cn-expand" title="크게/작게"><i class="cn-po-max"></i></button>
+                    <button class="cn-po-wb cn-close" title="닫기">${PX.x("#4b3f99", 8)}</button>
+                </span>
+            </div>
+            <div class="cn-po-body">
+                <div class="cn-po-now">
+                    ${PX.cd()}
+                    <span class="cn-po-nowtext"><span class="cn-po-label">NOW EDITING</span><span id="cherry-note-char-name"></span></span>
+                    <span class="cn-po-eq"><i></i><i></i><i></i><i></i><i></i></span>
+                </div>
+                <div class="cn-po-field">${TEXTAREA_HTML}</div>
+                <div class="cn-po-inject">
+                    <span class="cn-po-label">INJECT</span>
+                    <span class="cn-inject-bar">${"<i></i>".repeat(INJECT_SEGMENTS)}</span>
+                    <span class="cn-count-chars">0자</span>
+                </div>
+            </div>
+            <div id="cherry-note-footer" class="cn-po-foot">
+                <span id="cherry-note-status"></span>
+                <button id="cherry-note-save-btn" title="저장하기">Save ${PX.heart("#f27bb0", 10, false)}</button>
+            </div>`,
+        name: (n) => `${n} ♡`,
+        saved: () => `♡ 자동 저장됨 · ${formatTime()}`,
+        keepStatus: true,
+    },
+    classic: {
+        html: () => `
+            <div id="cherry-note-header" class="cn-cd-titlebar">
+                <span class="cn-cd-title">MEMO MODE</span>
+                <button class="cn-cd-x cn-close" title="닫기">${PX.x("#1d1b22", 10)}</button>
+            </div>
+            <div class="cn-cd-body">
+                <div class="cn-cd-msg">
+                    ${PX.note(36)}
+                    <span class="cn-cd-msgtext"><b id="cherry-note-char-name"></b><span class="cn-cd-sub">다음 요청 맨 끝에 강제 주입돼요.</span></span>
+                </div>
+                ${TEXTAREA_HTML}
+                <div id="cherry-note-footer" class="cn-cd-foot">
+                    <span id="cherry-note-status"></span>
+                    <span class="cn-cd-btns">
+                        <button id="cherry-note-save-btn" class="cn-cd-btn cn-cd-default" title="저장하기"><u>S</u>ave</button>
+                        <button class="cn-cd-btn cn-close" title="닫기"><u>C</u>lose</button>
+                    </span>
+                </div>
+            </div>`,
+        name: (n) => `${n} 전용 메모`,
+        saved: () => "저장됨",
+    },
+};
+
+function getPanelTemplate(themeId) {
+    return PANEL_TEMPLATES[themeId] || PANEL_TEMPLATES.default;
+}
 
 const DEFAULT_CONFIG = {
     iconTheme: "cherry",
@@ -35,6 +182,7 @@ let saveTimer = null;
 let currentAvatar = null; // 현재 메모가 속한 캐릭터의 아바타 파일명
 let isDirty = false;
 let currentNoteBlock = ""; // <system_override_note>로 감싼, 주입 준비된 텍스트
+let charNameState = { kind: "none", name: "" }; // 헤더에 표시할 이름 상태 (테마별 포맷용)
 
 // ---------- 설정(테마/플로팅 on-off) 헬퍼 ----------
 
@@ -54,16 +202,107 @@ function saveConfig() {
     saveSettingsDebounced();
 }
 
-// ---------- 저장소 헬퍼 ----------
+// ---------- 저장소: user files (data/<user>/user/files/) ----------
+// 메모는 settings.json이 아니라 캐릭터별 JSON 파일로 따로 저장한다.
+// settings.json에는 테마 설정(config)만 남음.
 
-function getNotesStore() {
-    if (!extension_settings[EXT_NAME]) {
-        extension_settings[EXT_NAME] = {};
+const FILE_PREFIX = "cherrynote_";
+
+// 짧은 53비트 해시 (파일명 충돌 방지용)
+function hashString(str) {
+    let h1 = 0xdeadbeef, h2 = 0x41c6ce57;
+    for (let i = 0; i < str.length; i++) {
+        const ch = str.charCodeAt(i);
+        h1 = Math.imul(h1 ^ ch, 2654435761);
+        h2 = Math.imul(h2 ^ ch, 1597334677);
     }
-    if (!extension_settings[EXT_NAME].notes) {
-        extension_settings[EXT_NAME].notes = {};
+    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+    return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(36);
+}
+
+// 아바타 파일명 -> 안전한 파일명 (영문/숫자만 남기고 + 해시)
+function noteFileName(avatar) {
+    const readable = avatar.replace(/\.[^.]+$/, "").replace(/[^A-Za-z0-9_-]/g, "").slice(0, 40);
+    return `${FILE_PREFIX}${readable ? readable + "_" : ""}${hashString(avatar)}.json`;
+}
+
+function toBase64Utf8(str) {
+    const bytes = new TextEncoder().encode(str);
+    let bin = "";
+    for (let i = 0; i < bytes.length; i += 0x8000) {
+        bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
     }
-    return extension_settings[EXT_NAME].notes;
+    return btoa(bin);
+}
+
+async function readNoteFile(avatar) {
+    const res = await fetch(`/user/files/${noteFileName(avatar)}`, {
+        method: "GET",
+        cache: "no-store",
+        headers: getRequestHeaders(),
+    });
+    if (res.status === 404) return "";
+    if (!res.ok) throw new Error(`읽기 실패 (HTTP ${res.status})`);
+    const data = await res.json();
+    return typeof data?.text === "string" ? data.text : "";
+}
+
+async function writeNoteFile(avatar, text, { keepalive = false } = {}) {
+    const name = noteFileName(avatar);
+
+    // 메모를 다 지웠으면 파일도 삭제 (빈 파일 쌓이지 않게)
+    if (!text) {
+        const res = await fetch("/api/files/delete", {
+            method: "POST",
+            headers: getRequestHeaders(),
+            body: JSON.stringify({ path: `user/files/${name}` }),
+            keepalive,
+        });
+        if (!res.ok && res.status !== 404) throw new Error(`삭제 실패 (HTTP ${res.status})`);
+        return;
+    }
+
+    const payload = JSON.stringify({ v: 1, avatar, text, updatedAt: new Date().toISOString() });
+    const res = await fetch("/api/files/upload", {
+        method: "POST",
+        headers: getRequestHeaders(),
+        body: JSON.stringify({ name, data: toBase64Utf8(payload) }),
+        keepalive,
+    });
+    if (!res.ok) throw new Error(`저장 실패 (HTTP ${res.status})`);
+}
+
+// 쓰기 요청이 순서 뒤바뀌지 않게 한 줄로 세움
+let writeChain = Promise.resolve();
+function queueWrite(avatar, text, opts) {
+    const job = writeChain.then(() => writeNoteFile(avatar, text, opts));
+    writeChain = job.catch(() => {});
+    return job;
+}
+
+// 예전 버전(settings.json 안의 notes) -> 파일로 1회 이전
+async function migrateLegacyNotes() {
+    const legacy = extension_settings[EXT_NAME]?.notes;
+    if (!legacy || typeof legacy !== "object") return;
+
+    const entries = Object.entries(legacy);
+    let failed = 0;
+    for (const [avatar, text] of entries) {
+        try {
+            if (text) await queueWrite(avatar, text);
+            delete legacy[avatar];
+        } catch (e) {
+            failed++;
+            console.error(`[Aggressive Notepad] 메모 이전 실패 (${avatar}):`, e);
+        }
+    }
+
+    if (failed === 0) {
+        delete extension_settings[EXT_NAME].notes;
+    }
+    saveSettingsDebounced();
+    console.log(`[Aggressive Notepad] settings.json -> user files 이전: ${entries.length - failed}/${entries.length}개 완료`);
 }
 
 function getCurrentAvatar() {
@@ -101,9 +340,10 @@ function isInjectionAllowed() {
 }
 
 // Chat Completion (Gemini/Vertex, Claude API, OpenAI 등 채팅형 API 연결)
-function onChatCompletionPromptReady(eventData) {
+async function onChatCompletionPromptReady(eventData) {
     try {
         if (!eventData || eventData.dryRun) return;
+        await loadingPromise;
         if (!isInjectionAllowed()) return;
         if (!Array.isArray(eventData.chat)) return;
 
@@ -115,9 +355,10 @@ function onChatCompletionPromptReady(eventData) {
 }
 
 // Text Completion (KoboldAI, 로컬 모델, 텍스트 완성형 API 연결)
-function onTextCompletionPromptReady(eventData) {
+async function onTextCompletionPromptReady(eventData) {
     try {
         if (!eventData) return;
+        await loadingPromise;
         if (!isInjectionAllowed()) return;
 
         if (typeof eventData.prompt === "string") {
@@ -150,29 +391,39 @@ function registerInjectionHooks() {
 
 // ---------- 저장 로직 (자동저장 + 수동저장 겸용, 안전장치 포함) ----------
 
-function doSave(showFeedback = true) {
-    // 저장 시점에 캐릭터가 바뀌어있진 않은지 다시 한번 확인
-    const avatarNow = getCurrentAvatar();
-    if (!avatarNow || avatarNow !== currentAvatar) {
-        // 캐릭터가 이미 전환된 상태 -> 엉뚱한 캐릭터에 덮어쓰는 것을 방지하고 저장 취소
+// 입력창 내용은 항상 "currentAvatar"(불러올 때 정해진 캐릭터)의 메모.
+// 캐릭터가 바뀌면 입력창을 갈아끼우기 "전에" flush 하므로 엉뚱한 캐릭터에 덮어쓰지 않음.
+function doSave(showFeedback = true, { keepalive = false } = {}) {
+    const avatar = currentAvatar;
+    if (!avatar || isLoading) {
         isDirty = false;
-        return;
+        return Promise.resolve();
     }
 
-    const text = $("#cherry-note-textarea").val();
-    const notes = getNotesStore();
-    notes[avatarNow] = text;
-    saveSettingsDebounced();
-    updateNoteBlock(text);
+    const text = $("#cherry-note-textarea").val() || "";
+    if (avatar === getCurrentAvatar()) {
+        updateNoteBlock(text);
+    }
     isDirty = false;
+    $("#cherry-note-panel").removeClass("cn-dirty");
 
-    if (showFeedback) {
-        showSavedFeedback();
-    }
+    return queueWrite(avatar, text, { keepalive })
+        .then(() => {
+            if (showFeedback && avatar === currentAvatar) showSavedFeedback();
+        })
+        .catch((e) => {
+            console.error("[Aggressive Notepad] 저장 실패:", e);
+            if (avatar === currentAvatar) {
+                isDirty = true; // 다음 입력/닫기 때 다시 시도
+                $("#cherry-note-panel").addClass("cn-dirty");
+                showStatus("⚠ 저장 실패", true);
+            }
+        });
 }
 
 function scheduleAutoSave() {
     isDirty = true;
+    $("#cherry-note-panel").addClass("cn-dirty");
     if (saveTimer) {
         clearTimeout(saveTimer);
     }
@@ -182,54 +433,131 @@ function scheduleAutoSave() {
     }, SAVE_DELAY_MS);
 }
 
-function flushPendingSave() {
+function flushPendingSave(opts) {
     if (saveTimer) {
         clearTimeout(saveTimer);
         saveTimer = null;
     }
     if (isDirty) {
-        doSave(false);
+        return doSave(false, opts);
+    }
+    return Promise.resolve();
+}
+
+function showStatus(text, keep = false) {
+    const $status = $("#cherry-note-status");
+    $status.stop(true, true).text(text).css("opacity", 1);
+    if (!keep) {
+        $status.delay(1000).animate({ opacity: 0 }, 400);
     }
 }
 
 function showSavedFeedback() {
-    const $status = $("#cherry-note-status");
-    $status.stop(true, true).text("저장됨 ✓").css("opacity", 1);
-    $status.delay(1000).animate({ opacity: 0 }, 400);
+    const tpl = getPanelTemplate(getConfig().panelTheme);
+    showStatus(tpl.saved(), !!tpl.keepStatus);
+}
+
+// ---------- 캐릭터 이름 / 글자 수 표시 ----------
+
+function renderCharName() {
+    const $name = $("#cherry-note-char-name");
+    if (charNameState.kind === "group") {
+        $name.text("그룹챗은 지원되지 않아요");
+    } else if (charNameState.kind === "char") {
+        $name.text(getPanelTemplate(getConfig().panelTheme).name(charNameState.name));
+    } else {
+        $name.text("캐릭터를 선택해주세요");
+    }
+}
+
+function updateCounter() {
+    const len = ($("#cherry-note-textarea").val() || "").length;
+    $("#cherry-note-panel .cn-count-score").text(String(len).padStart(6, "0"));
+    $("#cherry-note-panel .cn-count-chars").text(`${len}자`);
+    const filled = len === 0 ? 0 : Math.min(INJECT_SEGMENTS, Math.ceil(len / CHARS_PER_SEGMENT));
+    $("#cherry-note-panel .cn-inject-bar i").each((i, el) => {
+        el.classList.toggle("on", i < filled);
+    });
 }
 
 // ---------- 캐릭터/챗 전환 시 메모 불러오기 ----------
 
+let isLoading = false;
+let loadingPromise = Promise.resolve();
+let loadToken = 0;
+
 function loadNoteForCurrentCharacter() {
-    // 이전 캐릭터의 대기중인 저장을 먼저 확정
+    loadingPromise = loadNoteInternal();
+    return loadingPromise;
+}
+
+async function loadNoteInternal() {
+    // 이전 캐릭터의 대기중인 저장을 먼저 확정 (입력창 갈아끼우기 전에!)
     flushPendingSave();
 
+    const myToken = ++loadToken;
     const avatar = getCurrentAvatar();
     currentAvatar = avatar;
 
     const isGroup = avatar === null && !!getContext().groupId;
-    const notes = getNotesStore();
-    const text = avatar ? (notes[avatar] || "") : "";
 
-    $("#cherry-note-textarea").val(text);
-    setGroupChatState(isGroup);
-
-    const nameEl = $("#cherry-note-char-name");
+    // 이름은 바로 표시
     if (isGroup) {
-        nameEl.text("그룹챗은 지원되지 않아요");
+        charNameState = { kind: "group", name: "" };
     } else {
         const context = getContext();
         const character = context.characters?.[context.characterId];
-        nameEl.text(character?.name ? `📝 ${character.name}` : "캐릭터를 선택해주세요");
+        charNameState = character?.name ? { kind: "char", name: character.name } : { kind: "none", name: "" };
+    }
+    renderCharName();
+    $("#cherry-note-panel").removeClass("cn-dirty");
+    $("#cherry-note-status").stop(true, true).text("").css("opacity", 0);
+
+    updateNoteBlock("");
+    $("#cherry-note-textarea").val("");
+
+    let text = "";
+    if (avatar) {
+        isLoading = true;
+        $("#cherry-note-textarea").prop("disabled", true);
+        $("#cherry-note-save-btn").prop("disabled", true);
+        let failed = false;
+        try {
+            text = await readNoteFile(avatar);
+        } catch (e) {
+            failed = true;
+            console.error("[Aggressive Notepad] 메모 불러오기 실패:", e);
+        }
+        // 기다리는 사이 다른 캐릭터로 넘어갔으면 이 결과는 버림
+        if (myToken !== loadToken) return;
+        isLoading = false;
+        if (failed) {
+            // 못 불러온 상태에서 입력하면 기존 메모를 빈 내용으로 덮어쓸 수 있으니 잠가둠
+            setGroupChatState(true);
+            showStatus("⚠ 불러오기 실패 (새로고침 해주세요)", true);
+            return;
+        }
+    }
+
+    $("#cherry-note-textarea").val(text);
+    setGroupChatState(isGroup || !avatar);
+    updateCounter();
+
+    if (isGroup) {
+        charNameState = { kind: "group", name: "" };
+    } else {
+        const context = getContext();
+        const character = context.characters?.[context.characterId];
+        charNameState = character?.name ? { kind: "char", name: character.name } : { kind: "none", name: "" };
     }
 
     updateNoteBlock(isGroup ? "" : text);
 }
 
-function setGroupChatState(isGroup) {
-    $("#cherry-note-textarea").prop("disabled", isGroup);
-    $("#cherry-note-save-btn").prop("disabled", isGroup);
-    $("#cherry-note-panel").toggleClass("cherry-note-disabled", isGroup);
+function setGroupChatState(disabled) {
+    $("#cherry-note-textarea").prop("disabled", disabled);
+    $("#cherry-note-save-btn").prop("disabled", disabled);
+    $("#cherry-note-panel").toggleClass("cherry-note-disabled", disabled);
 }
 
 // ---------- 드래그 가능한 플로팅 아이콘 ----------
@@ -326,12 +654,39 @@ function applyIconTheme(themeId) {
     const $icon = $("#cherry-note-icon");
     const theme = ICON_THEMES.find((t) => t.id === themeId) || ICON_THEMES[0];
     $icon.attr("data-icon-theme", theme.id);
-    $icon.text(theme.emoji);
+    if (theme.html) {
+        $icon.html(theme.html());
+    } else {
+        $icon.text(theme.emoji);
+    }
 }
 
 function applyPanelTheme(themeId) {
     const $panel = $("#cherry-note-panel");
+    const $oldTa = $("#cherry-note-textarea");
+
+    // 마크업을 갈아끼우기 전에 현재 상태 보존
+    const hadContent = $oldTa.length > 0;
+    const text = $oldTa.val() || "";
+    const disabled = $oldTa.prop("disabled") || false;
+
     $panel.attr("data-theme", themeId);
+    $panel.removeClass("cn-expanded");
+    $panel.html(getPanelTemplate(themeId).html());
+
+    if (hadContent) {
+        $("#cherry-note-textarea").val(text);
+    }
+    $("#cherry-note-textarea").prop("disabled", disabled);
+    $("#cherry-note-save-btn").prop("disabled", disabled);
+    $("#cherry-note-status").css("opacity", 0);
+
+    renderCharName();
+    updateCounter();
+
+    if (!$panel.hasClass("cherry-note-hidden")) {
+        positionPanelNearIcon();
+    }
 }
 
 function applyFloatingVisibility(enabled) {
@@ -432,17 +787,7 @@ function buildExtensionsMenuToggle() {
 function buildUI() {
     const html = `
     <div id="cherry-note-icon" title="Aggressive Notepad">🍒</div>
-    <div id="cherry-note-panel" class="cherry-note-hidden">
-        <div id="cherry-note-header">
-            <span id="cherry-note-char-name">📝</span>
-            <span id="cherry-note-close">✕</span>
-        </div>
-        <textarea id="cherry-note-textarea" placeholder="여기 적으면 진짜 맨 끝에 강제로 박아넣어요..."></textarea>
-        <div id="cherry-note-footer">
-            <span id="cherry-note-status"></span>
-            <button id="cherry-note-save-btn" title="저장하기">💾</button>
-        </div>
-    </div>
+    <div id="cherry-note-panel" class="cherry-note-hidden"></div>
     `;
     $("body").append(html);
 
@@ -460,15 +805,22 @@ function buildUI() {
 
     makeDraggable($icon, "cherry-note-icon-pos", togglePanel);
 
-    $("#cherry-note-close").on("click", () => {
+    // 패널 내부는 테마 바뀔 때마다 새로 그려지므로 이벤트는 위임으로 연결
+    $panel.on("click", ".cn-close", () => {
         $panel.addClass("cherry-note-hidden");
     });
 
-    $("#cherry-note-textarea").on("input", () => {
+    $panel.on("click", ".cn-expand", () => {
+        $panel.toggleClass("cn-expanded");
+        positionPanelNearIcon();
+    });
+
+    $panel.on("input", "#cherry-note-textarea", () => {
+        updateCounter();
         scheduleAutoSave();
     });
 
-    $("#cherry-note-save-btn").on("click", () => {
+    $panel.on("click", "#cherry-note-save-btn", () => {
         doSave(true);
     });
 
@@ -529,11 +881,21 @@ jQuery(async () => {
         loadNoteForCurrentCharacter();
     });
 
-    // 페이지 떠날 때 마지막 저장 보장
+    // 페이지 떠날 때 / 앱 전환(모바일) 때 마지막 저장 보장
     window.addEventListener("beforeunload", () => {
-        flushPendingSave();
+        flushPendingSave({ keepalive: true });
+    });
+    document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "hidden") {
+            flushPendingSave({ keepalive: true });
+        }
     });
 
-    // 최초 로드 시점
+    // 예전 settings.json 메모 -> 파일로 이전 후 최초 로드
+    try {
+        await migrateLegacyNotes();
+    } catch (e) {
+        console.error("[Aggressive Notepad] 메모 이전 중 오류:", e);
+    }
     loadNoteForCurrentCharacter();
 });

@@ -455,3 +455,628 @@
         font-size: 13px;
     }
 }
+
+/* ========================================================= */
+/* 👾 레트로 픽셀 테마 3종 (arcade / pastelos / classic)       */
+/*    폰트: 갈무리(Galmuri) by Lee Minseo, SIL OFL 1.1          */
+/* ========================================================= */
+
+@font-face {
+    font-family: "CN Galmuri11";
+    src: url("fonts/Galmuri11.woff2") format("woff2");
+    font-weight: 400;
+    font-display: swap;
+}
+@font-face {
+    font-family: "CN Galmuri11";
+    src: url("fonts/Galmuri11-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-display: swap;
+}
+@font-face {
+    font-family: "CN Galmuri9";
+    src: url("fonts/Galmuri9.woff2") format("woff2");
+    font-weight: 400;
+    font-display: swap;
+}
+
+/* --- 공통 --- */
+#cherry-note-panel[data-theme="arcade"],
+#cherry-note-panel[data-theme="pastelos"],
+#cherry-note-panel[data-theme="classic"] {
+    width: 300px;
+    backdrop-filter: none;
+    font-family: "CN Galmuri11", monospace;
+    -webkit-font-smoothing: none;
+}
+#cherry-note-panel[data-theme="arcade"] *,
+#cherry-note-panel[data-theme="pastelos"] *,
+#cherry-note-panel[data-theme="classic"] * {
+    box-sizing: border-box;
+}
+#cherry-note-panel .cn-px {
+    display: block;
+    flex-shrink: 0;
+}
+#cherry-note-panel[data-theme="arcade"] button,
+#cherry-note-panel[data-theme="pastelos"] button,
+#cherry-note-panel[data-theme="classic"] button {
+    margin: 0;
+    font-family: "CN Galmuri11", monospace;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+#cherry-note-panel[data-theme="arcade"] #cherry-note-textarea,
+#cherry-note-panel[data-theme="pastelos"] #cherry-note-textarea,
+#cherry-note-panel[data-theme="classic"] #cherry-note-textarea {
+    font-family: "CN Galmuri11", monospace;
+    font-size: 12px;
+    line-height: 1.7;
+    padding: 8px 10px;
+    height: 150px;
+    min-height: 100px;
+    margin: 0;
+}
+#cherry-note-panel.cn-expanded #cherry-note-textarea {
+    height: 45vh;
+    max-height: 60vh;
+}
+#cherry-note-panel[data-theme="arcade"] #cherry-note-status,
+#cherry-note-panel[data-theme="pastelos"] #cherry-note-status,
+#cherry-note-panel[data-theme="classic"] #cherry-note-status {
+    font-family: "CN Galmuri9", monospace;
+    font-size: 10px;
+}
+
+/* ---------------- 01 체리 아케이드 ---------------- */
+#cherry-note-panel[data-theme="arcade"] {
+    background: #f7a8cc;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 12px 12px;
+    gap: 8px;
+    box-shadow: 0 6px 0 #e07aab, 0 16px 28px rgba(170, 40, 110, 0.22);
+    color: #7a2458;
+}
+#cherry-note-panel[data-theme="arcade"] .cn-ar-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 20px;
+}
+#cherry-note-panel[data-theme="arcade"] .cn-ar-spacer { width: 24px; }
+#cherry-note-panel[data-theme="arcade"] .cn-ar-dots { display: flex; align-items: center; gap: 4px; }
+#cherry-note-panel[data-theme="arcade"] .cn-ar-close {
+    width: 24px;
+    height: 20px;
+    padding: 0;
+    border: none;
+    border-radius: 6px;
+    background: #ee8ab8;
+    box-shadow: inset 0 -2px 0 #d86a9f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#cherry-note-panel[data-theme="arcade"] .cn-ar-close:hover { background: #e97aae; }
+#cherry-note-panel[data-theme="arcade"] .cn-ar-close:active { box-shadow: inset 0 1px 0 #d86a9f; }
+
+#cherry-note-panel[data-theme="arcade"] .cn-ar-screen {
+    background: linear-gradient(180deg, #efe4ff 0%, #fff3f9 55%);
+    border: 3px solid #ffffff;
+    border-radius: 8px;
+    box-shadow: inset 0 0 0 2px #f39ac4;
+    padding: 10px 10px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow: hidden;
+}
+#cherry-note-panel[data-theme="arcade"] #cherry-note-header {
+    padding: 0;
+    font-size: 12px;
+    font-weight: 700;
+    color: #c2186e;
+    gap: 8px;
+}
+#cherry-note-panel[data-theme="arcade"] .cn-ar-name { display: flex; align-items: center; gap: 6px; min-width: 0; }
+#cherry-note-panel[data-theme="arcade"] .cn-ar-hearts { display: flex; align-items: center; gap: 3px; flex-shrink: 0; }
+#cherry-note-panel[data-theme="arcade"] .cn-ar-heart-half { display: none; }
+#cherry-note-panel[data-theme="arcade"].cn-dirty .cn-ar-heart-full { display: none; }
+#cherry-note-panel[data-theme="arcade"].cn-dirty .cn-ar-heart-half { display: block; }
+
+#cherry-note-panel[data-theme="arcade"] #cherry-note-textarea {
+    width: 100%;
+    border: 2px solid #f5b5d3;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.85);
+    color: #7a2458;
+    box-shadow: none;
+}
+#cherry-note-panel[data-theme="arcade"] #cherry-note-textarea:focus {
+    border-color: #f07ab4;
+    box-shadow: 0 0 0 2px rgba(240, 122, 180, 0.2);
+}
+#cherry-note-panel[data-theme="arcade"] #cherry-note-textarea::placeholder { color: #e9a3c6; }
+
+#cherry-note-panel[data-theme="arcade"] #cherry-note-footer { padding: 0 2px; }
+#cherry-note-panel[data-theme="arcade"] #cherry-note-status { color: #3f5bd8; }
+#cherry-note-panel[data-theme="arcade"] .cn-ar-score {
+    font-size: 12px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    text-shadow: 1px 0 0 #e0438f, -1px 0 0 #e0438f, 0 1px 0 #e0438f, 0 -1px 0 #e0438f, 1px 1px 0 #e0438f;
+}
+#cherry-note-panel[data-theme="arcade"] .cn-ar-ground {
+    height: 12px;
+    margin: 0 -10px;
+    background: repeating-linear-gradient(90deg, #f06fae 0 6px, #f9a1c9 6px 12px);
+    border-top: 3px solid #ffc6de;
+}
+
+#cherry-note-panel[data-theme="arcade"] .cn-ar-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px 2px 0;
+}
+#cherry-note-panel[data-theme="arcade"] .cn-ar-dpad { display: flex; gap: 5px; }
+#cherry-note-panel[data-theme="arcade"] .cn-ar-dpad > span {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #5b7bef;
+    box-shadow: inset 0 -2px 0 #3c5bd0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#cherry-note-panel[data-theme="arcade"] .cn-ar-grill { display: flex; gap: 3px; }
+#cherry-note-panel[data-theme="arcade"] .cn-ar-grill i {
+    display: block;
+    width: 3px;
+    height: 16px;
+    background: #e27cae;
+    border-radius: 2px;
+}
+#cherry-note-panel[data-theme="arcade"] #cherry-note-save-btn {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: #f07ab4;
+    box-shadow: inset 0 -4px 0 #d9579a, inset 0 3px 0 #ffb3d6, 0 2px 0 #e07aab;
+}
+#cherry-note-panel[data-theme="arcade"] #cherry-note-save-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: inset 0 -4px 0 #d9579a, inset 0 3px 0 #ffb3d6, 0 3px 0 #e07aab;
+}
+#cherry-note-panel[data-theme="arcade"] #cherry-note-save-btn:active {
+    transform: translateY(1px);
+    box-shadow: inset 0 -1px 0 #d9579a, inset 0 3px 0 #ffb3d6, 0 0 0 #e07aab;
+}
+#cherry-note-panel[data-theme="arcade"] #cherry-note-save-btn:disabled {
+    background: #e9c2d6;
+    box-shadow: none;
+    transform: none;
+}
+
+/* ---------------- 02 파스텔 OS ---------------- */
+#cherry-note-panel[data-theme="pastelos"] {
+    background: #fbf9ff;
+    border: 2px solid #a99be6;
+    border-radius: 10px;
+    padding: 0;
+    gap: 0;
+    overflow: hidden;
+    box-shadow: 4px 4px 0 #c8bdf6, 0 14px 26px rgba(90, 70, 180, 0.18);
+    color: #433a8c;
+}
+#cherry-note-panel[data-theme="pastelos"] #cherry-note-header {
+    height: 30px;
+    padding: 0 6px 0 10px;
+    background: #ebe5ff;
+    border-bottom: 2px solid #a99be6;
+    font-size: 12px;
+    color: #4b3f99;
+}
+#cherry-note-panel[data-theme="pastelos"] .cn-po-title { display: flex; align-items: center; gap: 6px; }
+#cherry-note-panel[data-theme="pastelos"] .cn-po-title b { font-weight: 700; }
+#cherry-note-panel[data-theme="pastelos"] .cn-po-winbtns { display: flex; gap: 4px; }
+#cherry-note-panel[data-theme="pastelos"] .cn-po-wb {
+    width: 20px;
+    height: 18px;
+    padding: 0;
+    background: #ffffff;
+    border: 1.5px solid #a99be6;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#cherry-note-panel[data-theme="pastelos"] .cn-po-wb:hover { background: #f3f0ff; }
+#cherry-note-panel[data-theme="pastelos"] .cn-po-wb:active { background: #e6e0ff; }
+#cherry-note-panel[data-theme="pastelos"] .cn-po-min {
+    display: block;
+    width: 8px;
+    height: 2px;
+    margin-top: 6px;
+    background: #4b3f99;
+}
+#cherry-note-panel[data-theme="pastelos"] .cn-po-max {
+    display: block;
+    width: 8px;
+    height: 7px;
+    border: 1.5px solid #4b3f99;
+    border-top-width: 2.5px;
+}
+
+#cherry-note-panel[data-theme="pastelos"] .cn-po-body {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+#cherry-note-panel[data-theme="pastelos"] .cn-po-now {
+    background: #ffffff;
+    border: 1.5px solid #d9d1fb;
+    border-radius: 8px;
+    padding: 7px 9px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+#cherry-note-panel[data-theme="pastelos"] .cn-po-nowtext {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex-grow: 1;
+    min-width: 0;
+}
+#cherry-note-panel[data-theme="pastelos"] .cn-po-label {
+    font-family: "CN Galmuri9", monospace;
+    font-size: 10px;
+    color: #8b7fd6;
+    letter-spacing: 1px;
+}
+#cherry-note-panel[data-theme="pastelos"] #cherry-note-char-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: #4b3f99;
+}
+#cherry-note-panel[data-theme="pastelos"] .cn-po-eq {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 16px;
+}
+#cherry-note-panel[data-theme="pastelos"] .cn-po-eq i {
+    display: block;
+    width: 3px;
+    background: #c8bdf6;
+    transform-origin: bottom;
+}
+#cherry-note-panel[data-theme="pastelos"] .cn-po-eq i:nth-child(1) { height: 6px; }
+#cherry-note-panel[data-theme="pastelos"] .cn-po-eq i:nth-child(2) { height: 12px; }
+#cherry-note-panel[data-theme="pastelos"] .cn-po-eq i:nth-child(3) { height: 9px; background: #f59ac2; }
+#cherry-note-panel[data-theme="pastelos"] .cn-po-eq i:nth-child(4) { height: 15px; }
+#cherry-note-panel[data-theme="pastelos"] .cn-po-eq i:nth-child(5) { height: 7px; }
+#cherry-note-panel[data-theme="pastelos"].cn-dirty .cn-po-eq i {
+    animation: cn-eq-bounce 0.5s ease-in-out infinite alternate;
+}
+#cherry-note-panel[data-theme="pastelos"].cn-dirty .cn-po-eq i:nth-child(2) { animation-delay: 0.15s; }
+#cherry-note-panel[data-theme="pastelos"].cn-dirty .cn-po-eq i:nth-child(3) { animation-delay: 0.3s; }
+#cherry-note-panel[data-theme="pastelos"].cn-dirty .cn-po-eq i:nth-child(4) { animation-delay: 0.1s; }
+#cherry-note-panel[data-theme="pastelos"].cn-dirty .cn-po-eq i:nth-child(5) { animation-delay: 0.25s; }
+@keyframes cn-eq-bounce {
+    from { transform: scaleY(0.35); }
+    to { transform: scaleY(1); }
+}
+
+#cherry-note-panel[data-theme="pastelos"] .cn-po-field {
+    background: #ffffff;
+    border: 1.5px solid #d9d1fb;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+#cherry-note-panel[data-theme="pastelos"] .cn-po-field:focus-within {
+    border-color: #a99be6;
+    box-shadow: 0 0 0 3px rgba(169, 155, 230, 0.2);
+}
+#cherry-note-panel[data-theme="pastelos"] #cherry-note-textarea {
+    display: block;
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    color: #433a8c;
+    box-shadow: none;
+    scrollbar-color: #c8bdf6 #f3f0ff;
+}
+#cherry-note-panel[data-theme="pastelos"] #cherry-note-textarea::placeholder { color: #b9b0ea; }
+#cherry-note-panel[data-theme="pastelos"] #cherry-note-textarea::-webkit-scrollbar { width: 12px; }
+#cherry-note-panel[data-theme="pastelos"] #cherry-note-textarea::-webkit-scrollbar-track {
+    background: #f3f0ff;
+    border-left: 1.5px solid #d9d1fb;
+}
+#cherry-note-panel[data-theme="pastelos"] #cherry-note-textarea::-webkit-scrollbar-thumb {
+    background: #c8bdf6;
+    border: 3px solid #f3f0ff;
+    border-radius: 6px;
+}
+
+#cherry-note-panel[data-theme="pastelos"] .cn-po-inject { display: flex; align-items: center; gap: 8px; }
+#cherry-note-panel[data-theme="pastelos"] .cn-inject-bar { display: flex; gap: 2px; flex-grow: 1; }
+#cherry-note-panel[data-theme="pastelos"] .cn-inject-bar i {
+    display: block;
+    flex: 1;
+    height: 8px;
+    background: #ffffff;
+    border: 1px solid #d9d1fb;
+}
+#cherry-note-panel[data-theme="pastelos"] .cn-inject-bar i.on {
+    background: #f59ac2;
+    border-color: #e27cae;
+}
+#cherry-note-panel[data-theme="pastelos"] .cn-count-chars {
+    font-family: "CN Galmuri9", monospace;
+    font-size: 10px;
+    color: #4b3f99;
+    min-width: 30px;
+    text-align: right;
+}
+
+#cherry-note-panel[data-theme="pastelos"] #cherry-note-footer {
+    padding: 7px 10px;
+    background: #f3f0ff;
+    border-top: 1.5px solid #d9d1fb;
+}
+#cherry-note-panel[data-theme="pastelos"] #cherry-note-status { color: #7d71c9; }
+#cherry-note-panel[data-theme="pastelos"] #cherry-note-save-btn {
+    width: auto;
+    height: 26px;
+    padding: 0 12px;
+    gap: 6px;
+    background: #ffffff;
+    border: 1.5px solid #a99be6;
+    border-radius: 6px;
+    box-shadow: 0 2px 0 #c8bdf6;
+    font-size: 12px;
+    font-weight: 700;
+    color: #4b3f99;
+}
+#cherry-note-panel[data-theme="pastelos"] #cherry-note-save-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 0 #c8bdf6;
+}
+#cherry-note-panel[data-theme="pastelos"] #cherry-note-save-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 0 0 #c8bdf6;
+}
+#cherry-note-panel[data-theme="pastelos"] #cherry-note-save-btn:disabled {
+    background: #f3f0ff;
+    color: #b9b0ea;
+    box-shadow: none;
+    transform: none;
+}
+
+/* ---------------- 03 클래식 다이얼로그 ---------------- */
+#cherry-note-panel[data-theme="classic"] {
+    background: #e6e2e6;
+    border-radius: 0;
+    border-top: 2px solid #ffffff;
+    border-left: 2px solid #ffffff;
+    border-right: 2px solid #5b5566;
+    border-bottom: 2px solid #5b5566;
+    box-shadow: 0 0 0 1px #1d1b22, 6px 6px 0 rgba(0, 0, 0, 0.35);
+    padding: 3px;
+    gap: 0;
+    color: #1d1b22;
+}
+#cherry-note-panel[data-theme="classic"] #cherry-note-header {
+    height: 28px;
+    padding: 0 3px 0 8px;
+    background: #232d7f;
+}
+#cherry-note-panel[data-theme="classic"] .cn-cd-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 1px;
+}
+#cherry-note-panel[data-theme="classic"] .cn-cd-x,
+#cherry-note-panel[data-theme="classic"] .cn-cd-btn {
+    padding: 0;
+    border-radius: 0;
+    background: #e6e2e6;
+    border-top: 2px solid #ffffff;
+    border-left: 2px solid #ffffff;
+    border-right: 2px solid #5b5566;
+    border-bottom: 2px solid #5b5566;
+    box-shadow: 1px 1px 0 #1d1b22;
+    color: #1d1b22;
+}
+#cherry-note-panel[data-theme="classic"] .cn-cd-x {
+    width: 22px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#cherry-note-panel[data-theme="classic"] .cn-cd-x:active,
+#cherry-note-panel[data-theme="classic"] .cn-cd-btn:active {
+    border-top-color: #5b5566;
+    border-left-color: #5b5566;
+    border-right-color: #ffffff;
+    border-bottom-color: #ffffff;
+    box-shadow: inset 1px 1px 0 #1d1b22;
+}
+
+#cherry-note-panel[data-theme="classic"] .cn-cd-body {
+    padding: 12px 10px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+#cherry-note-panel[data-theme="classic"] .cn-cd-msg { display: flex; align-items: center; gap: 10px; }
+#cherry-note-panel[data-theme="classic"] .cn-cd-msgtext {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+#cherry-note-panel[data-theme="classic"] #cherry-note-char-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: #1d1b22;
+}
+#cherry-note-panel[data-theme="classic"] .cn-cd-sub {
+    font-family: "CN Galmuri9", monospace;
+    font-size: 10px;
+    color: #5b5566;
+}
+
+#cherry-note-panel[data-theme="classic"] #cherry-note-textarea {
+    width: 100%;
+    height: 140px;
+    background: #ffffff;
+    border-radius: 0;
+    border-top: 2px solid #5b5566;
+    border-left: 2px solid #5b5566;
+    border-right: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
+    box-shadow: inset 1px 1px 0 #1d1b22;
+    color: #1d1b22;
+}
+#cherry-note-panel[data-theme="classic"] #cherry-note-textarea:focus {
+    border-color: #5b5566 #ffffff #ffffff #5b5566;
+    box-shadow: inset 1px 1px 0 #1d1b22;
+}
+#cherry-note-panel[data-theme="classic"] #cherry-note-textarea::placeholder { color: #a8a0ad; }
+#cherry-note-panel[data-theme="classic"] #cherry-note-textarea:disabled { background: #f1eef1; color: #8f8a93; }
+
+#cherry-note-panel[data-theme="classic"] #cherry-note-footer { padding: 0; gap: 8px; }
+#cherry-note-panel[data-theme="classic"] #cherry-note-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #b0306a;
+}
+#cherry-note-panel[data-theme="classic"] #cherry-note-status:not(:empty)::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    background: #f06fae;
+    box-shadow: 0 0 0 1px #b0306a;
+}
+#cherry-note-panel[data-theme="classic"] .cn-cd-btns { display: flex; gap: 8px; }
+#cherry-note-panel[data-theme="classic"] .cn-cd-btn {
+    width: 76px;
+    height: 28px;
+    font-size: 12px;
+    line-height: 1;
+    display: block;
+}
+#cherry-note-panel[data-theme="classic"] .cn-cd-btn u { text-decoration: underline; }
+#cherry-note-panel[data-theme="classic"] .cn-cd-default {
+    outline: 1px dotted #1d1b22;
+    outline-offset: -6px;
+}
+#cherry-note-panel[data-theme="classic"] #cherry-note-save-btn:hover { transform: none; }
+#cherry-note-panel[data-theme="classic"] #cherry-note-save-btn:disabled {
+    background: #e6e2e6;
+    color: #8f8a93;
+    text-shadow: 1px 1px 0 #ffffff;
+    outline: none;
+}
+
+/* ---------------- 레트로 플로팅 버튼 3종 ---------------- */
+#cherry-note-icon svg,
+#cherry-note-icon span,
+#cherry-note-icon i {
+    pointer-events: none;
+}
+
+#cherry-note-icon[data-icon-theme="arcade"] {
+    box-sizing: border-box;
+    border-radius: 8px;
+    background: #ffb3d6;
+    border: 2px solid #8a2f62;
+    box-shadow: inset -3px -3px 0 #f07ab4, inset 3px 3px 0 #ffd9ea, 0 3px 0 #8a2f62;
+}
+#cherry-note-icon[data-icon-theme="arcade"]:hover {
+    box-shadow: inset -3px -3px 0 #f07ab4, inset 3px 3px 0 #ffd9ea, 0 4px 0 #8a2f62;
+}
+
+#cherry-note-icon[data-icon-theme="pastelos"] {
+    box-sizing: border-box;
+    border-radius: 7px;
+    background: #ffffff;
+    border: 2px solid #a99be6;
+    box-shadow: 2px 2px 0 #c8bdf6;
+    overflow: hidden;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+}
+#cherry-note-icon[data-icon-theme="pastelos"]:hover { box-shadow: 3px 3px 0 #c8bdf6; }
+#cherry-note-icon[data-icon-theme="pastelos"] .cn-ic-po-bar {
+    height: 8px;
+    flex-shrink: 0;
+    background: #ebe5ff;
+    border-bottom: 2px solid #a99be6;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 2px;
+    padding-right: 3px;
+    box-sizing: content-box;
+}
+#cherry-note-icon[data-icon-theme="pastelos"] .cn-ic-po-bar i {
+    display: block;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #f59ac2;
+}
+#cherry-note-icon[data-icon-theme="pastelos"] .cn-ic-po-bar i + i { background: #a99be6; }
+#cherry-note-icon[data-icon-theme="pastelos"] .cn-ic-po-body {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#cherry-note-icon[data-icon-theme="classic"] {
+    box-sizing: border-box;
+    border-radius: 0;
+    background: #e6e2e6;
+    border-top: 2px solid #ffffff;
+    border-left: 2px solid #ffffff;
+    border-right: 2px solid #5b5566;
+    border-bottom: 2px solid #5b5566;
+    box-shadow: 0 0 0 1px #1d1b22;
+    animation: none;
+}
+#cherry-note-icon[data-icon-theme="classic"]:hover {
+    transform: none;
+    box-shadow: 0 0 0 1px #1d1b22;
+}
+#cherry-note-icon[data-icon-theme="classic"]:active {
+    border-top-color: #5b5566;
+    border-left-color: #5b5566;
+    border-right-color: #ffffff;
+    border-bottom-color: #ffffff;
+}
+
+@media (max-width: 480px) {
+    #cherry-note-panel[data-theme="arcade"],
+    #cherry-note-panel[data-theme="pastelos"],
+    #cherry-note-panel[data-theme="classic"] {
+        width: 280px;
+    }
+}
