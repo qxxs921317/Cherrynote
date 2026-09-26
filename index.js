@@ -373,11 +373,13 @@ function buildSettingsPanel() {
                 <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
             </div>
             <div class="inline-drawer-content">
-                <label for="cherry-note-icon-theme-select">플로팅 아이콘 디자인</label>
-                <select id="cherry-note-icon-theme-select" class="text_pole">${iconOptions}</select>
+                <div class="cherry-note-settings-inner">
+                    <label for="cherry-note-icon-theme-select">플로팅 아이콘 디자인</label>
+                    <select id="cherry-note-icon-theme-select" class="text_pole">${iconOptions}</select>
 
-                <label for="cherry-note-panel-theme-select">패널 테마 (저장 버튼 색상 포함)</label>
-                <select id="cherry-note-panel-theme-select" class="text_pole">${panelOptions}</select>
+                    <label for="cherry-note-panel-theme-select">패널 테마 (저장 버튼 색상 포함)</label>
+                    <select id="cherry-note-panel-theme-select" class="text_pole">${panelOptions}</select>
+                </div>
             </div>
         </div>
     </div>

@@ -415,7 +415,8 @@
 /* ⚙️ 확장 설정 패널 (테마 선택 / 플로팅 on-off)                */
 /* ========================================================= */
 
-.cherry-note-settings-block .inline-drawer-content {
+/* inline-drawer-content 자체엔 display 지정 금지 (ST 기본 닫힘 상태를 덮어씀) */
+.cherry-note-settings-block .cherry-note-settings-inner {
     display: flex;
     flex-direction: column;
     gap: 8px;
