@@ -17,6 +17,9 @@ const ICON_THEMES = [
     { id: "arcade", label: "🕹️ 픽셀 체리 카트리지", html: () => PX.cherry(18) },
     { id: "pastelos", label: "💿 파스텔 OS 미니창", html: () => `<span class="cn-ic-po-bar"><i></i><i></i></span><span class="cn-ic-po-body">${PX.heart("#f27bb0", 14, false)}</span>` },
     { id: "classic", label: "🪟 클래식 98 버튼", html: () => PX.note(20) },
+    { id: "digi", label: "📁 디지 스티커 폴더", html: () => PX.folder(18) },
+    { id: "dual", label: "🎮 핑크 듀얼 게임기", html: () => `<span class="cn-ic-du-scr">${PX.heart("#f07ab4", 5, false)}</span><span class="cn-ic-du-hinge"></span><span class="cn-ic-du-scr"></span>` },
+    { id: "letter", label: "💌 러브레터 봉투", html: () => PX.envelope(20, "#fbd6c2") },
 ];
 
 const PANEL_THEMES = [
@@ -29,6 +32,9 @@ const PANEL_THEMES = [
     { id: "arcade", label: "🕹️ 체리 아케이드 (픽셀)" },
     { id: "pastelos", label: "💿 파스텔 OS (픽셀)" },
     { id: "classic", label: "🪟 클래식 다이얼로그 (픽셀)" },
+    { id: "digi", label: "📁 디지 스티커 (픽셀)" },
+    { id: "dual", label: "🎮 핑크 듀얼 (픽셀)" },
+    { id: "letter", label: "💌 러브레터 (픽셀)" },
 ];
 
 // ---------- 픽셀 아이콘 (SVG) ----------
@@ -50,6 +56,18 @@ const PX = {
         `<svg class="cn-px" width="${w}" height="${w}" viewBox="0 0 12 12" shape-rendering="crispEdges" aria-hidden="true"><g fill="#7bd389"><rect x="7" y="0" width="3" height="1"/><rect x="8" y="1" width="2" height="1"/></g><g fill="#2f7a47"><rect x="6" y="1" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="4" y="3" width="1" height="2"/><rect x="3" y="5" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="8" y="3" width="1" height="2"/></g><g fill="#ff4d8d"><rect x="2" y="6" width="3" height="1"/><rect x="1" y="7" width="5" height="3"/><rect x="2" y="10" width="3" height="1"/><rect x="7" y="5" width="3" height="1"/><rect x="6" y="6" width="5" height="3"/><rect x="7" y="9" width="3" height="1"/></g><g fill="#d12e6f"><rect x="5" y="8" width="1" height="2"/><rect x="4" y="10" width="1" height="1"/><rect x="10" y="7" width="1" height="2"/><rect x="9" y="9" width="1" height="1"/></g><g fill="#ffffff"><rect x="2" y="7" width="1" height="1"/><rect x="7" y="6" width="1" height="1"/></g></svg>`,
     note: (w = 20) =>
         `<svg class="cn-px" width="${w}" height="${w}" viewBox="0 0 12 12" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="1" width="8" height="10" fill="#3a2d4a"/><rect x="2" y="2" width="6" height="8" fill="#ffffff"/><g fill="#f06fae"><rect x="3" y="4" width="4" height="1"/><rect x="3" y="6" width="4" height="1"/><rect x="3" y="8" width="2" height="1"/></g><g fill="#ff8cc0"><rect x="9" y="2" width="2" height="1"/><rect x="8" y="3" width="2" height="1"/><rect x="7" y="4" width="2" height="1"/><rect x="6" y="5" width="2" height="1"/></g><rect x="10" y="2" width="1" height="1" fill="#c2186e"/><rect x="5" y="6" width="1" height="1" fill="#3a2d4a"/></svg>`,
+    sparkle: (fill, w = 12) =>
+        `<svg class="cn-px" width="${w}" height="${w}" viewBox="0 0 7 7" shape-rendering="crispEdges" fill="${fill}" aria-hidden="true"><rect x="3" y="0" width="1" height="7"/><rect x="0" y="3" width="7" height="1"/><rect x="2" y="2" width="3" height="3"/></svg>`,
+    folder: (w = 18) =>
+        `<svg class="cn-px" width="${w}" height="${Math.round((w * 10) / 12)}" viewBox="0 0 12 10" shape-rendering="crispEdges" aria-hidden="true"><rect x="0" y="0" width="5" height="2" fill="#f07ab4"/><rect x="0" y="2" width="12" height="8" fill="#f7a8cc"/><rect x="0" y="9" width="12" height="1" fill="#d46b9f"/><g fill="#ffffff"><rect x="4" y="4" width="2" height="1"/><rect x="7" y="4" width="2" height="1"/><rect x="4" y="5" width="5" height="1"/><rect x="5" y="6" width="3" height="1"/><rect x="6" y="7" width="1" height="1"/></g></svg>`,
+    envelope: (w = 19, inner = "#fff7f2") =>
+        `<svg class="cn-px" width="${w}" height="${Math.round((w * 9) / 13)}" viewBox="0 0 13 9" shape-rendering="crispEdges" aria-hidden="true"><rect x="0" y="0" width="13" height="9" fill="#b0564a"/><rect x="1" y="1" width="11" height="7" fill="${inner}"/><g fill="#b0564a"><rect x="1" y="1" width="1" height="1"/><rect x="11" y="1" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="10" y="2" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="9" y="3" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="8" y="4" width="1" height="1"/></g><g fill="#e0404f"><rect x="5" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="5" y="5" width="3" height="1"/><rect x="6" y="6" width="1" height="1"/></g></svg>`,
+    bow: (w = 22) =>
+        `<svg class="cn-px" width="${w}" height="${Math.round((w * 7) / 11)}" viewBox="0 0 11 7" shape-rendering="crispEdges" aria-hidden="true"><g fill="#f29bb0"><rect x="0" y="0" width="2" height="1"/><rect x="0" y="1" width="3" height="1"/><rect x="0" y="2" width="4" height="2"/><rect x="0" y="4" width="3" height="1"/><rect x="0" y="5" width="2" height="1"/><rect x="9" y="0" width="2" height="1"/><rect x="8" y="1" width="3" height="1"/><rect x="7" y="2" width="4" height="2"/><rect x="8" y="4" width="3" height="1"/><rect x="9" y="5" width="2" height="1"/></g><g fill="#c9667f"><rect x="4" y="2" width="3" height="2"/><rect x="4" y="4" width="1" height="2"/><rect x="6" y="4" width="1" height="2"/><rect x="3" y="6" width="1" height="1"/><rect x="7" y="6" width="1" height="1"/></g></svg>`,
+    star: (w = 27) =>
+        `<svg class="cn-px" width="${w}" height="${w}" viewBox="0 0 9 9" shape-rendering="crispEdges" aria-hidden="true"><g fill="#f7c95b"><rect x="4" y="0" width="1" height="2"/><rect x="3" y="2" width="3" height="1"/><rect x="0" y="3" width="9" height="1"/><rect x="1" y="4" width="7" height="1"/><rect x="2" y="5" width="5" height="2"/><rect x="1" y="7" width="3" height="1"/><rect x="5" y="7" width="3" height="1"/><rect x="1" y="8" width="2" height="1"/><rect x="6" y="8" width="2" height="1"/></g><rect x="4" y="3" width="1" height="1" fill="#fff4cf"/></svg>`,
+    dpad: (w = 44) =>
+        `<svg class="cn-px" width="${w}" height="${w}" viewBox="0 0 14 14" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="0" width="6" height="14" fill="#d98bb1"/><rect x="0" y="4" width="14" height="6" fill="#d98bb1"/><rect x="5" y="1" width="4" height="12" fill="#ffffff"/><rect x="1" y="5" width="12" height="4" fill="#ffffff"/><rect x="6" y="6" width="2" height="2" fill="#f3c6da"/></svg>`,
     cd: () =>
         '<svg class="cn-px" width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="12" fill="#e6e0ff" stroke="#a99be6" stroke-width="1.5"/><circle cx="13" cy="13" r="8" fill="#fbe3f1"/><circle cx="13" cy="13" r="3.5" fill="#ffffff" stroke="#a99be6" stroke-width="1.5"/></svg>',
 };
@@ -111,6 +129,7 @@ const PANEL_TEMPLATES = {
             </div>`,
         name: (n) => n,
         saved: () => "♥ SAVED!",
+        retro: true,
     },
     pastelos: {
         html: () => `
@@ -142,6 +161,7 @@ const PANEL_TEMPLATES = {
         name: (n) => `${n} ♡`,
         saved: () => `♡ 자동 저장됨 · ${formatTime()}`,
         keepStatus: true,
+        retro: true,
     },
     classic: {
         html: () => `
@@ -165,6 +185,105 @@ const PANEL_TEMPLATES = {
             </div>`,
         name: (n) => `${n} 전용 메모`,
         saved: () => "저장됨",
+        retro: true,
+    },
+    digi: {
+        html: () => `
+            <div class="cn-dg-win">
+                <div id="cherry-note-header" class="cn-dg-titlebar">
+                    <span class="cn-dg-title">DIGI NOTE.EXE</span>
+                    <span class="cn-dg-winbtns">
+                        <button class="cn-dg-wb cn-close" title="최소화"><i class="cn-dg-min"></i></button>
+                        <button class="cn-dg-wb cn-expand" title="크게/작게"><i class="cn-dg-max"></i></button>
+                        <button class="cn-dg-wb cn-close" title="닫기">${PX.x("#8e5a7a", 7)}</button>
+                    </span>
+                </div>
+                <div class="cn-dg-body">
+                    <div class="cn-dg-row">
+                        <span class="cn-dg-tag">${PX.sparkle("#ffffff", 12)}<span id="cherry-note-char-name"></span></span>
+                        <span class="cn-dg-hearts">${PX.heart("#f28ab8")}${PX.heart("#9fa8f0")}${PX.heart("#f3dfb8")}</span>
+                    </div>
+                    ${TEXTAREA_HTML}
+                    <div class="cn-dg-load">
+                        <span class="cn-dg-loadtext">&gt; LOADING CUTENESS... <span class="cn-count-chars">0자</span></span>
+                        <div class="cn-dg-bar"><div class="cn-progress-fill"></div></div>
+                    </div>
+                </div>
+                <div id="cherry-note-footer" class="cn-dg-foot">
+                    <span id="cherry-note-status"></span>
+                    <span class="cn-dg-btns">
+                        <button class="cn-dg-btn cn-close" title="닫기">CLOSE</button>
+                        <button id="cherry-note-save-btn" class="cn-dg-btn cn-dg-primary" title="저장하기">SAVE</button>
+                    </span>
+                </div>
+            </div>`,
+        name: (n) => n,
+        saved: () => "♥ SAVED!",
+        retro: true,
+    },
+    dual: {
+        html: () => `
+            <div class="cn-du-top">
+                <span class="cn-du-spk"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+                <div class="cn-du-bezel">
+                    <div id="cherry-note-header" class="cn-du-screen">
+                        <div class="cn-du-line"><span class="cn-du-label">PLAYER 1</span><span id="cherry-note-status"></span></div>
+                        <span id="cherry-note-char-name"></span>
+                        <div class="cn-du-line"><span class="cn-du-label">MEMO</span><span class="cn-count-score">000000</span></div>
+                    </div>
+                </div>
+                <span class="cn-du-spk"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+            </div>
+            <div class="cn-du-hinge">
+                <span class="cn-du-slot"></span>
+                <span class="cn-du-mic"><i></i>MIC</span>
+                <span class="cn-du-leds"><i></i><i></i></span>
+            </div>
+            <div class="cn-du-bottom">
+                <div class="cn-du-bezel">${TEXTAREA_HTML}</div>
+                <div id="cherry-note-footer" class="cn-du-controls">
+                    ${PX.dpad(44)}
+                    <span class="cn-du-legend"><span><i></i>A  SAVE</span><span><i></i>B  CLOSE</span></span>
+                    <div class="cn-du-abxy">
+                        <span></span><span class="cn-du-key">X</span><span></span>
+                        <span class="cn-du-key">Y</span><span></span>
+                        <button id="cherry-note-save-btn" class="cn-du-a" title="저장하기 (A)">A</button>
+                        <span></span><button class="cn-du-b cn-close" title="닫기 (B)">B</button><span></span>
+                    </div>
+                </div>
+            </div>`,
+        name: (n) => n,
+        saved: () => "♥ SAVED",
+        retro: true,
+    },
+    letter: {
+        html: () => `
+            <div class="cn-lt-pearls cn-lt-pearls-top"><span class="cn-lt-bow-l">${PX.bow(22)}</span><span class="cn-lt-bow-r">${PX.bow(22)}</span></div>
+            <div id="cherry-note-header" class="cn-lt-titlebar">
+                <span class="cn-lt-title">${PX.envelope(19)}<span class="cn-lt-titletext">LOVE LETTER -&nbsp;<span id="cherry-note-char-name"></span></span></span>
+                <span class="cn-lt-winbtns">
+                    <button class="cn-lt-wb cn-close" title="최소화"><i class="cn-lt-min"></i></button>
+                    <button class="cn-lt-wb cn-expand" title="크게/작게"><i class="cn-lt-max"></i></button>
+                    <button class="cn-lt-wb cn-close" title="닫기">${PX.x("#5e2e26", 8)}</button>
+                </span>
+            </div>
+            <div class="cn-lt-menu"><span>File</span><span>Edit</span><span>Message</span><span>Insert</span><span>Help</span></div>
+            <div class="cn-lt-body">
+                <div class="cn-lt-paper">${TEXTAREA_HTML}</div>
+                <div class="cn-lt-pearls"></div>
+                <span class="cn-lt-status">✉ <span class="cn-count-chars">0자</span> <span id="cherry-note-status"></span></span>
+            </div>
+            <div id="cherry-note-footer" class="cn-lt-toolbar">
+                ${PX.envelope(33)}
+                ${PX.bow(33)}
+                <span class="cn-lt-stamp">${PX.heart("#ffffff", 14, false)}</span>
+                ${PX.star(27)}
+                <button id="cherry-note-save-btn" class="cn-lt-floppy" title="저장하기"><span class="cn-lt-shutter"><i></i></span><span class="cn-lt-label">SAVE</span></button>
+            </div>`,
+        name: (n) => n,
+        saved: () => `· Draft saved ${formatTime()}`,
+        keepStatus: true,
+        retro: true,
     },
 };
 
@@ -478,6 +597,8 @@ function updateCounter() {
     $("#cherry-note-panel .cn-inject-bar i").each((i, el) => {
         el.classList.toggle("on", i < filled);
     });
+    const pct = Math.min(100, (len / (INJECT_SEGMENTS * CHARS_PER_SEGMENT)) * 100);
+    $("#cherry-note-panel .cn-progress-fill").css("width", `${pct}%`);
 }
 
 // ---------- 캐릭터/챗 전환 시 메모 불러오기 ----------
@@ -670,9 +791,11 @@ function applyPanelTheme(themeId) {
     const text = $oldTa.val() || "";
     const disabled = $oldTa.prop("disabled") || false;
 
+    const tpl = getPanelTemplate(themeId);
     $panel.attr("data-theme", themeId);
     $panel.removeClass("cn-expanded");
-    $panel.html(getPanelTemplate(themeId).html());
+    $panel.toggleClass("cn-retro", !!tpl.retro);
+    $panel.html(tpl.html());
 
     if (hadContent) {
         $("#cherry-note-textarea").val(text);

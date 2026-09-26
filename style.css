@@ -481,34 +481,26 @@
 }
 
 /* --- 공통 --- */
-#cherry-note-panel[data-theme="arcade"],
-#cherry-note-panel[data-theme="pastelos"],
-#cherry-note-panel[data-theme="classic"] {
+#cherry-note-panel.cn-retro {
     width: 300px;
     backdrop-filter: none;
     font-family: "CN Galmuri11", monospace;
     -webkit-font-smoothing: none;
 }
-#cherry-note-panel[data-theme="arcade"] *,
-#cherry-note-panel[data-theme="pastelos"] *,
-#cherry-note-panel[data-theme="classic"] * {
+#cherry-note-panel.cn-retro * {
     box-sizing: border-box;
 }
 #cherry-note-panel .cn-px {
     display: block;
     flex-shrink: 0;
 }
-#cherry-note-panel[data-theme="arcade"] button,
-#cherry-note-panel[data-theme="pastelos"] button,
-#cherry-note-panel[data-theme="classic"] button {
+#cherry-note-panel.cn-retro button {
     margin: 0;
     font-family: "CN Galmuri11", monospace;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
 }
-#cherry-note-panel[data-theme="arcade"] #cherry-note-textarea,
-#cherry-note-panel[data-theme="pastelos"] #cherry-note-textarea,
-#cherry-note-panel[data-theme="classic"] #cherry-note-textarea {
+#cherry-note-panel.cn-retro #cherry-note-textarea {
     font-family: "CN Galmuri11", monospace;
     font-size: 12px;
     line-height: 1.7;
@@ -517,13 +509,11 @@
     min-height: 100px;
     margin: 0;
 }
-#cherry-note-panel.cn-expanded #cherry-note-textarea {
+#cherry-note-panel.cn-retro.cn-expanded #cherry-note-textarea {
     height: 45vh;
     max-height: 60vh;
 }
-#cherry-note-panel[data-theme="arcade"] #cherry-note-status,
-#cherry-note-panel[data-theme="pastelos"] #cherry-note-status,
-#cherry-note-panel[data-theme="classic"] #cherry-note-status {
+#cherry-note-panel.cn-retro #cherry-note-status {
     font-family: "CN Galmuri9", monospace;
     font-size: 10px;
 }
@@ -1074,9 +1064,553 @@
 }
 
 @media (max-width: 480px) {
-    #cherry-note-panel[data-theme="arcade"],
-    #cherry-note-panel[data-theme="pastelos"],
-    #cherry-note-panel[data-theme="classic"] {
+    #cherry-note-panel.cn-retro {
         width: 280px;
     }
 }
+
+/* ========================================================= */
+/* 🎀 레트로 2차 (digi / dual / letter)                         */
+/* ========================================================= */
+
+/* ---------------- 04 디지 스티커 ---------------- */
+#cherry-note-panel[data-theme="digi"] {
+    background: #ffffff;
+    border: none;
+    border-radius: 16px;
+    padding: 5px;
+    gap: 0;
+    box-shadow: 0 0 0 2px #c58aa8, 4px 5px 0 2px rgba(197, 138, 168, 0.35);
+    color: #5b3a6e;
+}
+#cherry-note-panel[data-theme="digi"] .cn-dg-win {
+    border: 2px solid #8e5a7a;
+    border-radius: 10px;
+    background: #fbe3ef;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+#cherry-note-panel[data-theme="digi"] #cherry-note-header {
+    height: 28px;
+    padding: 0 5px 0 9px;
+    background: linear-gradient(90deg, #cdc7f7 0%, #f6c6dc 100%);
+    border-bottom: 2px solid #8e5a7a;
+    font-size: 12px;
+    color: #5b3a6e;
+}
+#cherry-note-panel[data-theme="digi"] .cn-dg-title { font-weight: 700; }
+#cherry-note-panel[data-theme="digi"] .cn-dg-winbtns { display: flex; gap: 3px; }
+#cherry-note-panel[data-theme="digi"] .cn-dg-wb {
+    width: 17px;
+    height: 15px;
+    padding: 0;
+    background: #fbe3ef;
+    border: 1.5px solid #8e5a7a;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#cherry-note-panel[data-theme="digi"] .cn-dg-wb:hover { background: #ffffff; }
+#cherry-note-panel[data-theme="digi"] .cn-dg-min { display: block; width: 7px; height: 2px; margin-top: 5px; background: #8e5a7a; }
+#cherry-note-panel[data-theme="digi"] .cn-dg-max { display: block; width: 7px; height: 6px; border: 1.5px solid #8e5a7a; border-top-width: 2.5px; }
+
+#cherry-note-panel[data-theme="digi"] .cn-dg-body {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+#cherry-note-panel[data-theme="digi"] .cn-dg-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+#cherry-note-panel[data-theme="digi"] .cn-dg-tag {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    padding: 4px 10px 4px 7px;
+    background: #f7c1d9;
+    border: 2px solid #8e5a7a;
+    border-radius: 10px;
+    box-shadow: 2px 2px 0 #e3a3c3;
+}
+#cherry-note-panel[data-theme="digi"] #cherry-note-char-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: #5b3a6e;
+    max-width: 180px;
+}
+#cherry-note-panel[data-theme="digi"] .cn-dg-hearts { display: flex; gap: 3px; flex-shrink: 0; }
+#cherry-note-panel[data-theme="digi"].cn-dirty .cn-dg-hearts .cn-px { animation: cn-heart-beat 0.6s ease-in-out infinite alternate; }
+#cherry-note-panel[data-theme="digi"].cn-dirty .cn-dg-hearts .cn-px:nth-child(2) { animation-delay: 0.2s; }
+#cherry-note-panel[data-theme="digi"].cn-dirty .cn-dg-hearts .cn-px:nth-child(3) { animation-delay: 0.4s; }
+@keyframes cn-heart-beat {
+    from { transform: translateY(0); }
+    to { transform: translateY(-2px); }
+}
+
+#cherry-note-panel[data-theme="digi"] #cherry-note-textarea {
+    width: 100%;
+    height: 140px;
+    border: 2px solid #8e5a7a;
+    border-radius: 6px;
+    background: #fffafc;
+    color: #5b3a6e;
+    box-shadow: none;
+}
+#cherry-note-panel[data-theme="digi"] #cherry-note-textarea:focus { box-shadow: 0 0 0 3px rgba(242, 138, 184, 0.25); }
+#cherry-note-panel[data-theme="digi"] #cherry-note-textarea::placeholder { color: #d7a9c4; }
+
+#cherry-note-panel[data-theme="digi"] .cn-dg-load { display: flex; flex-direction: column; gap: 4px; }
+#cherry-note-panel[data-theme="digi"] .cn-dg-loadtext {
+    font-family: "CN Galmuri9", monospace;
+    font-size: 10px;
+    color: #5b3a6e;
+}
+#cherry-note-panel[data-theme="digi"] .cn-dg-bar {
+    height: 12px;
+    padding: 2px;
+    background: #ffffff;
+    border: 1.5px solid #8e5a7a;
+    border-radius: 3px;
+}
+#cherry-note-panel[data-theme="digi"] .cn-progress-fill {
+    width: 0;
+    height: 100%;
+    background: repeating-linear-gradient(90deg, #f28ab8 0 8px, #ffffff 8px 10px);
+    transition: width 0.2s ease;
+}
+
+#cherry-note-panel[data-theme="digi"] #cherry-note-footer {
+    padding: 7px 10px 9px;
+    border-top: 2px dashed #e3a3c3;
+}
+#cherry-note-panel[data-theme="digi"] #cherry-note-status { color: #b0467f; }
+#cherry-note-panel[data-theme="digi"] .cn-dg-btns { display: flex; gap: 6px; }
+#cherry-note-panel[data-theme="digi"] .cn-dg-btn {
+    width: auto;
+    height: 24px;
+    padding: 0 12px;
+    background: #ffffff;
+    border: 2px solid #8e5a7a;
+    border-radius: 6px;
+    box-shadow: none;
+    font-size: 12px;
+    line-height: 1;
+    color: #5b3a6e;
+    display: block;
+}
+#cherry-note-panel[data-theme="digi"] .cn-dg-btn:hover { transform: translateY(-1px); background: #fff5fa; }
+#cherry-note-panel[data-theme="digi"] .cn-dg-btn:active { transform: translateY(1px); }
+#cherry-note-panel[data-theme="digi"] .cn-dg-primary {
+    padding: 0 14px;
+    background: #f28ab8;
+    box-shadow: inset 0 -2px 0 #d9679d;
+    font-weight: 700;
+    color: #ffffff;
+}
+#cherry-note-panel[data-theme="digi"] .cn-dg-primary:hover { background: #f07ab0; box-shadow: inset 0 -2px 0 #d9679d; }
+#cherry-note-panel[data-theme="digi"] .cn-dg-primary:disabled {
+    background: #ead2de;
+    box-shadow: none;
+    transform: none;
+}
+
+/* ---------------- 05 핑크 듀얼 ---------------- */
+#cherry-note-panel[data-theme="dual"] {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    gap: 0;
+    box-shadow: none;
+    filter: drop-shadow(0 10px 18px rgba(200, 90, 140, 0.25));
+    color: #8a2f62;
+}
+#cherry-note-panel[data-theme="dual"] .cn-du-top {
+    background: #f8c3db;
+    border: 2px solid #d98bb1;
+    border-radius: 16px 16px 6px 6px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+#cherry-note-panel[data-theme="dual"] .cn-du-spk {
+    display: grid;
+    grid-template-columns: repeat(2, 3px);
+    gap: 3px;
+    flex-shrink: 0;
+}
+#cherry-note-panel[data-theme="dual"] .cn-du-spk i { display: block; width: 3px; height: 3px; background: #d98bb1; }
+#cherry-note-panel[data-theme="dual"] .cn-du-bezel {
+    flex-grow: 1;
+    min-width: 0;
+    background: #fde8f1;
+    border: 2px solid #d98bb1;
+    border-radius: 5px;
+    padding: 5px;
+}
+#cherry-note-panel[data-theme="dual"] #cherry-note-header {
+    height: 76px;
+    padding: 7px 9px;
+    background: #fff7fb;
+    border: 1.5px solid #eab2cb;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #8a2f62;
+}
+#cherry-note-panel[data-theme="dual"] .cn-du-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#cherry-note-panel[data-theme="dual"] .cn-du-label {
+    font-family: "CN Galmuri9", monospace;
+    font-size: 10px;
+    color: #c46a97;
+    letter-spacing: 1px;
+}
+#cherry-note-panel[data-theme="dual"] #cherry-note-status { color: #e0559a; }
+#cherry-note-panel[data-theme="dual"] #cherry-note-char-name {
+    max-width: none;
+    font-weight: 700;
+}
+#cherry-note-panel[data-theme="dual"] .cn-count-score { letter-spacing: 1px; }
+
+#cherry-note-panel[data-theme="dual"] .cn-du-hinge {
+    margin: 0 8px;
+    height: 16px;
+    padding: 0 10px;
+    background: #f3a9ca;
+    border-left: 2px solid #d98bb1;
+    border-right: 2px solid #d98bb1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#cherry-note-panel[data-theme="dual"] .cn-du-slot { width: 22px; height: 4px; background: #e58fb7; border-radius: 2px; }
+#cherry-note-panel[data-theme="dual"] .cn-du-mic {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-family: "CN Galmuri9", monospace;
+    font-size: 10px;
+    color: #a8467a;
+}
+#cherry-note-panel[data-theme="dual"] .cn-du-mic i { display: block; width: 3px; height: 6px; background: #a8467a; }
+#cherry-note-panel[data-theme="dual"] .cn-du-leds { display: flex; gap: 3px; }
+#cherry-note-panel[data-theme="dual"] .cn-du-leds i { display: block; width: 4px; height: 7px; background: #ff6fae; }
+#cherry-note-panel[data-theme="dual"] .cn-du-leds i + i { background: #ffd66b; }
+#cherry-note-panel[data-theme="dual"].cn-dirty .cn-du-leds i:first-child { animation: cn-led-blink 0.5s steps(1) infinite; }
+@keyframes cn-led-blink {
+    50% { opacity: 0.25; }
+}
+
+#cherry-note-panel[data-theme="dual"] .cn-du-bottom {
+    background: #f8c3db;
+    border: 2px solid #d98bb1;
+    border-radius: 6px 6px 16px 16px;
+    padding: 10px 12px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+#cherry-note-panel[data-theme="dual"] #cherry-note-textarea {
+    display: block;
+    width: 100%;
+    height: 132px;
+    padding: 7px 9px;
+    border: 1.5px solid #eab2cb;
+    border-radius: 0;
+    background: #fff7fb;
+    color: #8a2f62;
+    box-shadow: none;
+}
+#cherry-note-panel[data-theme="dual"] #cherry-note-textarea:focus { border-color: #f07ab4; }
+#cherry-note-panel[data-theme="dual"] #cherry-note-textarea::placeholder { color: #e2a9c4; }
+
+#cherry-note-panel[data-theme="dual"] #cherry-note-footer { padding: 0; }
+#cherry-note-panel[data-theme="dual"] .cn-du-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-family: "CN Galmuri9", monospace;
+    font-size: 10px;
+    color: #a8467a;
+    white-space: pre;
+}
+#cherry-note-panel[data-theme="dual"] .cn-du-legend span { display: flex; align-items: center; gap: 5px; }
+#cherry-note-panel[data-theme="dual"] .cn-du-legend i {
+    display: block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    border: 1.5px solid #a8467a;
+}
+#cherry-note-panel[data-theme="dual"] .cn-du-abxy {
+    width: 64px;
+    height: 64px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    place-items: center;
+}
+#cherry-note-panel[data-theme="dual"] .cn-du-key {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1.5px solid #d98bb1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "CN Galmuri9", monospace;
+    font-size: 10px;
+    color: #c46a97;
+}
+#cherry-note-panel[data-theme="dual"] .cn-du-a,
+#cherry-note-panel[data-theme="dual"] .cn-du-b {
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    border-radius: 50%;
+    font-family: "CN Galmuri9", monospace;
+    font-size: 10px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#cherry-note-panel[data-theme="dual"] .cn-du-a {
+    background: #f07ab4;
+    border: 1.5px solid #c4568d;
+    box-shadow: inset 0 -2px 0 #d9579a;
+    color: #ffffff;
+}
+#cherry-note-panel[data-theme="dual"] .cn-du-b {
+    background: #ffd3e6;
+    border: 1.5px solid #d98bb1;
+    box-shadow: inset 0 -2px 0 #f3a9ca;
+    color: #a8467a;
+}
+#cherry-note-panel[data-theme="dual"] .cn-du-a:hover,
+#cherry-note-panel[data-theme="dual"] .cn-du-b:hover { transform: translateY(-1px); }
+#cherry-note-panel[data-theme="dual"] .cn-du-a:active,
+#cherry-note-panel[data-theme="dual"] .cn-du-b:active { transform: translateY(1px); box-shadow: none; }
+#cherry-note-panel[data-theme="dual"] .cn-du-a:disabled { background: #eac6d7; box-shadow: none; transform: none; }
+
+/* ---------------- 06 러브레터 ---------------- */
+#cherry-note-panel[data-theme="letter"] {
+    background: #fbd6c2;
+    border: 2px solid #9c5a4a;
+    border-radius: 6px;
+    padding: 0;
+    gap: 0;
+    box-shadow: 4px 4px 0 #e8b9a3;
+    color: #5e2e26;
+}
+#cherry-note-panel[data-theme="letter"] .cn-lt-pearls {
+    position: relative;
+    height: 10px;
+    background: radial-gradient(circle at 5px 5px, #ffffff 0 2px, #f1ddd3 2.5px 3.2px, #b88b7d 3.4px 4.3px, transparent 4.6px) 0 0 / 10px 10px repeat-x;
+}
+#cherry-note-panel[data-theme="letter"] .cn-lt-pearls-top { margin: -6px 10px 0; }
+#cherry-note-panel[data-theme="letter"] .cn-lt-bow-l,
+#cherry-note-panel[data-theme="letter"] .cn-lt-bow-r { position: absolute; top: -3px; }
+#cherry-note-panel[data-theme="letter"] .cn-lt-bow-l { left: -14px; }
+#cherry-note-panel[data-theme="letter"] .cn-lt-bow-r { right: -14px; }
+
+#cherry-note-panel[data-theme="letter"] #cherry-note-header {
+    height: 30px;
+    margin: 2px 4px 0;
+    padding: 0 3px 0 7px;
+    background: #f6b5b2;
+    border: 1.5px solid #9c5a4a;
+    font-size: 12px;
+    color: #5e2e26;
+    gap: 6px;
+}
+#cherry-note-panel[data-theme="letter"] .cn-lt-title { display: flex; align-items: center; gap: 6px; min-width: 0; }
+#cherry-note-panel[data-theme="letter"] .cn-lt-titletext {
+    display: flex;
+    min-width: 0;
+    font-weight: 700;
+    white-space: nowrap;
+}
+#cherry-note-panel[data-theme="letter"] #cherry-note-char-name { max-width: 110px; font-weight: 700; }
+#cherry-note-panel[data-theme="letter"] .cn-lt-winbtns { display: flex; gap: 3px; flex-shrink: 0; }
+#cherry-note-panel[data-theme="letter"] .cn-lt-wb {
+    width: 19px;
+    height: 18px;
+    padding: 0;
+    background: #fde7da;
+    border: 1.5px solid #9c5a4a;
+    border-radius: 0;
+    box-shadow: inset -1px -1px 0 #e0a894;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#cherry-note-panel[data-theme="letter"] .cn-lt-wb:active { box-shadow: inset 1px 1px 0 #e0a894; }
+#cherry-note-panel[data-theme="letter"] .cn-lt-min { display: block; width: 8px; height: 2px; margin-top: 6px; background: #5e2e26; }
+#cherry-note-panel[data-theme="letter"] .cn-lt-max { display: block; width: 8px; height: 7px; border: 1.5px solid #5e2e26; border-top-width: 2.5px; }
+
+#cherry-note-panel[data-theme="letter"] .cn-lt-menu {
+    margin: 0 4px;
+    padding: 4px 6px;
+    display: flex;
+    gap: 12px;
+    border-bottom: 1.5px solid #e3ae98;
+    font-size: 12px;
+    color: #5e2e26;
+    user-select: none;
+}
+
+#cherry-note-panel[data-theme="letter"] .cn-lt-body {
+    padding: 10px 10px 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+#cherry-note-panel[data-theme="letter"] .cn-lt-paper {
+    background: #fbf6ec;
+    border: 2px solid #9c5a4a;
+}
+#cherry-note-panel[data-theme="letter"] #cherry-note-textarea {
+    display: block;
+    width: 100%;
+    height: 144px;
+    padding: 4px 10px;
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
+    background-image: repeating-linear-gradient(transparent 0 23px, #efd9ca 23px 24px);
+    background-position: 0 4px;
+    background-attachment: local;
+    line-height: 24px;
+    color: #5e2e26;
+    box-shadow: none;
+    scrollbar-color: #f2b9a0 #f6e4da;
+}
+#cherry-note-panel[data-theme="letter"] #cherry-note-textarea::placeholder { color: #d2aa9c; }
+#cherry-note-panel[data-theme="letter"] #cherry-note-textarea::-webkit-scrollbar { width: 14px; }
+#cherry-note-panel[data-theme="letter"] #cherry-note-textarea::-webkit-scrollbar-track {
+    background: #f6e4da;
+    border-left: 1.5px solid #9c5a4a;
+}
+#cherry-note-panel[data-theme="letter"] #cherry-note-textarea::-webkit-scrollbar-thumb {
+    background: #f2b9a0;
+    border: 1.5px solid #9c5a4a;
+}
+#cherry-note-panel[data-theme="letter"] .cn-lt-body > .cn-lt-pearls { margin: -12px 4px 0; }
+#cherry-note-panel[data-theme="letter"] .cn-lt-status {
+    font-family: "CN Galmuri9", monospace;
+    font-size: 10px;
+    color: #9c5a4a;
+}
+#cherry-note-panel[data-theme="letter"] #cherry-note-status { color: #9c5a4a; }
+
+#cherry-note-panel[data-theme="letter"] #cherry-note-footer {
+    padding: 4px 10px 10px;
+}
+#cherry-note-panel[data-theme="letter"] .cn-lt-stamp {
+    width: 30px;
+    height: 30px;
+    background: #d94a55;
+    border: 3px solid #ffffff;
+    outline: 1.5px dashed #b88b7d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#cherry-note-panel[data-theme="letter"] #cherry-note-save-btn {
+    width: 42px;
+    height: 42px;
+    padding: 3px 0 4px;
+    background: #f5cf5f;
+    border: 2px solid #7a4a1e;
+    border-radius: 3px;
+    box-shadow: 2px 2px 0 #d9a24a;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+#cherry-note-panel[data-theme="letter"] #cherry-note-save-btn:hover { transform: translateY(-1px); box-shadow: 2px 3px 0 #d9a24a; }
+#cherry-note-panel[data-theme="letter"] #cherry-note-save-btn:active { transform: translate(1px, 1px); box-shadow: 0 0 0 #d9a24a; }
+#cherry-note-panel[data-theme="letter"] #cherry-note-save-btn:disabled { filter: grayscale(0.7); opacity: 0.6; transform: none; }
+#cherry-note-panel[data-theme="letter"] .cn-lt-shutter {
+    width: 18px;
+    height: 11px;
+    background: #d8d2c8;
+    border: 1.5px solid #7a4a1e;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 3px;
+}
+#cherry-note-panel[data-theme="letter"] .cn-lt-shutter i { display: block; width: 3px; height: 6px; margin-top: 1px; background: #7a4a1e; }
+#cherry-note-panel[data-theme="letter"] .cn-lt-label {
+    width: 32px;
+    height: 14px;
+    background: #ffffff;
+    border: 1.5px solid #7a4a1e;
+    font-family: "CN Galmuri9", monospace;
+    font-size: 10px;
+    line-height: 11px;
+    color: #5e2e26;
+    text-align: center;
+}
+
+/* ---------------- 2차 플로팅 버튼 ---------------- */
+#cherry-note-icon[data-icon-theme="digi"] {
+    box-sizing: border-box;
+    background: #fbe3ef;
+    border: 3px solid #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 0 2px #c58aa8, 3px 3px 0 2px rgba(197, 138, 168, 0.3);
+}
+#cherry-note-icon[data-icon-theme="digi"]:hover {
+    box-shadow: 0 0 0 2px #c58aa8, 4px 4px 0 2px rgba(197, 138, 168, 0.35);
+}
+
+#cherry-note-icon[data-icon-theme="dual"] {
+    box-sizing: border-box;
+    background: #f8c3db;
+    border: 2px solid #d98bb1;
+    border-radius: 7px;
+    box-shadow: 0 3px 8px rgba(217, 139, 177, 0.4);
+    flex-direction: column;
+    gap: 2px;
+}
+#cherry-note-icon[data-icon-theme="dual"] .cn-ic-du-scr {
+    width: 17px;
+    height: 9px;
+    box-sizing: border-box;
+    background: #fff7fb;
+    border: 1px solid #d98bb1;
+    border-radius: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#cherry-note-icon[data-icon-theme="dual"] .cn-ic-du-hinge {
+    width: 23px;
+    height: 2px;
+    background: #d98bb1;
+}
+
+#cherry-note-icon[data-icon-theme="letter"] {
+    box-sizing: border-box;
+    background: #fff7f2;
+    border: 2px solid #9c5a4a;
+    border-radius: 6px;
+    box-shadow: 2px 2px 0 #e8b9a3;
+}
+#cherry-note-icon[data-icon-theme="letter"]:hover { box-shadow: 3px 3px 0 #e8b9a3; }
