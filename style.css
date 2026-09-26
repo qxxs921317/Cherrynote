@@ -461,34 +461,20 @@
 /*    폰트: 갈무리(Galmuri) by Lee Minseo, SIL OFL 1.1          */
 /* ========================================================= */
 
-@font-face {
-    font-family: "CN Galmuri11";
-    src: url("fonts/Galmuri11.woff2") format("woff2");
-    font-weight: 400;
-    font-display: swap;
-}
-@font-face {
-    font-family: "CN Galmuri11";
-    src: url("fonts/Galmuri11-Bold.woff2") format("woff2");
-    font-weight: 700;
-    font-display: swap;
-}
-@font-face {
-    font-family: "CN Galmuri9";
-    src: url("fonts/Galmuri9.woff2") format("woff2");
-    font-weight: 400;
-    font-display: swap;
-}
-
 /* --- 공통 --- */
 #cherry-note-panel.cn-retro {
     width: 300px;
     backdrop-filter: none;
-    font-family: "CN Galmuri11", monospace;
+    font-family: "CN Galmuri11", monospace !important;
     -webkit-font-smoothing: none;
 }
 #cherry-note-panel.cn-retro * {
     box-sizing: border-box;
+}
+/* 전역 CSS(* { font-family: ... !important })보다 우선하도록 모든 자식에 직접 지정 */
+#cherry-note-panel.cn-retro,
+#cherry-note-panel.cn-retro * {
+    font-family: "CN Galmuri11", monospace !important;
 }
 #cherry-note-panel .cn-px {
     display: block;
@@ -496,12 +482,12 @@
 }
 #cherry-note-panel.cn-retro button {
     margin: 0;
-    font-family: "CN Galmuri11", monospace;
+    font-family: "CN Galmuri11", monospace !important;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
 }
 #cherry-note-panel.cn-retro #cherry-note-textarea {
-    font-family: "CN Galmuri11", monospace;
+    font-family: "CN Galmuri11", monospace !important;
     font-size: 12px;
     line-height: 1.7;
     padding: 8px 10px;
@@ -514,7 +500,7 @@
     max-height: 60vh;
 }
 #cherry-note-panel.cn-retro #cherry-note-status {
-    font-family: "CN Galmuri9", monospace;
+    font-family: "CN Galmuri9", monospace !important;
     font-size: 10px;
 }
 
@@ -727,7 +713,7 @@
     min-width: 0;
 }
 #cherry-note-panel[data-theme="pastelos"] .cn-po-label {
-    font-family: "CN Galmuri9", monospace;
+    font-family: "CN Galmuri9", monospace !important;
     font-size: 10px;
     color: #8b7fd6;
     letter-spacing: 1px;
@@ -813,7 +799,7 @@
     border-color: #e27cae;
 }
 #cherry-note-panel[data-theme="pastelos"] .cn-count-chars {
-    font-family: "CN Galmuri9", monospace;
+    font-family: "CN Galmuri9", monospace !important;
     font-size: 10px;
     color: #4b3f99;
     min-width: 30px;
@@ -925,7 +911,7 @@
     color: #1d1b22;
 }
 #cherry-note-panel[data-theme="classic"] .cn-cd-sub {
-    font-family: "CN Galmuri9", monospace;
+    font-family: "CN Galmuri9", monospace !important;
     font-size: 10px;
     color: #5b5566;
 }
@@ -1168,7 +1154,7 @@
 
 #cherry-note-panel[data-theme="digi"] .cn-dg-load { display: flex; flex-direction: column; gap: 4px; }
 #cherry-note-panel[data-theme="digi"] .cn-dg-loadtext {
-    font-family: "CN Galmuri9", monospace;
+    font-family: "CN Galmuri9", monospace !important;
     font-size: 10px;
     color: #5b3a6e;
 }
@@ -1273,7 +1259,7 @@
     justify-content: space-between;
 }
 #cherry-note-panel[data-theme="dual"] .cn-du-label {
-    font-family: "CN Galmuri9", monospace;
+    font-family: "CN Galmuri9", monospace !important;
     font-size: 10px;
     color: #c46a97;
     letter-spacing: 1px;
@@ -1301,7 +1287,7 @@
     display: flex;
     align-items: center;
     gap: 4px;
-    font-family: "CN Galmuri9", monospace;
+    font-family: "CN Galmuri9", monospace !important;
     font-size: 10px;
     color: #a8467a;
 }
@@ -1342,7 +1328,7 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
-    font-family: "CN Galmuri9", monospace;
+    font-family: "CN Galmuri9", monospace !important;
     font-size: 10px;
     color: #a8467a;
     white-space: pre;
@@ -1372,7 +1358,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: "CN Galmuri9", monospace;
+    font-family: "CN Galmuri9", monospace !important;
     font-size: 10px;
     color: #c46a97;
 }
@@ -1382,7 +1368,7 @@
     height: 22px;
     padding: 0;
     border-radius: 50%;
-    font-family: "CN Galmuri9", monospace;
+    font-family: "CN Galmuri9", monospace !important;
     font-size: 10px;
     line-height: 1;
     display: flex;
@@ -1512,7 +1498,7 @@
 }
 #cherry-note-panel[data-theme="letter"] .cn-lt-body > .cn-lt-pearls { margin: -12px 4px 0; }
 #cherry-note-panel[data-theme="letter"] .cn-lt-status {
-    font-family: "CN Galmuri9", monospace;
+    font-family: "CN Galmuri9", monospace !important;
     font-size: 10px;
     color: #9c5a4a;
 }
@@ -1561,7 +1547,7 @@
     height: 14px;
     background: #ffffff;
     border: 1.5px solid #7a4a1e;
-    font-family: "CN Galmuri9", monospace;
+    font-family: "CN Galmuri9", monospace !important;
     font-size: 10px;
     line-height: 11px;
     color: #5e2e26;
@@ -1617,15 +1603,23 @@
 
 /* ========================================================= */
 /* 🧾 영수증 테마 3종 (sage / pinkreceipt / cafe)               */
-/*    폰트: fonts/receipt-fonts.css (JS가 자동으로 불러옴)      */
+/*    폰트: index.js의 injectFontFaces()가 @font-face를 주입      */
 /* ========================================================= */
 
 #cherry-note-panel.cn-receipt {
     width: 300px;
     backdrop-filter: none;
-    font-family: "CN Gowun Batang", serif;
+    font-family: "CN Gowun Batang", serif !important;
 }
 #cherry-note-panel.cn-receipt * { box-sizing: border-box; }
+#cherry-note-panel.cn-receipt,
+#cherry-note-panel.cn-receipt * {
+    font-family: "CN Gowun Batang", serif !important;
+}
+#cherry-note-panel[data-theme="cafe"],
+#cherry-note-panel[data-theme="cafe"] * {
+    font-family: "CN Nanum Coding", monospace !important;
+}
 #cherry-note-panel.cn-receipt button {
     margin: 0;
     cursor: pointer;
@@ -1640,7 +1634,7 @@
     border-radius: 0;
     background: transparent;
     box-shadow: none;
-    font-family: "CN Gowun Batang", serif;
+    font-family: "CN Gowun Batang", serif !important;
     font-size: 13px;
     line-height: 1.75;
 }
@@ -1659,9 +1653,10 @@
 
 /* ---------------- 07 세이지 영수증 ---------------- */
 #cherry-note-panel[data-theme="sage"] {
-    background: none;
+    background: #f8f4ec;
+    background-clip: padding-box;
     border: 14px solid transparent;
-    border-image: url("assets/scallop-sage.svg") 14 fill round;
+    border-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 42 42"%3E%3Cg fill="%23f8f4ec" stroke="%23aab27f" stroke-width="1.5"%3E%3Ccircle cx="7" cy="7" r="6.4"/%3E%3Ccircle cx="21" cy="7" r="6.4"/%3E%3Ccircle cx="35" cy="7" r="6.4"/%3E%3Ccircle cx="7" cy="21" r="6.4"/%3E%3Ccircle cx="35" cy="21" r="6.4"/%3E%3Ccircle cx="7" cy="35" r="6.4"/%3E%3Ccircle cx="21" cy="35" r="6.4"/%3E%3Ccircle cx="35" cy="35" r="6.4"/%3E%3C/g%3E%3Crect x="7" y="7" width="28" height="28" fill="%23f8f4ec"/%3E%3Cg fill="%23b9bf93"%3E%3Ccircle cx="7" cy="7" r="1.5"/%3E%3Ccircle cx="21" cy="7" r="1.5"/%3E%3Ccircle cx="35" cy="7" r="1.5"/%3E%3Ccircle cx="7" cy="21" r="1.5"/%3E%3Ccircle cx="35" cy="21" r="1.5"/%3E%3Ccircle cx="7" cy="35" r="1.5"/%3E%3Ccircle cx="21" cy="35" r="1.5"/%3E%3Ccircle cx="35" cy="35" r="1.5"/%3E%3C/g%3E%3C/svg%3E') 14 fill round;
     border-radius: 0;
     padding: 0 6px 2px;
     gap: 0;
@@ -1685,13 +1680,13 @@
     position: relative;
     z-index: 1;
     margin: 0 0 -18px 40px;
-    font-family: "CN Cormorant", serif;
+    font-family: "CN Cormorant", serif !important;
     font-size: 17px;
     font-weight: 700;
     color: #4e5a2a;
 }
 #cherry-note-panel[data-theme="sage"] .cn-sg-title {
-    font-family: "CN Pinyon", cursive;
+    font-family: "CN Pinyon", cursive !important;
     font-size: 58px;
     line-height: 1.1;
     color: #e7ebcf;
@@ -1700,7 +1695,7 @@
 }
 #cherry-note-panel[data-theme="sage"] .cn-sg-body { display: flex; flex-direction: column; gap: 7px; }
 #cherry-note-panel[data-theme="sage"] .cn-sg-sub {
-    font-family: "CN Cormorant", serif;
+    font-family: "CN Cormorant", serif !important;
     font-size: 18px;
     font-weight: 500;
     text-align: center;
@@ -1716,7 +1711,7 @@
 }
 #cherry-note-panel[data-theme="sage"] .cn-sg-field { display: flex; align-items: baseline; gap: 6px; min-width: 0; }
 #cherry-note-panel[data-theme="sage"] .cn-sg-field b {
-    font-family: "CN Cormorant", serif;
+    font-family: "CN Cormorant", serif !important;
     font-size: 12px;
     font-weight: 700;
     letter-spacing: 1px;
@@ -1731,7 +1726,7 @@
     display: flex;
     justify-content: space-between;
     padding: 0 8px;
-    font-family: "CN Cormorant", serif;
+    font-family: "CN Cormorant", serif !important;
     font-size: 12px;
     font-weight: 700;
     letter-spacing: 1px;
@@ -1760,7 +1755,7 @@
 }
 #cherry-note-panel[data-theme="sage"] .cn-sg-totalwrap { display: flex; align-items: baseline; gap: 10px; }
 #cherry-note-panel[data-theme="sage"] .cn-sg-script {
-    font-family: "CN Pinyon", cursive;
+    font-family: "CN Pinyon", cursive !important;
     font-size: 26px;
     color: #e7ebcf;
     -webkit-text-stroke: 0.8px #4e5a2a;
@@ -1768,7 +1763,7 @@
 }
 #cherry-note-panel[data-theme="sage"] .cn-count-chars { font-size: 14px; font-weight: 700; }
 #cherry-note-panel[data-theme="sage"] .cn-sg-method {
-    font-family: "CN Cormorant", serif;
+    font-family: "CN Cormorant", serif !important;
     font-size: 16px;
     font-weight: 500;
     text-align: center;
@@ -1805,7 +1800,7 @@
     box-shadow: inset 0 0 0 2px #f8f4ec;
 }
 #cherry-note-panel[data-theme="sage"] .cn-sg-opt span {
-    font-family: "CN Pinyon", cursive;
+    font-family: "CN Pinyon", cursive !important;
     font-size: 24px;
     line-height: 1.2;
     color: #e7ebcf;
@@ -1837,7 +1832,7 @@
     gap: 8px;
 }
 #cherry-note-panel[data-theme="pinkreceipt"] .cn-pr-title {
-    font-family: "CN Pinyon", cursive;
+    font-family: "CN Pinyon", cursive !important;
     font-size: 52px;
     line-height: 1;
     color: #e0679e;
@@ -1845,7 +1840,7 @@
     text-shadow: 1.5px 1.5px 0 #fbd0e2;
 }
 #cherry-note-panel[data-theme="pinkreceipt"] .cn-pr-sub {
-    font-family: "CN Cormorant", serif;
+    font-family: "CN Cormorant", serif !important;
     font-size: 12px;
     font-weight: 700;
     letter-spacing: 1.2px;
@@ -1863,7 +1858,7 @@
 }
 #cherry-note-panel[data-theme="pinkreceipt"] .cn-pr-meta > span { display: flex; align-items: baseline; gap: 5px; min-width: 0; white-space: nowrap; }
 #cherry-note-panel[data-theme="pinkreceipt"] .cn-pr-meta b {
-    font-family: "CN Cormorant", serif;
+    font-family: "CN Cormorant", serif !important;
     font-weight: 600;
     letter-spacing: 1px;
 }
@@ -1871,7 +1866,7 @@
 #cherry-note-panel[data-theme="pinkreceipt"] .cn-pr-cols {
     display: flex;
     justify-content: space-between;
-    font-family: "CN Cormorant", serif;
+    font-family: "CN Cormorant", serif !important;
     font-size: 12.5px;
     font-weight: 700;
     letter-spacing: 1px;
@@ -1890,7 +1885,7 @@
     gap: 10px;
 }
 #cherry-note-panel[data-theme="pinkreceipt"] .cn-pr-script {
-    font-family: "CN Pinyon", cursive;
+    font-family: "CN Pinyon", cursive !important;
     font-size: 28px;
     line-height: 1;
     color: #e0679e;
@@ -1912,7 +1907,7 @@
     display: flex;
     align-items: center;
     gap: 5px;
-    font-family: "CN Cormorant", serif;
+    font-family: "CN Cormorant", serif !important;
     font-size: 13px;
     font-weight: 600;
     letter-spacing: 1px;
@@ -1931,7 +1926,7 @@
 }
 #cherry-note-panel[data-theme="pinkreceipt"] .cn-pr-deliver {
     margin-top: 2px;
-    font-family: "CN Cormorant", serif;
+    font-family: "CN Cormorant", serif !important;
     font-size: 10.5px;
     font-weight: 600;
     letter-spacing: 1px;
@@ -1946,7 +1941,7 @@
     color: #e0679e;
 }
 #cherry-note-panel[data-theme="pinkreceipt"] .cn-pr-code .cn-count-score {
-    font-family: "CN Cormorant", serif;
+    font-family: "CN Cormorant", serif !important;
     font-size: 11px;
     letter-spacing: 3px;
     color: #c9427e;
@@ -1961,7 +1956,7 @@
     gap: 0;
     box-shadow: none;
     filter: drop-shadow(0 8px 12px rgba(120, 20, 30, 0.2));
-    font-family: "CN Nanum Coding", monospace;
+    font-family: "CN Nanum Coding", monospace !important;
     color: #3a2a2a;
 }
 #cherry-note-panel[data-theme="cafe"] .cn-cf-edge { height: 9px; }
@@ -1984,7 +1979,7 @@
 }
 #cherry-note-panel[data-theme="cafe"] .cn-cf-head { display: flex; flex-direction: column; align-items: center; }
 #cherry-note-panel[data-theme="cafe"] .cn-cf-title {
-    font-family: "CN Pinyon", cursive;
+    font-family: "CN Pinyon", cursive !important;
     font-size: 34px;
     line-height: 1.1;
     color: #c8323f;
@@ -2014,7 +2009,7 @@
 #cherry-note-panel[data-theme="cafe"] #cherry-note-textarea {
     height: 116px;
     padding: 0;
-    font-family: "CN Nanum Coding", monospace;
+    font-family: "CN Nanum Coding", monospace !important;
     font-size: 12.5px;
     line-height: 1.7;
     color: #3a2a2a;
@@ -2034,7 +2029,7 @@
     border: 1.5px solid #c9a9a4;
     border-radius: 13px;
     box-shadow: none;
-    font-family: "CN Nanum Coding", monospace;
+    font-family: "CN Nanum Coding", monospace !important;
     font-size: 12px;
     line-height: 1;
     color: #6a4a4a;
@@ -2098,7 +2093,7 @@
 }
 #cherry-note-panel[data-theme="cafe"] .cn-cf-stamp span { font-size: 9px; }
 #cherry-note-panel[data-theme="cafe"] .cn-cf-stamp b {
-    font-family: "CN Cormorant", serif;
+    font-family: "CN Cormorant", serif !important;
     font-size: 17px;
     font-weight: 700;
     letter-spacing: 1px;
@@ -2114,7 +2109,7 @@
     box-sizing: border-box;
     background: none;
     border: 5px solid transparent;
-    border-image: url("assets/scallop-sage.svg") 14 fill round;
+    border-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 42 42"%3E%3Cg fill="%23f8f4ec" stroke="%23aab27f" stroke-width="1.5"%3E%3Ccircle cx="7" cy="7" r="6.4"/%3E%3Ccircle cx="21" cy="7" r="6.4"/%3E%3Ccircle cx="35" cy="7" r="6.4"/%3E%3Ccircle cx="7" cy="21" r="6.4"/%3E%3Ccircle cx="35" cy="21" r="6.4"/%3E%3Ccircle cx="7" cy="35" r="6.4"/%3E%3Ccircle cx="21" cy="35" r="6.4"/%3E%3Ccircle cx="35" cy="35" r="6.4"/%3E%3C/g%3E%3Crect x="7" y="7" width="28" height="28" fill="%23f8f4ec"/%3E%3Cg fill="%23b9bf93"%3E%3Ccircle cx="7" cy="7" r="1.5"/%3E%3Ccircle cx="21" cy="7" r="1.5"/%3E%3Ccircle cx="35" cy="7" r="1.5"/%3E%3Ccircle cx="7" cy="21" r="1.5"/%3E%3Ccircle cx="35" cy="21" r="1.5"/%3E%3Ccircle cx="7" cy="35" r="1.5"/%3E%3Ccircle cx="21" cy="35" r="1.5"/%3E%3Ccircle cx="35" cy="35" r="1.5"/%3E%3C/g%3E%3C/svg%3E') 14 fill round;
     border-radius: 0;
     box-shadow: none;
     filter: drop-shadow(0 2px 3px rgba(78, 90, 42, 0.25));

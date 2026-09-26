@@ -1156,19 +1156,54 @@ function positionPanelNearIcon() {
 
 // ---------- 초기화 ----------
 
-function loadBundledFontCss() {
+// ---------- 내장 폰트 등록 ----------
+// CSS의 상대경로(url("fonts/..."))는 설치 방식/폴더 구조에 따라 깨질 수 있어서,
+// 이 스크립트 파일 위치(import.meta.url)를 기준으로 절대 주소를 만들어 @font-face를 직접 주입한다.
+// 폰트 파일은 전부 확장 폴더 "최상단"에 둔다 (하위 폴더 없음).
+
+const FONT_FACES = [
+    ["CN Galmuri11", "Galmuri11.woff2", "400"],
+    ["CN Galmuri11", "Galmuri11-Bold.woff2", "700"],
+    ["CN Galmuri9", "Galmuri9.woff2", "400"],
+    ["CN Pinyon", "PinyonScript-Regular.woff2", "400"],
+    ["CN Cormorant", "CormorantGaramond-VF.woff2", "300 700"],
+    ["CN Gowun Batang", "GowunBatang-Regular.woff2", "400"],
+    ["CN Gowun Batang", "GowunBatang-Bold.woff2", "700"],
+    ["CN Nanum Coding", "NanumGothicCoding-Regular.woff2", "400"],
+    ["CN Nanum Coding", "NanumGothicCoding-Bold.woff2", "700"],
+];
+
+function injectFontFaces() {
+    if (document.getElementById("cherry-note-font-faces")) return;
+    let base;
     try {
-        const href = new URL("./fonts/receipt-fonts.css", import.meta.url).href;
-        if (!document.querySelector(`link[href="${href}"]`)) {
-            $("<link>", { rel: "stylesheet", href }).appendTo("head");
-        }
+        base = new URL(".", import.meta.url).href;
     } catch (e) {
-        console.warn("[Aggressive Notepad] 영수증 폰트 CSS 로드 실패:", e);
+        console.warn("[Aggressive Notepad] 확장 경로를 못 찾아 폰트를 등록하지 못함:", e);
+        return;
     }
+    const css = FONT_FACES.map(([family, file, weight]) => `@font-face {
+    font-family: "${family}";
+    src: url("${base}${file}") format("woff2");
+    font-weight: ${weight};
+    font-style: normal;
+    font-display: swap;
+}`).join("\n");
+    $("<style>", { id: "cherry-note-font-faces", text: css }).appendTo("head");
+
+    // 진단용: 폰트 파일이 실제로 안 불러와지면 콘솔에 파일명을 알려줌
+    setTimeout(() => {
+        FONT_FACES.forEach(([family, file, weight]) => {
+            const w = String(weight).split(" ")[0];
+            document.fonts.load(`${w} 16px "${family}"`, "가A").then((faces) => {
+                if (!faces.length) console.warn(`[Aggressive Notepad] 폰트 로드 실패: ${base}${file}`);
+            }).catch(() => console.warn(`[Aggressive Notepad] 폰트 로드 실패: ${base}${file}`));
+        });
+    }, 1500);
 }
 
 jQuery(async () => {
-    loadBundledFontCss();
+    injectFontFaces();
     buildUI();
     buildSettingsPanel();
     buildExtensionsMenuToggle();
