@@ -2715,6 +2715,11 @@
 /* ========================================================= */
 
 /* ---------------- 📱 핑크 폴더폰 ---------------- */
+/* 위·아래 높이 맞추려고 넣은 display:grid가 숨김(display:none)을 덮어쓰지 않도록 */
+#cherry-note-panel.cn-retro[data-theme="flip"].cherry-note-hidden,
+#cherry-note-panel.cn-retro[data-theme="dreamds"].cherry-note-hidden {
+    display: none;
+}
 #cherry-note-panel.cn-retro[data-theme="flip"] {
     width: 184px;
     display: grid;
