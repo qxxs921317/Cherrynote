@@ -2166,3 +2166,675 @@
 @media (max-width: 480px) {
     #cherry-note-panel.cn-receipt { width: 280px; }
 }
+
+/* ========================================================= */
+/* 🖥️ 4·5차 픽셀 (inbox / haunted / grimoire / memopet)        */
+/* ========================================================= */
+
+/* 공통: 기본 패널 장식 초기화 */
+#cherry-note-panel[data-theme="inbox"],
+#cherry-note-panel[data-theme="haunted"],
+#cherry-note-panel[data-theme="grimoire"],
+#cherry-note-panel[data-theme="memopet"] {
+    border: none;
+    border-radius: 0;
+    backdrop-filter: none;
+}
+#cherry-note-panel[data-theme="inbox"] #cherry-note-header,
+#cherry-note-panel[data-theme="haunted"] #cherry-note-header,
+#cherry-note-panel[data-theme="grimoire"] #cherry-note-header,
+#cherry-note-panel[data-theme="memopet"] #cherry-note-header,
+#cherry-note-panel[data-theme="inbox"] #cherry-note-footer,
+#cherry-note-panel[data-theme="haunted"] #cherry-note-footer,
+#cherry-note-panel[data-theme="grimoire"] #cherry-note-footer,
+#cherry-note-panel[data-theme="memopet"] #cherry-note-footer {
+    padding: 0;
+}
+#cherry-note-panel[data-theme="inbox"] #cherry-note-textarea,
+#cherry-note-panel[data-theme="haunted"] #cherry-note-textarea,
+#cherry-note-panel[data-theme="grimoire"] #cherry-note-textarea,
+#cherry-note-panel[data-theme="memopet"] #cherry-note-textarea {
+    border: none;
+    border-radius: 0;
+    resize: none;
+    max-height: none;
+}
+#cherry-note-panel[data-theme="inbox"] #cherry-note-save-btn,
+#cherry-note-panel[data-theme="haunted"] #cherry-note-save-btn,
+#cherry-note-panel[data-theme="grimoire"] #cherry-note-save-btn,
+#cherry-note-panel[data-theme="memopet"] #cherry-note-save-btn {
+    width: auto;
+    border: none;
+    border-radius: 0;
+    line-height: 1;
+}
+#cherry-note-panel[data-theme="inbox"] #cherry-note-save-btn:hover,
+#cherry-note-panel[data-theme="haunted"] #cherry-note-save-btn:hover,
+#cherry-note-panel[data-theme="grimoire"] #cherry-note-save-btn:hover,
+#cherry-note-panel[data-theme="memopet"] #cherry-note-save-btn:hover {
+    transform: none;
+}
+#cherry-note-panel[data-theme="inbox"] #cherry-note-save-btn:disabled,
+#cherry-note-panel[data-theme="haunted"] #cherry-note-save-btn:disabled,
+#cherry-note-panel[data-theme="grimoire"] #cherry-note-save-btn:disabled,
+#cherry-note-panel[data-theme="memopet"] #cherry-note-save-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+/* ---------------- 12 1비트 인박스 ---------------- */
+#cherry-note-panel[data-theme="inbox"] {
+    background: #efe9d7;
+    padding: 8px 8px 6px;
+    gap: 6px;
+    box-shadow: 0 -3px 0 #2b2d33, 0 3px 0 #2b2d33, -3px 0 0 #2b2d33, 3px 0 0 #2b2d33, 6px 6px 0 0 rgba(43, 45, 51, 0.35);
+    color: #2b2d33;
+}
+#cherry-note-panel[data-theme="inbox"] .cn-ib-frame {
+    padding: 6px;
+    background: repeating-conic-gradient(#2b2d33 0% 25%, #efe9d7 0% 50%) 0 0 / 4px 4px;
+    box-shadow: 0 0 0 2px #2b2d33;
+}
+#cherry-note-panel[data-theme="inbox"] .cn-ib-screen {
+    background: #2b2d33;
+    padding: 8px 8px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+#cherry-note-panel[data-theme="inbox"] .cn-ib-desk {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+#cherry-note-panel[data-theme="inbox"] .cn-ib-icons {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 4px 0 0 2px;
+}
+#cherry-note-panel[data-theme="inbox"] .cn-ib-inv { filter: invert(1) sepia(0.25); }
+#cherry-note-panel[data-theme="inbox"] .cn-ib-win {
+    background: #efe9d7;
+    box-shadow: 0 0 0 2px #efe9d7, 0 0 0 4px #2b2d33;
+    color: #2b2d33;
+}
+#cherry-note-panel[data-theme="inbox"] .cn-ib-chars { width: 150px; margin: 2px 2px 0 0; }
+#cherry-note-panel[data-theme="inbox"] .cn-ib-tb,
+#cherry-note-panel[data-theme="inbox"] #cherry-note-header.cn-ib-tb {
+    height: 20px;
+    padding: 0 3px 0 6px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
+    border-bottom: 2px solid #2b2d33;
+    font-size: 12px;
+    font-weight: 700;
+    color: #2b2d33;
+}
+#cherry-note-panel[data-theme="inbox"] #cherry-note-header.cn-ib-tb { height: 22px; }
+#cherry-note-panel[data-theme="inbox"] .cn-ib-dith {
+    flex-grow: 1;
+    height: 10px;
+    background: repeating-conic-gradient(#2b2d33 0% 25%, #efe9d7 0% 50%) 0 0 / 4px 4px;
+}
+#cherry-note-panel[data-theme="inbox"] .cn-ib-item {
+    padding: 5px 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+}
+#cherry-note-panel[data-theme="inbox"] .cn-ib-item + .cn-ib-item { border-top: 2px solid #2b2d33; }
+#cherry-note-panel[data-theme="inbox"] .cn-ib-dim { opacity: 0.45; }
+#cherry-note-panel[data-theme="inbox"] .cn-ib-itemtext {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    line-height: 1.25;
+}
+#cherry-note-panel[data-theme="inbox"] #cherry-note-char-name { max-width: 100px; font-size: 12px; }
+#cherry-note-panel[data-theme="inbox"] small,
+#cherry-note-panel[data-theme="inbox"] .cn-ib-task {
+    font-family: "CN Galmuri9", monospace !important;
+    font-size: 10px;
+}
+#cherry-note-panel[data-theme="inbox"] small * { font-family: "CN Galmuri9", monospace !important; }
+#cherry-note-panel[data-theme="inbox"] .cn-ib-memo {
+    width: 236px;
+    max-width: calc(100% - 10px);
+    margin: -8px 0 0 6px;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 0 0 2px #efe9d7, 0 0 0 4px #2b2d33, 4px 4px 0 4px rgba(0, 0, 0, 0.35);
+}
+#cherry-note-panel[data-theme="inbox"] .cn-ib-x {
+    width: 18px;
+    height: 18px;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: #efe9d7;
+    box-shadow: 0 0 0 2px #2b2d33;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#cherry-note-panel[data-theme="inbox"] .cn-ib-field { display: flex; }
+#cherry-note-panel[data-theme="inbox"] #cherry-note-textarea {
+    flex-grow: 1;
+    min-width: 0;
+    height: 136px;
+    padding: 6px 8px;
+    background: transparent;
+    box-shadow: none;
+    color: #2b2d33;
+    line-height: 1.75;
+}
+#cherry-note-panel[data-theme="inbox"] #cherry-note-textarea::placeholder { color: #8a8578; }
+#cherry-note-panel[data-theme="inbox"] .cn-ib-scroll {
+    width: 16px;
+    flex-shrink: 0;
+    border-left: 2px solid #2b2d33;
+    display: flex;
+    flex-direction: column;
+}
+#cherry-note-panel[data-theme="inbox"] .cn-ib-up,
+#cherry-note-panel[data-theme="inbox"] .cn-ib-dn {
+    height: 16px;
+    background: #2b2d33;
+    position: relative;
+}
+#cherry-note-panel[data-theme="inbox"] .cn-ib-up::after,
+#cherry-note-panel[data-theme="inbox"] .cn-ib-dn::after {
+    content: "";
+    position: absolute;
+    left: 3px;
+    top: 5px;
+    width: 6px;
+    height: 4px;
+    background: #efe9d7;
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+#cherry-note-panel[data-theme="inbox"] .cn-ib-dn::after { clip-path: polygon(0 0, 100% 0, 50% 100%); }
+#cherry-note-panel[data-theme="inbox"] .cn-ib-track {
+    flex-grow: 1;
+    background: repeating-conic-gradient(#2b2d33 0% 25%, #efe9d7 0% 50%) 0 0 / 4px 4px;
+    opacity: 0.35;
+}
+#cherry-note-panel[data-theme="inbox"] #cherry-note-footer.cn-ib-dialog {
+    margin: 2px 0 0;
+    padding: 8px 10px;
+    background: #2b2d33;
+    box-shadow: 0 0 0 2px #efe9d7, 0 0 0 4px #2b2d33;
+    border-radius: 3px;
+    color: #efe9d7;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 8px;
+}
+#cherry-note-panel[data-theme="inbox"] .cn-ib-dtext { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+#cherry-note-panel[data-theme="inbox"] .cn-ib-dtext b { font-size: 12px; }
+#cherry-note-panel[data-theme="inbox"] .cn-ib-dtext small { line-height: 1.5; }
+#cherry-note-panel[data-theme="inbox"] #cherry-note-save-btn {
+    height: 24px;
+    padding: 0 9px;
+    flex-shrink: 0;
+    background: #efe9d7;
+    box-shadow: 0 0 0 2px #efe9d7, 0 0 0 4px #2b2d33;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #2b2d33;
+}
+#cherry-note-panel[data-theme="inbox"] #cherry-note-save-btn:active { background: #d9d2bd; }
+#cherry-note-panel[data-theme="inbox"] .cn-ib-task {
+    margin: 0 -8px;
+    height: 24px;
+    padding: 0 6px;
+    background: #efe9d7;
+    border-top: 2px solid #2b2d33;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #2b2d33;
+}
+#cherry-note-panel[data-theme="inbox"] .cn-ib-task * { font-family: "CN Galmuri9", monospace !important; }
+#cherry-note-panel[data-theme="inbox"] .cn-ib-tag { padding: 1px 5px; background: #2b2d33; color: #efe9d7; }
+#cherry-note-panel[data-theme="inbox"] #cherry-note-status { margin-left: auto; color: #2b2d33; font-weight: 700; }
+#cherry-note-panel[data-theme="inbox"] .cn-ib-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px 4px 0;
+}
+#cherry-note-panel[data-theme="inbox"] .cn-ib-vent { display: flex; flex-direction: column; gap: 2px; }
+#cherry-note-panel[data-theme="inbox"] .cn-ib-vent i { display: block; width: 40px; height: 2px; background: #2b2d33; }
+#cherry-note-panel[data-theme="inbox"] .cn-ib-knob {
+    width: 12px;
+    height: 12px;
+    border: 2px solid #2b2d33;
+    box-shadow: inset 0 0 0 2px #efe9d7, inset 0 0 0 6px #2b2d33;
+}
+
+/* ---------------- 13 으스스 책상 ---------------- */
+#cherry-note-panel[data-theme="haunted"] {
+    background: transparent;
+    padding: 0 0 3px;
+    gap: 0;
+    box-shadow: none;
+    filter: drop-shadow(0 10px 14px rgba(20, 10, 30, 0.35));
+    color: #e9e0ff;
+}
+#cherry-note-panel[data-theme="haunted"] .cn-hd-top { position: relative; padding-top: 30px; }
+#cherry-note-panel[data-theme="haunted"] .cn-hd-bat { position: absolute; left: 6px; top: 0; animation: cn-hd-flap 1.2s steps(2) infinite; }
+#cherry-note-panel[data-theme="haunted"] .cn-hd-ghost { position: absolute; right: 40px; top: -4px; z-index: 1; animation: cn-hd-bob 1.6s steps(2) infinite; }
+@keyframes cn-hd-flap { 50% { transform: translateY(-2px); } }
+@keyframes cn-hd-bob { 50% { transform: translateY(-3px); } }
+#cherry-note-panel[data-theme="haunted"] .cn-hd-mon {
+    position: relative;
+    margin: 0 6px;
+    padding: 12px 12px 16px;
+    background: #4a3a66;
+    box-shadow: 0 -3px 0 #1c1428, 0 3px 0 #1c1428, -3px 0 0 #1c1428, 3px 0 0 #1c1428, inset -4px -4px 0 #33264a, inset 4px 4px 0 #6a5790;
+}
+#cherry-note-panel[data-theme="haunted"] .cn-hd-scr {
+    position: relative;
+    padding: 10px 10px 8px;
+    background: #150f1d;
+    box-shadow: 0 0 0 3px #0d0912, inset 0 0 22px rgba(184, 155, 224, 0.22);
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    overflow: hidden;
+}
+#cherry-note-panel[data-theme="haunted"] .cn-hd-scr::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 3px);
+    pointer-events: none;
+}
+#cherry-note-panel[data-theme="haunted"] .cn-hd-head {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #e9e0ff;
+}
+#cherry-note-panel[data-theme="haunted"] #cherry-note-char-name { max-width: 170px; font-size: 12px; }
+#cherry-note-panel[data-theme="haunted"] .cn-hd-rec {
+    font-family: "CN Galmuri9", monospace !important;
+    font-size: 10px;
+    font-weight: 400;
+    color: #f5a3c7;
+    animation: cn-hd-blink 1.4s steps(1) infinite;
+}
+@keyframes cn-hd-blink { 50% { opacity: 0.25; } }
+#cherry-note-panel[data-theme="haunted"] #cherry-note-textarea {
+    position: relative;
+    height: 150px;
+    padding: 6px 8px;
+    background: rgba(184, 155, 224, 0.06);
+    box-shadow: 0 0 0 2px #3b2d55;
+    color: #e9e0ff;
+    line-height: 1.75;
+}
+#cherry-note-panel[data-theme="haunted"] #cherry-note-textarea::placeholder { color: #6f5f8e; }
+#cherry-note-panel[data-theme="haunted"] #cherry-note-textarea:disabled { background: rgba(184, 155, 224, 0.03); color: #6f5f8e; }
+#cherry-note-panel[data-theme="haunted"] .cn-hd-info {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    color: #b89be0;
+}
+#cherry-note-panel[data-theme="haunted"] .cn-hd-info,
+#cherry-note-panel[data-theme="haunted"] .cn-hd-info * {
+    font-family: "CN Galmuri9", monospace !important;
+    font-size: 10px;
+}
+#cherry-note-panel[data-theme="haunted"] #cherry-note-status { color: #f5a3c7; margin-right: auto; }
+#cherry-note-panel[data-theme="haunted"] .cn-hd-led {
+    position: absolute;
+    right: 14px;
+    bottom: 5px;
+    width: 6px;
+    height: 4px;
+    background: #b89be0;
+    box-shadow: 0 0 6px #b89be0;
+}
+#cherry-note-panel[data-theme="haunted"].cn-dirty .cn-hd-led { background: #f5a3c7; box-shadow: 0 0 6px #f5a3c7; }
+#cherry-note-panel[data-theme="haunted"] .cn-hd-stand { display: flex; flex-direction: column; align-items: center; }
+#cherry-note-panel[data-theme="haunted"] .cn-hd-stand i { display: block; }
+#cherry-note-panel[data-theme="haunted"] .cn-hd-stand i:first-child {
+    width: 40px;
+    height: 12px;
+    background: #33264a;
+    box-shadow: -3px 0 0 #1c1428, 3px 0 0 #1c1428;
+}
+#cherry-note-panel[data-theme="haunted"] .cn-hd-stand i:last-child {
+    width: 120px;
+    height: 6px;
+    background: #4a3a66;
+    box-shadow: 0 -3px 0 #1c1428, -3px 0 0 #1c1428, 3px 0 0 #1c1428;
+}
+#cherry-note-panel[data-theme="haunted"] .cn-hd-desk {
+    position: relative;
+    height: 66px;
+    background: #5b3f7a;
+    box-shadow: 0 -3px 0 #1c1428, 0 3px 0 #1c1428, -3px 0 0 #1c1428, 3px 0 0 #1c1428, inset 0 4px 0 #7b5aa0, inset 0 -4px 0 #48305f;
+}
+#cherry-note-panel[data-theme="haunted"] .cn-hd-glow {
+    position: absolute;
+    left: 4px;
+    bottom: calc(100% - 13px);
+    width: 36px;
+    height: 44px;
+    background: radial-gradient(circle at 50% 22%, rgba(255, 200, 110, 0.45), transparent 60%);
+    pointer-events: none;
+}
+#cherry-note-panel[data-theme="haunted"] .cn-hd-candle,
+#cherry-note-panel[data-theme="haunted"] .cn-hd-potion,
+#cherry-note-panel[data-theme="haunted"] .cn-hd-skull { position: absolute; bottom: calc(100% - 12px); }
+#cherry-note-panel[data-theme="haunted"] .cn-hd-candle { left: 12px; }
+#cherry-note-panel[data-theme="haunted"] .cn-hd-potion { left: 42px; }
+#cherry-note-panel[data-theme="haunted"] .cn-hd-skull { right: 12px; }
+#cherry-note-panel[data-theme="haunted"] .cn-hd-kb {
+    position: absolute;
+    left: 50%;
+    top: 14px;
+    transform: translateX(-50%);
+    width: 196px;
+    height: 36px;
+    padding: 5px 6px;
+    background: #2d2340;
+    box-shadow: 0 0 0 3px #1c1428, inset 0 -3px 0 #221a31;
+    display: flex;
+    align-items: stretch;
+    gap: 5px;
+}
+#cherry-note-panel[data-theme="haunted"] .cn-hd-esc,
+#cherry-note-panel[data-theme="haunted"] #cherry-note-save-btn {
+    height: auto;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    font-family: "CN Galmuri9", monospace !important;
+    font-size: 10px;
+}
+#cherry-note-panel[data-theme="haunted"] .cn-hd-esc {
+    width: 38px;
+    background: #6a5790;
+    box-shadow: inset 0 -3px 0 #4a3a66, 0 0 0 2px #1c1428;
+    color: #e9e0ff;
+}
+#cherry-note-panel[data-theme="haunted"] #cherry-note-save-btn {
+    width: 52px;
+    background: #cbb4f0;
+    box-shadow: inset 0 -3px 0 #a58ad4, 0 0 0 2px #1c1428;
+    font-weight: 700;
+    color: #2d2340;
+}
+#cherry-note-panel[data-theme="haunted"] .cn-hd-esc:active,
+#cherry-note-panel[data-theme="haunted"] #cherry-note-save-btn:active { box-shadow: inset 0 3px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px #1c1428; }
+#cherry-note-panel[data-theme="haunted"] .cn-hd-keys {
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: 3px;
+}
+#cherry-note-panel[data-theme="haunted"] .cn-hd-keys i { display: block; background: #4a3a66; box-shadow: 0 0 0 1px #1c1428; }
+
+/* ---------------- 14 마녀 주문서 ---------------- */
+#cherry-note-panel[data-theme="grimoire"] {
+    background: transparent;
+    padding: 24px 0 8px;
+    gap: 0;
+    box-shadow: none;
+    color: #3b2a4a;
+}
+#cherry-note-panel[data-theme="grimoire"] .cn-gm-cover {
+    position: relative;
+    padding: 10px;
+    background: #6b3a8e;
+    box-shadow: 0 -3px 0 #1c1428, 0 3px 0 #1c1428, -3px 0 0 #1c1428, 3px 0 0 #1c1428, inset -4px -4px 0 #4f2a6b, inset 4px 4px 0 #8a55ad, 0 8px 0 -2px rgba(20, 10, 30, 0.35);
+}
+#cherry-note-panel[data-theme="grimoire"] .cn-gm-corner {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #f2c14e;
+    box-shadow: inset -2px -2px 0 #c9912c, 0 0 0 2px #1c1428;
+    z-index: 1;
+}
+#cherry-note-panel[data-theme="grimoire"] .cn-gm-tl { left: -3px; top: -3px; }
+#cherry-note-panel[data-theme="grimoire"] .cn-gm-tr { right: -3px; top: -3px; }
+#cherry-note-panel[data-theme="grimoire"] .cn-gm-bl { left: -3px; bottom: -3px; }
+#cherry-note-panel[data-theme="grimoire"] .cn-gm-br { right: -3px; bottom: -3px; }
+#cherry-note-panel[data-theme="grimoire"] .cn-gm-hat {
+    position: absolute;
+    left: -8px;
+    top: -28px;
+    z-index: 2;
+    transform: rotate(-12deg);
+}
+#cherry-note-panel[data-theme="grimoire"] .cn-gm-page {
+    position: relative;
+    padding: 12px;
+    background-color: #efe3cc;
+    background-image: radial-gradient(ellipse at 80% 90%, rgba(180, 140, 90, 0.18), transparent 50%), radial-gradient(ellipse at 10% 10%, rgba(255, 255, 255, 0.5), transparent 50%);
+    box-shadow: 0 0 0 2px #1c1428, inset 0 0 0 2px #d9c29c, inset -4px -4px 0 #e2d2b4;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+#cherry-note-panel[data-theme="grimoire"] .cn-gm-head { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+#cherry-note-panel[data-theme="grimoire"] .cn-gm-titles { display: flex; flex-direction: column; min-width: 0; }
+#cherry-note-panel[data-theme="grimoire"] .cn-gm-titles b { font-size: 14px; color: #4b2a66; letter-spacing: 1px; }
+#cherry-note-panel[data-theme="grimoire"] small,
+#cherry-note-panel[data-theme="grimoire"] small *,
+#cherry-note-panel[data-theme="grimoire"] .cn-gm-seal,
+#cherry-note-panel[data-theme="grimoire"] .cn-gm-seal * {
+    font-family: "CN Galmuri9", monospace !important;
+    font-size: 10px;
+    color: #7b5a8e;
+}
+#cherry-note-panel[data-theme="grimoire"] #cherry-note-char-name {
+    display: inline-block;
+    max-width: 96px;
+    vertical-align: bottom;
+}
+#cherry-note-panel[data-theme="grimoire"] .cn-gm-mana {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 6px;
+    background: #e4d4b6;
+    box-shadow: 0 0 0 2px #c9b18c;
+}
+#cherry-note-panel[data-theme="grimoire"] .cn-gm-mana b {
+    width: 32px;
+    font-family: "CN Galmuri9", monospace !important;
+    font-size: 10px;
+    color: #6b3a8e;
+}
+#cherry-note-panel[data-theme="grimoire"] .cn-inject-bar { display: flex; gap: 4px; }
+#cherry-note-panel[data-theme="grimoire"] .cn-inject-bar i { display: block; opacity: 0.3; transition: opacity 0.2s steps(2); }
+#cherry-note-panel[data-theme="grimoire"] .cn-inject-bar i.on { opacity: 1; }
+#cherry-note-panel[data-theme="grimoire"] #cherry-note-textarea {
+    height: 150px;
+    padding: 3px 8px;
+    background-color: rgba(255, 250, 240, 0.55);
+    background-image: repeating-linear-gradient(transparent 0 23px, #d9c7a6 23px 24px);
+    background-position: 0 3px;
+    background-attachment: local;
+    box-shadow: 0 0 0 2px #c9b18c;
+    color: #3b2a4a;
+    line-height: 24px;
+}
+#cherry-note-panel[data-theme="grimoire"] #cherry-note-textarea::placeholder { color: #a8906e; }
+#cherry-note-panel[data-theme="grimoire"] .cn-gm-foot { display: flex; align-items: flex-end; gap: 8px; }
+#cherry-note-panel[data-theme="grimoire"] .cn-gm-seal { flex-grow: 1; min-width: 0; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#cherry-note-panel[data-theme="grimoire"] .cn-gm-sealtext { display: none; }
+#cherry-note-panel[data-theme="grimoire"].cn-has-saved .cn-gm-sealtext { display: inline; }
+#cherry-note-panel[data-theme="grimoire"] #cherry-note-status { color: #c9912c; }
+#cherry-note-panel[data-theme="grimoire"] .cn-gm-x {
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: #e4d4b6;
+    box-shadow: 0 0 0 2px #1c1428, inset -2px -2px 0 #c9b18c;
+    font-size: 12px;
+    font-weight: 700;
+    color: #6b3a8e;
+}
+#cherry-note-panel[data-theme="grimoire"] #cherry-note-save-btn {
+    height: 34px;
+    padding: 0 10px 0 4px;
+    background: #7b3fa0;
+    box-shadow: 0 0 0 2px #1c1428, inset -3px -3px 0 #5a2a7a, inset 3px 3px 0 #9a5ec2;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #f2c14e;
+}
+#cherry-note-panel[data-theme="grimoire"] .cn-gm-x:active,
+#cherry-note-panel[data-theme="grimoire"] #cherry-note-save-btn:active { transform: translateY(1px); }
+
+/* ---------------- 15 메모 펫 ---------------- */
+#cherry-note-panel.cn-retro[data-theme="memopet"] {
+    box-sizing: border-box;
+    width: 228px;
+    background: #3a2a5c;
+    padding: 4px;
+    gap: 0;
+    box-shadow: none;
+    clip-path: polygon(12px 0, calc(100% - 12px) 0, calc(100% - 12px) 4px, calc(100% - 4px) 4px, calc(100% - 4px) 12px, 100% 12px, 100% calc(100% - 12px), calc(100% - 4px) calc(100% - 12px), calc(100% - 4px) calc(100% - 4px), calc(100% - 12px) calc(100% - 4px), calc(100% - 12px) 100%, 12px 100%, 12px calc(100% - 4px), 4px calc(100% - 4px), 4px calc(100% - 12px), 0 calc(100% - 12px), 0 12px, 4px 12px, 4px 4px, 12px 4px);
+    color: #2e3b3a;
+}
+#cherry-note-panel[data-theme="memopet"] .cn-mp-plate {
+    position: relative;
+    padding: 8px;
+    background: linear-gradient(180deg, #b7b1f5 0%, #a39cec 100%);
+    clip-path: polygon(10px 0, calc(100% - 10px) 0, calc(100% - 10px) 4px, calc(100% - 4px) 4px, calc(100% - 4px) 10px, 100% 10px, 100% calc(100% - 10px), calc(100% - 4px) calc(100% - 10px), calc(100% - 4px) calc(100% - 4px), calc(100% - 10px) calc(100% - 4px), calc(100% - 10px) 100%, 10px 100%, 10px calc(100% - 4px), 4px calc(100% - 4px), 4px calc(100% - 10px), 0 calc(100% - 10px), 0 10px, 4px 10px, 4px 4px, 10px 4px);
+}
+#cherry-note-panel[data-theme="memopet"] .cn-mp-plate::before,
+#cherry-note-panel[data-theme="memopet"] .cn-mp-plate::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.55);
+}
+#cherry-note-panel[data-theme="memopet"] .cn-mp-plate::before { left: 10px; width: 28px; }
+#cherry-note-panel[data-theme="memopet"] .cn-mp-plate::after { left: 42px; width: 6px; }
+#cherry-note-panel[data-theme="memopet"] .cn-mp-bezel {
+    padding: 9px;
+    background: #8d86e0;
+    box-shadow: 0 -3px 0 #3a2a5c, 0 3px 0 #3a2a5c, -3px 0 0 #3a2a5c, 3px 0 0 #3a2a5c, inset -3px -3px 0 #7870d0, inset 3px 3px 0 #aba6f2;
+}
+#cherry-note-panel[data-theme="memopet"] .cn-mp-lcd {
+    padding: 6px 7px;
+    background-color: #cdeee2;
+    background-image: radial-gradient(#b8e0d2 0.8px, transparent 0.8px);
+    background-size: 3px 3px;
+    box-shadow: 0 0 0 2px #3a2a5c;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+#cherry-note-panel[data-theme="memopet"] .cn-mp-menu {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-bottom: 4px;
+    border-bottom: 1px dashed #7fa597;
+}
+#cherry-note-panel[data-theme="memopet"] .cn-mp-sel { padding: 2px; background: #3a4a50; }
+#cherry-note-panel[data-theme="memopet"] .cn-mp-sel svg { filter: invert(1); }
+#cherry-note-panel[data-theme="memopet"] .cn-mp-pet { display: flex; align-items: center; justify-content: flex-start; gap: 8px; color: #2e3b3a; }
+#cherry-note-panel[data-theme="memopet"] .cn-mp-cat { position: relative; width: 32px; height: 28px; flex-shrink: 0; }
+#cherry-note-panel[data-theme="memopet"] .cn-mp-cat svg { position: absolute; left: 0; top: 0; }
+#cherry-note-panel[data-theme="memopet"] .cn-mp-fa { animation: cn-mp-a 4s steps(1) infinite; }
+#cherry-note-panel[data-theme="memopet"] .cn-mp-fb { animation: cn-mp-b 4s steps(1) infinite; }
+@keyframes cn-mp-a { 0% { opacity: 1; } 88% { opacity: 0; } 94% { opacity: 1; } }
+@keyframes cn-mp-b { 0% { opacity: 0; } 88% { opacity: 1; } 94% { opacity: 0; } }
+#cherry-note-panel[data-theme="memopet"] .cn-mp-info { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+#cherry-note-panel[data-theme="memopet"] #cherry-note-char-name { max-width: 120px; font-size: 12px; font-weight: 700; color: #2e3b3a; }
+#cherry-note-panel[data-theme="memopet"] small,
+#cherry-note-panel[data-theme="memopet"] small *,
+#cherry-note-panel[data-theme="memopet"] .cn-mp-foot,
+#cherry-note-panel[data-theme="memopet"] .cn-mp-foot * {
+    font-family: "CN Galmuri9", monospace !important;
+    font-size: 10px;
+}
+#cherry-note-panel[data-theme="memopet"] #cherry-note-textarea {
+    height: 104px;
+    min-height: 60px;
+    padding: 4px 5px;
+    background: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 0 0 1px #8fbcac;
+    color: #2e3b3a;
+    line-height: 1.6;
+}
+#cherry-note-panel[data-theme="memopet"] #cherry-note-textarea::placeholder { color: #7fa597; }
+#cherry-note-panel[data-theme="memopet"] .cn-mp-foot { display: flex; align-items: center; justify-content: flex-start; gap: 5px; color: #2e3b3a; }
+#cherry-note-panel[data-theme="memopet"] #cherry-note-status { flex-grow: 1; color: #3a4a50; font-weight: 700; }
+#cherry-note-panel[data-theme="memopet"] .cn-mp-btn,
+#cherry-note-panel[data-theme="memopet"] #cherry-note-save-btn {
+    width: auto;
+    height: 15px;
+    padding: 0 4px;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: 0 0 0 1px #3a4a50;
+    color: #2e3b3a;
+    display: flex;
+    align-items: center;
+}
+#cherry-note-panel[data-theme="memopet"] #cherry-note-save-btn { background: #3a4a50; color: #cdeee2; }
+#cherry-note-panel[data-theme="memopet"] .cn-mp-btn:active { transform: translateY(1px); }
+
+/* ---------------- 4·5차 플로팅 버튼 ---------------- */
+#cherry-note-icon[data-icon-theme="inbox"],
+#cherry-note-icon[data-icon-theme="grimoire"],
+#cherry-note-icon[data-icon-theme="memopet"] {
+    width: auto;
+    height: auto;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.25));
+}
+#cherry-note-icon[data-icon-theme="inbox"]:hover,
+#cherry-note-icon[data-icon-theme="grimoire"]:hover,
+#cherry-note-icon[data-icon-theme="memopet"]:hover { box-shadow: none; }
+#cherry-note-icon[data-icon-theme="haunted"] {
+    box-sizing: border-box;
+    width: 36px;
+    height: 36px;
+    border-radius: 0;
+    background: #3b2d55;
+    box-shadow: 0 -2px 0 #1c1428, 0 2px 0 #1c1428, -2px 0 0 #1c1428, 2px 0 0 #1c1428, inset -2px -2px 0 #2d2340, inset 2px 2px 0 #5b4a7a;
+}
+#cherry-note-icon[data-icon-theme="haunted"]:hover {
+    box-shadow: 0 -2px 0 #1c1428, 0 2px 0 #1c1428, -2px 0 0 #1c1428, 2px 0 0 #1c1428, inset -2px -2px 0 #2d2340, inset 2px 2px 0 #6c5a8e;
+}
+#cherry-note-icon svg { display: block; image-rendering: pixelated; }
