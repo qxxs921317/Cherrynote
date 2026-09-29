@@ -25,8 +25,10 @@ const ICON_THEMES = [
     { id: "cafe", label: "🍒 체리 카페 깅엄", html: () => `<span class="cn-ic-cf-inner">${SVG.cherry(15)}</span>` },
     { id: "inbox", label: "🖥️ 1비트 모니터", html: () => spr("inbox_moni", 32, 28) },
     { id: "haunted", label: "👻 으스스 유령", html: () => spr("hd_ghost", 21, 21) },
-    { id: "grimoire", label: "📖 마녀 주문서", html: () => spr("gm_book", 32, 30) },
     { id: "memopet", label: "🐱 메모 펫 액정", html: () => spr("mp_icon", 40, 36) },
+    { id: "flip", label: "📱 핑크 폴더폰", html: () => `<span class="cn-ic-fp-top"><i></i></span><span class="cn-ic-fp-bot">${CUTE.gemHeart(9)}</span>` },
+    { id: "dreamds", label: "🌸 드림 게임기", html: () => `<span class="cn-ic-dd-scr">${CUTE.cloud(12)}</span><span class="cn-ic-dd-scr cn-ic-dd-low">${CUTE.sakura(8, "#fff", "#5b4348")}</span>` },
+    { id: "journal", label: "🌾 농장 다이어리", html: () => `<span class="cn-ic-jr-page">${PX.heart("#e8708f", 11)}</span><span class="cn-ic-jr-tab"></span>` },
 ];
 
 const PANEL_THEMES = [
@@ -47,8 +49,10 @@ const PANEL_THEMES = [
     { id: "cafe", label: "🍒 체리 카페 영수증" },
     { id: "inbox", label: "🖥️ 1비트 인박스 (픽셀)" },
     { id: "haunted", label: "👻 으스스 책상 (픽셀)" },
-    { id: "grimoire", label: "📖 마녀 주문서 (픽셀)" },
     { id: "memopet", label: "🐱 메모 펫 (픽셀)" },
+    { id: "flip", label: "📱 핑크 폴더폰 (픽셀)" },
+    { id: "dreamds", label: "🌸 드림 게임기 (픽셀)" },
+    { id: "journal", label: "🌾 농장 다이어리 (픽셀)" },
 ];
 
 // ---------- 영수증 테마용 선 그림 (SVG) ----------
@@ -100,9 +104,41 @@ const PX = {
         '<svg class="cn-px" width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="12" fill="#e6e0ff" stroke="#a99be6" stroke-width="1.5"/><circle cx="13" cy="13" r="8" fill="#fbe3f1"/><circle cx="13" cy="13" r="3.5" fill="#ffffff" stroke="#a99be6" stroke-width="1.5"/></svg>',
 };
 
+// ---------- 신규 테마(flip / dreamds / journal)용 작은 그림 ----------
+
+const CUTE = {
+    // 보석 하트 (폴더폰 스티커)
+    gemHeart: (w = 16, fill = "#f9a9cb", edge = "#e57fac") =>
+        `<svg class="cn-px" width="${w}" height="${Math.round(w * 0.9)}" viewBox="0 0 20 18" aria-hidden="true"><path d="M10 17 L2.2 9.2 C-0.6 6.4 1 1.4 5.2 1.2 C7.4 1.1 9 2.6 10 4.2 C11 2.6 12.6 1.1 14.8 1.2 C19 1.4 20.6 6.4 17.8 9.2 Z" fill="${fill}" stroke="${edge}" stroke-width="1.4" stroke-linejoin="round"/><path d="M10 4.2 L6.5 8.4 L10 14 L13.5 8.4 Z" fill="#ffffff" opacity=".35"/><path d="M4.4 4.2 C5.2 3.3 6.6 3.2 7.4 3.8" stroke="#ffffff" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg>`,
+    // 안테나 막대 (T.ıl)
+    signal: (color = "#c46a97") =>
+        `<svg class="cn-px" width="15" height="9" viewBox="0 0 15 9" shape-rendering="crispEdges" fill="${color}" aria-hidden="true"><rect x="0" y="0" width="5" height="1"/><rect x="2" y="1" width="1" height="8"/><rect x="6" y="6" width="2" height="3"/><rect x="9" y="4" width="2" height="5"/><rect x="12" y="1" width="2" height="8"/></svg>`,
+    // 벚꽃 (드림 게임기)
+    sakura: (w = 18, fill = "#ffffff", stroke = "#5b4348") =>
+        `<svg class="cn-px" width="${w}" height="${w}" viewBox="0 0 24 24" aria-hidden="true"><g fill="${fill}" stroke="${stroke}" stroke-width="1.6" stroke-linejoin="round">${[0, 72, 144, 216, 288].map((r) => `<path transform="rotate(${r} 12 12)" d="M12 12 C8.6 9 8.8 4.4 10.6 3 L12 4.6 L13.4 3 C15.2 4.4 15.4 9 12 12 Z"/>`).join("")}</g><circle cx="12" cy="12" r="1.6" fill="${stroke}"/></svg>`,
+    // 구름 한 덩이
+    cloud: (w = 34, fill = "#ffffff") =>
+        `<svg class="cn-px" width="${w}" height="${Math.round(w * 0.5)}" viewBox="0 0 34 17" aria-hidden="true"><path d="M3 16 C0 16 0 11 4 11 C4 6 10 5 12 8 C13 2 22 1 23 7 C27 4 32 7 30 11 C34 11 34 16 30 16 Z" fill="${fill}"/></svg>`,
+    // 픽셀 연필 (농장 다이어리 편집 아이콘)
+    pencil: (w = 12) =>
+        `<svg class="cn-px" width="${w}" height="${w}" viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><rect x="5" y="0" width="2" height="1" fill="#e98fae"/><rect x="4" y="1" width="3" height="1" fill="#c9a24a"/><rect x="3" y="2" width="3" height="1" fill="#f4c95d"/><rect x="2" y="3" width="3" height="1" fill="#f4c95d"/><rect x="1" y="4" width="3" height="1" fill="#f4c95d"/><rect x="0" y="5" width="3" height="1" fill="#f1dcb2"/><rect x="0" y="6" width="2" height="1" fill="#f1dcb2"/><rect x="0" y="7" width="1" height="1" fill="#5b4348"/><rect x="6" y="2" width="1" height="1" fill="#c9a24a"/></svg>`,
+    // 픽셀 셔츠 (탭 아이콘)
+    shirt: (w = 12, fill = "#e8708f") =>
+        `<svg class="cn-px" width="${w}" height="${w}" viewBox="0 0 8 8" shape-rendering="crispEdges" fill="${fill}" aria-hidden="true"><rect x="0" y="1" width="3" height="2"/><rect x="5" y="1" width="3" height="2"/><rect x="2" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="2" y="1" width="4" height="7"/><rect x="3" y="1" width="2" height="1" fill="#ffffff"/></svg>`,
+    // 픽셀 편지 (탭 아이콘)
+    mail: (w = 12) =>
+        `<svg class="cn-px" width="${w}" height="${w}" viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><rect x="0" y="1" width="8" height="6" fill="#8a4b3c"/><rect x="1" y="2" width="6" height="4" fill="#fff6ee"/><rect x="1" y="2" width="1" height="1" fill="#8a4b3c"/><rect x="6" y="2" width="1" height="1" fill="#8a4b3c"/><rect x="2" y="3" width="1" height="1" fill="#8a4b3c"/><rect x="5" y="3" width="1" height="1" fill="#8a4b3c"/><rect x="3" y="4" width="2" height="1" fill="#e8708f"/></svg>`,
+    // 픽셀 눈송이 (탭 아이콘)
+    snow: (w = 12) =>
+        `<svg class="cn-px" width="${w}" height="${w}" viewBox="0 0 7 7" shape-rendering="crispEdges" fill="#ffffff" aria-hidden="true"><rect x="3" y="0" width="1" height="7"/><rect x="0" y="3" width="7" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="1" y="5" width="1" height="1"/><rect x="5" y="5" width="1" height="1"/></svg>`,
+    // 픽셀 톱니 (탭 아이콘)
+    gear: (w = 12) =>
+        `<svg class="cn-px" width="${w}" height="${w}" viewBox="0 0 7 7" shape-rendering="crispEdges" fill="#6f6a72" aria-hidden="true"><rect x="3" y="0" width="1" height="1"/><rect x="3" y="6" width="1" height="1"/><rect x="0" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="1" y="1" width="5" height="5"/><rect x="3" y="3" width="1" height="1" fill="#e2dfe4"/></svg>`,
+};
+
 // ---------- 4·5차 픽셀 스프라이트 (색상별 path로 압축) ----------
 
-const SPR = {"inbox_env":["0 0 16 14","<path fill=\"#2b2d33\" d=\"M0 0h16v1h-16zM0 1h1v1h-1zM15 1h1v1h-1zM0 2h2v1h-2zM14 2h2v1h-2zM0 3h1v1h-1zM2 3h1v1h-1zM13 3h1v1h-1zM15 3h1v1h-1zM0 4h1v1h-1zM3 4h1v1h-1zM12 4h1v1h-1zM15 4h1v1h-1zM0 5h1v1h-1zM4 5h1v1h-1zM11 5h1v1h-1zM15 5h1v1h-1zM0 6h1v1h-1zM5 6h2v1h-2zM9 6h2v1h-2zM15 6h1v1h-1zM0 7h1v1h-1zM6 7h1v1h-1zM9 7h1v1h-1zM15 7h1v1h-1zM0 8h1v1h-1zM5 8h1v1h-1zM7 8h2v1h-2zM10 8h1v1h-1zM15 8h1v1h-1zM0 9h1v1h-1zM4 9h1v1h-1zM11 9h1v1h-1zM15 9h1v1h-1zM0 10h1v1h-1zM3 10h1v1h-1zM12 10h1v1h-1zM15 10h1v1h-1zM0 11h1v1h-1zM2 11h1v1h-1zM13 11h1v1h-1zM15 11h1v1h-1zM0 12h2v1h-2zM14 12h2v1h-2zM0 13h16v1h-16z\"/><path fill=\"#efe9d7\" d=\"M1 1h14v1h-14zM2 2h12v1h-12zM1 3h1v1h-1zM3 3h10v1h-10zM14 3h1v1h-1zM1 4h2v1h-2zM4 4h8v1h-8zM13 4h2v1h-2zM1 5h3v1h-3zM5 5h6v1h-6zM12 5h3v1h-3zM1 6h4v1h-4zM7 6h2v1h-2zM11 6h4v1h-4zM1 7h5v1h-5zM7 7h2v1h-2zM10 7h5v1h-5zM1 8h4v1h-4zM6 8h1v1h-1zM9 8h1v1h-1zM11 8h4v1h-4zM1 9h3v1h-3zM5 9h6v1h-6zM12 9h3v1h-3zM1 10h2v1h-2zM4 10h8v1h-8zM13 10h2v1h-2zM1 11h1v1h-1zM3 11h10v1h-10zM14 11h1v1h-1zM2 12h12v1h-12z\"/>"],"inbox_gear":["0 0 11 11","<path fill=\"#2b2d33\" d=\"M4 0h3v1h-3zM1 1h2v1h-2zM4 1h3v1h-3zM8 1h2v1h-2zM1 2h9v1h-9zM2 3h3v1h-3zM6 3h3v1h-3zM0 4h4v1h-4zM7 4h4v1h-4zM0 5h3v1h-3zM8 5h3v1h-3zM0 6h4v1h-4zM7 6h4v1h-4zM2 7h3v1h-3zM6 7h3v1h-3zM1 8h9v1h-9zM1 9h2v1h-2zM4 9h3v1h-3zM8 9h2v1h-2zM4 10h3v1h-3z\"/><path fill=\"#efe9d7\" d=\"M5 3h1v1h-1zM4 4h3v1h-3zM3 5h5v1h-5zM4 6h3v1h-3zM5 7h1v1h-1z\"/>"],"inbox_smile":["0 0 9 8","<path fill=\"#2b2d33\" d=\"M1 0h7v1h-7zM0 1h1v1h-1zM8 1h1v1h-1zM0 2h1v1h-1zM2 2h1v1h-1zM6 2h1v1h-1zM8 2h1v1h-1zM0 3h1v1h-1zM8 3h1v1h-1zM0 4h1v1h-1zM2 4h1v1h-1zM6 4h1v1h-1zM8 4h1v1h-1zM0 5h1v1h-1zM3 5h3v1h-3zM8 5h1v1h-1zM0 6h1v1h-1zM8 6h1v1h-1zM1 7h7v1h-7z\"/>"],"inbox_floppy":["0 0 9 8","<path fill=\"#2b2d33\" d=\"M0 0h9v1h-9zM0 1h1v1h-1zM2 1h1v1h-1zM6 1h1v1h-1zM8 1h1v1h-1zM0 2h1v1h-1zM2 2h1v1h-1zM6 2h1v1h-1zM8 2h1v1h-1zM0 3h1v1h-1zM2 3h5v1h-5zM8 3h1v1h-1zM0 4h1v1h-1zM8 4h1v1h-1zM0 5h1v1h-1zM2 5h5v1h-5zM8 5h1v1h-1zM0 6h1v1h-1zM2 6h1v1h-1zM6 6h1v1h-1zM8 6h1v1h-1zM0 7h9v1h-9z\"/><path fill=\"#efe9d7\" d=\"M1 1h1v1h-1zM3 1h3v1h-3zM7 1h1v1h-1zM1 2h1v1h-1zM3 2h3v1h-3zM7 2h1v1h-1zM1 3h1v1h-1zM7 3h1v1h-1zM1 4h7v1h-7zM1 5h1v1h-1zM7 5h1v1h-1zM1 6h1v1h-1zM3 6h3v1h-3zM7 6h1v1h-1z\"/>"],"inbox_moni":["0 0 16 14","<path fill=\"#2b2d33\" d=\"M0 0h16v1h-16zM0 1h1v1h-1zM15 1h1v1h-1zM0 2h1v1h-1zM2 2h12v1h-12zM15 2h1v1h-1zM0 3h1v1h-1zM2 3h1v1h-1zM13 3h1v1h-1zM15 3h1v1h-1zM0 4h1v1h-1zM2 4h1v1h-1zM4 4h1v1h-1zM11 4h1v1h-1zM13 4h1v1h-1zM15 4h1v1h-1zM0 5h1v1h-1zM2 5h1v1h-1zM13 5h1v1h-1zM15 5h1v1h-1zM0 6h1v1h-1zM2 6h1v1h-1zM5 6h1v1h-1zM10 6h1v1h-1zM13 6h1v1h-1zM15 6h1v1h-1zM0 7h1v1h-1zM2 7h1v1h-1zM6 7h4v1h-4zM13 7h1v1h-1zM15 7h1v1h-1zM0 8h1v1h-1zM2 8h1v1h-1zM13 8h1v1h-1zM15 8h1v1h-1zM0 9h1v1h-1zM2 9h12v1h-12zM15 9h1v1h-1zM0 10h1v1h-1zM13 10h3v1h-3zM0 11h16v1h-16zM5 12h1v1h-1zM10 12h1v1h-1zM4 13h8v1h-8z\"/><path fill=\"#efe9d7\" d=\"M1 1h14v1h-14zM1 2h1v1h-1zM14 2h1v1h-1zM1 3h1v1h-1zM3 3h10v1h-10zM14 3h1v1h-1zM1 4h1v1h-1zM3 4h1v1h-1zM5 4h6v1h-6zM12 4h1v1h-1zM14 4h1v1h-1zM1 5h1v1h-1zM3 5h10v1h-10zM14 5h1v1h-1zM1 6h1v1h-1zM3 6h2v1h-2zM6 6h4v1h-4zM11 6h2v1h-2zM14 6h1v1h-1zM1 7h1v1h-1zM3 7h3v1h-3zM10 7h3v1h-3zM14 7h1v1h-1zM1 8h1v1h-1zM3 8h10v1h-10zM14 8h1v1h-1zM1 9h1v1h-1zM14 9h1v1h-1zM1 10h12v1h-12zM6 12h4v1h-4z\"/>"],"hd_bat":["0 0 16 9","<path fill=\"#1c1428\" d=\"M5 1h1v1h-1zM10 1h1v1h-1zM5 2h2v1h-2zM9 2h2v1h-2zM4 3h1v1h-1zM11 3h1v1h-1zM1 4h3v1h-3zM12 4h3v1h-3zM0 5h1v1h-1zM15 5h1v1h-1zM0 6h1v1h-1zM3 6h2v1h-2zM11 6h2v1h-2zM15 6h1v1h-1zM0 7h1v1h-1zM2 7h1v1h-1zM5 7h2v1h-2zM9 7h2v1h-2zM13 7h1v1h-1zM15 7h1v1h-1zM0 8h2v1h-2zM7 8h2v1h-2zM14 8h2v1h-2z\"/><path fill=\"#6b5a8e\" d=\"M5 3h6v1h-6zM4 4h2v1h-2zM7 4h2v1h-2zM10 4h2v1h-2zM1 5h14v1h-14zM1 6h2v1h-2zM5 6h2v1h-2zM9 6h2v1h-2zM13 6h2v1h-2zM1 7h1v1h-1zM7 7h2v1h-2zM14 7h1v1h-1z\"/><path fill=\"#ffffff\" d=\"M6 4h1v1h-1zM9 4h1v1h-1z\"/><path fill=\"#f5a3c7\" d=\"M7 6h2v1h-2z\"/>"],"hd_ghost":["0 0 14 14","<path fill=\"#1c1428\" d=\"M4 0h6v1h-6zM3 1h1v1h-1zM10 1h1v1h-1zM2 2h1v1h-1zM11 2h1v1h-1zM1 3h1v1h-1zM12 3h1v1h-1zM1 4h1v1h-1zM12 4h1v1h-1zM1 5h1v1h-1zM4 5h1v1h-1zM9 5h1v1h-1zM12 5h1v1h-1zM1 6h1v1h-1zM4 6h1v1h-1zM9 6h1v1h-1zM12 6h1v1h-1zM1 7h1v1h-1zM12 7h1v1h-1zM1 8h1v1h-1zM6 8h2v1h-2zM12 8h1v1h-1zM1 9h1v1h-1zM12 9h1v1h-1zM1 10h1v1h-1zM12 10h1v1h-1zM1 11h1v1h-1zM12 11h1v1h-1zM1 12h1v1h-1zM3 12h2v1h-2zM7 12h2v1h-2zM11 12h2v1h-2zM1 13h2v1h-2zM5 13h2v1h-2zM9 13h2v1h-2z\"/><path fill=\"#ffffff\" d=\"M4 1h6v1h-6zM3 2h8v1h-8zM2 3h10v1h-10zM2 4h10v1h-10zM2 5h2v1h-2zM5 5h4v1h-4zM10 5h2v1h-2zM2 6h2v1h-2zM5 6h4v1h-4zM10 6h2v1h-2zM2 7h1v1h-1zM4 7h6v1h-6zM11 7h1v1h-1zM2 8h4v1h-4zM8 8h4v1h-4zM2 9h9v1h-9zM2 10h9v1h-9zM2 11h8v1h-8zM2 12h1v1h-1zM5 12h2v1h-2zM9 12h2v1h-2z\"/><path fill=\"#f5a3c7\" d=\"M3 7h1v1h-1zM10 7h1v1h-1z\"/><path fill=\"#d9cdea\" d=\"M11 9h1v1h-1zM11 10h1v1h-1zM10 11h2v1h-2z\"/>"],"hd_candle":["0 0 7 13","<path fill=\"#ffb84d\" d=\"M3 0h1v1h-1zM2 1h1v1h-1zM4 1h1v1h-1zM2 2h1v1h-1zM4 2h1v1h-1z\"/><path fill=\"#fff3b0\" d=\"M3 1h1v1h-1zM3 2h1v1h-1z\"/><path fill=\"#1c1428\" d=\"M3 3h1v1h-1zM1 4h5v1h-5zM1 5h1v1h-1zM5 5h1v1h-1zM1 6h1v1h-1zM5 6h1v1h-1zM1 7h1v1h-1zM5 7h1v1h-1zM1 8h1v1h-1zM5 8h1v1h-1zM1 9h1v1h-1zM5 9h1v1h-1zM0 10h7v1h-7zM0 11h1v1h-1zM6 11h1v1h-1zM1 12h5v1h-5z\"/><path fill=\"#b89be0\" d=\"M2 5h1v1h-1zM4 5h1v1h-1zM2 6h3v1h-3zM2 7h3v1h-3zM2 8h3v1h-3zM2 9h3v1h-3z\"/><path fill=\"#e2d4f7\" d=\"M3 5h1v1h-1z\"/><path fill=\"#8e8aa0\" d=\"M1 11h5v1h-5z\"/>"],"hd_potion":["0 0 9 12","<path fill=\"#1c1428\" d=\"M3 0h3v1h-3zM3 1h1v1h-1zM5 1h1v1h-1zM3 2h3v1h-3zM3 3h1v1h-1zM5 3h1v1h-1zM2 4h1v1h-1zM6 4h1v1h-1zM1 5h1v1h-1zM7 5h1v1h-1zM0 6h1v1h-1zM8 6h1v1h-1zM0 7h1v1h-1zM8 7h1v1h-1zM0 8h1v1h-1zM8 8h1v1h-1zM0 9h1v1h-1zM8 9h1v1h-1zM1 10h1v1h-1zM7 10h1v1h-1zM2 11h5v1h-5z\"/><path fill=\"#c98e5a\" d=\"M4 1h1v1h-1z\"/><path fill=\"#e8e0f4\" d=\"M4 3h1v1h-1zM3 4h3v1h-3zM2 5h5v1h-5zM1 6h1v1h-1zM7 6h1v1h-1zM1 7h1v1h-1zM7 7h1v1h-1zM1 8h1v1h-1zM7 8h1v1h-1zM1 9h1v1h-1zM7 9h1v1h-1zM2 10h1v1h-1zM6 10h1v1h-1z\"/><path fill=\"#b061d8\" d=\"M2 6h5v1h-5zM2 7h1v1h-1zM4 7h3v1h-3zM2 8h5v1h-5zM2 9h5v1h-5zM3 10h3v1h-3z\"/><path fill=\"#ffffff\" d=\"M3 7h1v1h-1z\"/>"],"hd_skull":["0 0 11 9","<path fill=\"#1c1428\" d=\"M2 0h7v1h-7zM1 1h1v1h-1zM9 1h1v1h-1zM0 2h1v1h-1zM10 2h1v1h-1zM0 3h1v1h-1zM2 3h2v1h-2zM7 3h2v1h-2zM10 3h1v1h-1zM0 4h1v1h-1zM2 4h2v1h-2zM7 4h2v1h-2zM10 4h1v1h-1zM0 5h1v1h-1zM5 5h1v1h-1zM10 5h1v1h-1zM1 6h1v1h-1zM9 6h1v1h-1zM2 7h1v1h-1zM4 7h1v1h-1zM6 7h1v1h-1zM8 7h1v1h-1zM2 8h7v1h-7z\"/><path fill=\"#f4efe6\" d=\"M2 1h7v1h-7zM1 2h8v1h-8zM1 3h1v1h-1zM4 3h3v1h-3zM1 4h1v1h-1zM4 4h3v1h-3zM1 5h4v1h-4zM6 5h3v1h-3zM2 6h6v1h-6zM3 7h1v1h-1zM5 7h1v1h-1zM7 7h1v1h-1z\"/><path fill=\"#cfc6b8\" d=\"M9 2h1v1h-1zM9 3h1v1h-1zM9 4h1v1h-1zM9 5h1v1h-1zM8 6h1v1h-1z\"/>"],"gm_book":["0 0 16 15","<path fill=\"#1c1428\" d=\"M1 0h13v1h-13zM0 1h1v1h-1zM14 1h1v1h-1zM0 2h1v1h-1zM14 2h2v1h-2zM0 3h1v1h-1zM14 3h1v1h-1zM0 4h1v1h-1zM14 4h1v1h-1zM0 5h1v1h-1zM14 5h1v1h-1zM0 6h1v1h-1zM14 6h1v1h-1zM0 7h1v1h-1zM14 7h1v1h-1zM0 8h1v1h-1zM14 8h1v1h-1zM0 9h1v1h-1zM14 9h1v1h-1zM0 10h1v1h-1zM14 10h1v1h-1zM0 11h1v1h-1zM14 11h1v1h-1zM0 12h1v1h-1zM14 12h1v1h-1zM0 13h15v1h-15z\"/><path fill=\"#7b3fa0\" d=\"M1 1h13v1h-13zM1 2h2v1h-2zM4 2h8v1h-8zM13 2h1v1h-1zM1 3h5v1h-5zM9 3h5v1h-5zM1 4h4v1h-4zM7 4h7v1h-7zM1 5h4v1h-4zM6 5h5v1h-5zM12 5h2v1h-2zM1 6h4v1h-4zM6 6h8v1h-8zM1 7h4v1h-4zM7 7h7v1h-7zM1 8h2v1h-2zM4 8h2v1h-2zM9 8h3v1h-3zM13 8h1v1h-1zM1 9h13v1h-13zM1 10h6v1h-6zM8 10h6v1h-6zM1 11h13v1h-13z\"/><path fill=\"#f2c14e\" d=\"M3 2h1v1h-1zM12 2h1v1h-1zM6 3h3v1h-3zM5 4h2v1h-2zM5 5h1v1h-1zM11 5h1v1h-1zM5 6h1v1h-1zM5 7h2v1h-2zM3 8h1v1h-1zM6 8h3v1h-3zM12 8h1v1h-1zM7 10h1v1h-1zM1 12h13v1h-13z\"/><path fill=\"#efe6d8\" d=\"M15 3h1v1h-1zM15 4h1v1h-1zM15 5h1v1h-1zM15 6h1v1h-1zM15 7h1v1h-1zM15 8h1v1h-1zM15 9h1v1h-1zM15 10h1v1h-1zM15 11h1v1h-1zM15 12h1v1h-1zM15 13h1v1h-1zM1 14h14v1h-14z\"/>"],"gm_hat":["0 0 16 12","<path fill=\"#1c1428\" d=\"M8 0h3v1h-3zM7 1h1v1h-1zM11 1h1v1h-1zM6 2h1v1h-1zM11 2h1v1h-1zM5 3h1v1h-1zM11 3h1v1h-1zM4 4h1v1h-1zM11 4h1v1h-1zM4 5h1v1h-1zM11 5h1v1h-1zM3 6h1v1h-1zM12 6h1v1h-1zM3 7h1v1h-1zM12 7h1v1h-1zM2 8h1v1h-1zM13 8h1v1h-1zM0 9h2v1h-2zM14 9h2v1h-2zM0 10h1v1h-1zM15 10h1v1h-1zM1 11h14v1h-14z\"/><path fill=\"#3b3060\" d=\"M8 1h3v1h-3zM7 2h4v1h-4zM6 3h2v1h-2zM9 3h2v1h-2zM5 4h6v1h-6zM5 5h6v1h-6zM4 6h2v1h-2zM7 6h5v1h-5zM3 8h10v1h-10zM2 9h12v1h-12zM1 10h14v1h-14z\"/><path fill=\"#f2c14e\" d=\"M8 3h1v1h-1zM6 6h1v1h-1z\"/><path fill=\"#b061d8\" d=\"M4 7h8v1h-8z\"/>"],"gm_mandrake":["0 0 12 13","<path fill=\"#7fb069\" d=\"M3 0h2v1h-2zM7 0h2v1h-2zM2 1h3v1h-3zM7 1h3v1h-3zM3 2h2v1h-2zM7 2h2v1h-2z\"/><path fill=\"#1c1428\" d=\"M5 1h2v1h-2zM5 2h2v1h-2zM5 3h2v1h-2zM3 4h6v1h-6zM2 5h1v1h-1zM9 5h1v1h-1zM1 6h1v1h-1zM10 6h1v1h-1zM1 7h1v1h-1zM3 7h1v1h-1zM4 7h1v1h-1zM7 7h1v1h-1zM8 7h1v1h-1zM10 7h1v1h-1zM1 8h1v1h-1zM10 8h1v1h-1zM1 9h1v1h-1zM5 9h2v1h-2zM10 9h1v1h-1zM2 10h1v1h-1zM9 10h1v1h-1zM3 11h2v1h-2zM7 11h2v1h-2zM4 12h1v1h-1zM7 12h1v1h-1z\"/><path fill=\"#f3e2c7\" d=\"M3 5h6v1h-6zM2 6h8v1h-8zM2 7h1v1h-1zM5 7h2v1h-2zM9 7h1v1h-1zM2 8h1v1h-1zM4 8h4v1h-4zM9 8h1v1h-1zM2 9h3v1h-3zM7 9h3v1h-3zM3 10h6v1h-6zM5 11h2v1h-2z\"/><path fill=\"#f5a3c7\" d=\"M3 8h1v1h-1zM8 8h1v1h-1z\"/>"],"gm_cauldron":["0 0 16 14","<path fill=\"#cfeecc\" d=\"M4 0h1v1h-1zM7 1h1v1h-1zM10 1h1v1h-1z\"/><path fill=\"#e6fae8\" d=\"M7 0h1v1h-1zM2 1h1v1h-1z\"/><path fill=\"#1c1428\" d=\"M5 2h6v1h-6zM3 3h2v1h-2zM11 3h2v1h-2zM2 4h1v1h-1zM13 4h1v1h-1zM1 5h14v1h-14zM1 6h1v1h-1zM14 6h1v1h-1zM0 7h1v1h-1zM15 7h1v1h-1zM0 8h1v1h-1zM15 8h1v1h-1zM0 9h1v1h-1zM15 9h1v1h-1zM0 10h1v1h-1zM15 10h1v1h-1zM1 11h1v1h-1zM14 11h1v1h-1zM2 12h2v1h-2zM12 12h2v1h-2zM3 13h2v1h-2zM11 13h2v1h-2z\"/><path fill=\"#8fe0a0\" d=\"M5 3h6v1h-6zM3 4h2v1h-2zM12 4h1v1h-1z\"/><path fill=\"#c6f5cf\" d=\"M5 4h7v1h-7z\"/><path fill=\"#3d3550\" d=\"M2 6h12v1h-12zM1 7h5v1h-5zM7 7h8v1h-8zM1 8h4v1h-4zM6 8h5v1h-5zM12 8h3v1h-3zM1 9h4v1h-4zM6 9h4v1h-4zM11 9h4v1h-4zM1 10h5v1h-5zM7 10h4v1h-4zM12 10h3v1h-3zM2 11h12v1h-12zM4 12h8v1h-8z\"/><path fill=\"#f2c14e\" d=\"M6 7h1v1h-1zM5 8h1v1h-1zM5 9h1v1h-1zM6 10h1v1h-1z\"/><path fill=\"#6a5f80\" d=\"M11 8h1v1h-1zM10 9h1v1h-1zM11 10h1v1h-1z\"/>"],"gm_star":["0 0 7 7","<path fill=\"#f2c14e\" d=\"M3 0h1v1h-1zM2 1h3v1h-3zM0 2h7v1h-7zM1 3h2v1h-2zM4 3h2v1h-2zM2 4h3v1h-3zM1 5h2v1h-2zM4 5h2v1h-2zM1 6h1v1h-1zM5 6h1v1h-1z\"/><path fill=\"#fff6c8\" d=\"M3 3h1v1h-1z\"/>"],"gm_spark":["0 0 5 5","<path fill=\"#b89be0\" d=\"M2 0h1v1h-1zM1 1h1v1h-1zM3 1h1v1h-1zM0 2h1v1h-1zM4 2h1v1h-1zM1 3h1v1h-1zM3 3h1v1h-1zM2 4h1v1h-1z\"/><path fill=\"#ffffff\" d=\"M2 1h1v1h-1zM1 2h3v1h-3zM2 3h1v1h-1z\"/>"],"gm_moon0":["0 0 11 11","<path fill=\"#4b3a6e\" d=\"M4 0h3v1h-3zM2 1h3v1h-3zM6 1h3v1h-3zM1 2h2v1h-2zM8 2h2v1h-2zM1 3h1v1h-1zM9 3h1v1h-1zM0 4h2v1h-2zM9 4h2v1h-2zM0 5h1v1h-1zM10 5h1v1h-1zM0 6h2v1h-2zM9 6h2v1h-2zM1 7h1v1h-1zM9 7h1v1h-1zM1 8h2v1h-2zM8 8h2v1h-2zM2 9h3v1h-3zM6 9h3v1h-3zM4 10h3v1h-3z\"/><path fill=\"#2e2445\" d=\"M5 1h1v1h-1zM3 2h5v1h-5zM2 3h7v1h-7zM2 4h7v1h-7zM1 5h9v1h-9zM2 6h7v1h-7zM2 7h7v1h-7zM3 8h5v1h-5zM5 9h1v1h-1z\"/>"],"gm_moon1":["0 0 11 11","<path fill=\"#4b3a6e\" d=\"M4 0h3v1h-3zM2 1h3v1h-3zM6 1h3v1h-3zM1 2h2v1h-2zM8 2h2v1h-2zM1 3h1v1h-1zM9 3h1v1h-1zM0 4h2v1h-2zM9 4h2v1h-2zM0 5h1v1h-1zM10 5h1v1h-1zM0 6h2v1h-2zM9 6h2v1h-2zM1 7h1v1h-1zM9 7h1v1h-1zM1 8h2v1h-2zM8 8h2v1h-2zM2 9h3v1h-3zM6 9h3v1h-3zM4 10h3v1h-3z\"/><path fill=\"#2e2445\" d=\"M5 1h1v1h-1zM3 2h5v1h-5zM2 3h6v1h-6zM2 4h6v1h-6zM1 5h7v1h-7zM2 6h6v1h-6zM2 7h6v1h-6zM3 8h5v1h-5zM5 9h1v1h-1z\"/><path fill=\"#f2e9ff\" d=\"M8 3h1v1h-1zM8 4h1v1h-1zM8 5h2v1h-2zM8 6h1v1h-1zM8 7h1v1h-1z\"/>"],"gm_moon2":["0 0 11 11","<path fill=\"#4b3a6e\" d=\"M4 0h3v1h-3zM2 1h3v1h-3zM6 1h3v1h-3zM1 2h2v1h-2zM8 2h2v1h-2zM1 3h1v1h-1zM9 3h1v1h-1zM0 4h2v1h-2zM9 4h2v1h-2zM0 5h1v1h-1zM10 5h1v1h-1zM0 6h2v1h-2zM9 6h2v1h-2zM1 7h1v1h-1zM9 7h1v1h-1zM1 8h2v1h-2zM8 8h2v1h-2zM2 9h3v1h-3zM6 9h3v1h-3zM4 10h3v1h-3z\"/><path fill=\"#f2e9ff\" d=\"M5 1h1v1h-1zM5 2h3v1h-3zM5 3h4v1h-4zM5 4h4v1h-4zM5 5h5v1h-5zM5 6h4v1h-4zM5 7h4v1h-4zM5 8h3v1h-3zM5 9h1v1h-1z\"/><path fill=\"#2e2445\" d=\"M3 2h2v1h-2zM2 3h3v1h-3zM2 4h3v1h-3zM1 5h4v1h-4zM2 6h3v1h-3zM2 7h3v1h-3zM3 8h2v1h-2z\"/>"],"gm_moon3":["0 0 11 11","<path fill=\"#4b3a6e\" d=\"M4 0h3v1h-3zM2 1h3v1h-3zM6 1h3v1h-3zM1 2h2v1h-2zM8 2h2v1h-2zM1 3h1v1h-1zM9 3h1v1h-1zM0 4h2v1h-2zM9 4h2v1h-2zM0 5h1v1h-1zM10 5h1v1h-1zM0 6h2v1h-2zM9 6h2v1h-2zM1 7h1v1h-1zM9 7h1v1h-1zM1 8h2v1h-2zM8 8h2v1h-2zM2 9h3v1h-3zM6 9h3v1h-3zM4 10h3v1h-3z\"/><path fill=\"#f2e9ff\" d=\"M5 1h1v1h-1zM3 2h5v1h-5zM3 3h6v1h-6zM3 4h6v1h-6zM3 5h7v1h-7zM3 6h6v1h-6zM3 7h6v1h-6zM3 8h5v1h-5zM5 9h1v1h-1z\"/><path fill=\"#2e2445\" d=\"M2 3h1v1h-1zM2 4h1v1h-1zM1 5h2v1h-2zM2 6h1v1h-1zM2 7h1v1h-1z\"/>"],"gm_moon4":["0 0 11 11","<path fill=\"#4b3a6e\" d=\"M4 0h3v1h-3zM2 1h3v1h-3zM6 1h3v1h-3zM1 2h2v1h-2zM8 2h2v1h-2zM1 3h1v1h-1zM9 3h1v1h-1zM0 4h2v1h-2zM9 4h2v1h-2zM0 5h1v1h-1zM10 5h1v1h-1zM0 6h2v1h-2zM9 6h2v1h-2zM1 7h1v1h-1zM9 7h1v1h-1zM1 8h2v1h-2zM8 8h2v1h-2zM2 9h3v1h-3zM6 9h3v1h-3zM4 10h3v1h-3z\"/><path fill=\"#f2e9ff\" d=\"M5 1h1v1h-1zM3 2h5v1h-5zM2 3h7v1h-7zM2 4h7v1h-7zM1 5h9v1h-9zM2 6h7v1h-7zM2 7h7v1h-7zM3 8h5v1h-5zM5 9h1v1h-1z\"/>"],"mp_heart":["0 0 7 6","<path fill=\"#3a4a50\" d=\"M1 0h2v1h-2zM4 0h2v1h-2zM0 1h7v1h-7zM0 2h7v1h-7zM1 3h5v1h-5zM2 4h3v1h-3zM3 5h1v1h-1z\"/>"],"mp_pen":["0 0 7 7","<path fill=\"#3a4a50\" d=\"M5 0h2v1h-2zM4 1h3v1h-3zM3 2h3v1h-3zM2 3h3v1h-3zM1 4h3v1h-3zM0 5h3v1h-3zM0 6h1v1h-1z\"/>"],"mp_moon":["0 0 7 7","<path fill=\"#3a4a50\" d=\"M2 0h3v1h-3zM1 1h2v1h-2zM0 2h2v1h-2zM0 3h2v1h-2zM0 4h2v1h-2zM1 5h2v1h-2zM2 6h3v1h-3z\"/>"],"mp_gear":["0 0 7 7","<path fill=\"#3a4a50\" d=\"M1 0h1v1h-1zM3 0h1v1h-1zM5 0h1v1h-1zM0 1h7v1h-7zM1 2h2v1h-2zM4 2h2v1h-2zM0 3h2v1h-2zM5 3h2v1h-2zM1 4h2v1h-2zM4 4h2v1h-2zM0 5h7v1h-7zM1 6h1v1h-1zM3 6h1v1h-1zM5 6h1v1h-1z\"/>"],"mp_cat_a":["0 0 16 14","<path fill=\"#3a2a5c\" d=\"M1 0h2v1h-2zM10 0h2v1h-2zM1 1h1v1h-1zM3 1h1v1h-1zM9 1h1v1h-1zM11 1h1v1h-1zM1 2h1v1h-1zM4 2h5v1h-5zM11 2h1v1h-1zM1 3h1v1h-1zM11 3h1v1h-1zM0 4h1v1h-1zM12 4h1v1h-1zM0 5h1v1h-1zM3 5h1v1h-1zM9 5h1v1h-1zM12 5h1v1h-1zM0 6h1v1h-1zM3 6h1v1h-1zM9 6h1v1h-1zM12 6h1v1h-1zM0 7h1v1h-1zM12 7h1v1h-1zM0 8h1v1h-1zM5 8h1v1h-1zM7 8h1v1h-1zM12 8h1v1h-1zM14 8h2v1h-2zM1 9h1v1h-1zM11 9h1v1h-1zM13 9h1v1h-1zM15 9h1v1h-1zM1 10h1v1h-1zM11 10h2v1h-2zM14 10h1v1h-1zM1 11h1v1h-1zM4 11h1v1h-1zM9 11h1v1h-1zM13 11h1v1h-1zM1 12h1v1h-1zM4 12h1v1h-1zM9 12h1v1h-1zM12 12h1v1h-1zM2 13h10v1h-10z\"/><path fill=\"#f5a3c7\" d=\"M2 1h1v1h-1zM10 1h1v1h-1zM2 2h1v1h-1zM10 2h1v1h-1zM6 7h1v1h-1z\"/><path fill=\"#fffaf2\" d=\"M3 2h1v1h-1zM9 2h1v1h-1zM2 3h9v1h-9zM1 4h11v1h-11zM1 5h2v1h-2zM4 5h5v1h-5zM10 5h2v1h-2zM1 6h2v1h-2zM4 6h5v1h-5zM10 6h2v1h-2zM1 7h1v1h-1zM3 7h3v1h-3zM7 7h4v1h-4zM1 8h4v1h-4zM6 8h1v1h-1zM8 8h4v1h-4zM2 9h9v1h-9zM14 9h1v1h-1zM2 10h9v1h-9zM13 10h1v1h-1zM2 11h2v1h-2zM6 11h2v1h-2zM10 11h3v1h-3zM2 12h2v1h-2zM6 12h2v1h-2zM10 12h2v1h-2z\"/><path fill=\"#f7b6c8\" d=\"M2 7h1v1h-1zM11 7h1v1h-1z\"/><path fill=\"#e6dccd\" d=\"M5 11h1v1h-1zM8 11h1v1h-1zM5 12h1v1h-1zM8 12h1v1h-1z\"/>"],"mp_cat_b":["0 0 16 14","<path fill=\"#3a2a5c\" d=\"M1 1h2v1h-2zM10 1h2v1h-2zM1 2h1v1h-1zM3 2h1v1h-1zM9 2h1v1h-1zM11 2h1v1h-1zM1 3h1v1h-1zM4 3h5v1h-5zM11 3h1v1h-1zM1 4h1v1h-1zM11 4h1v1h-1zM0 5h1v1h-1zM12 5h1v1h-1zM0 6h1v1h-1zM12 6h1v1h-1zM0 7h1v1h-1zM2 7h2v1h-2zM9 7h2v1h-2zM12 7h1v1h-1zM14 7h2v1h-2zM0 8h1v1h-1zM12 8h2v1h-2zM15 8h1v1h-1zM0 9h1v1h-1zM5 9h1v1h-1zM7 9h1v1h-1zM12 9h1v1h-1zM14 9h1v1h-1zM1 10h1v1h-1zM11 10h1v1h-1zM13 10h1v1h-1zM1 11h1v1h-1zM4 11h1v1h-1zM9 11h1v1h-1zM13 11h1v1h-1zM1 12h1v1h-1zM4 12h1v1h-1zM9 12h1v1h-1zM12 12h1v1h-1zM2 13h10v1h-10z\"/><path fill=\"#f5a3c7\" d=\"M2 2h1v1h-1zM10 2h1v1h-1zM2 3h1v1h-1zM10 3h1v1h-1zM6 8h1v1h-1z\"/><path fill=\"#fffaf2\" d=\"M3 3h1v1h-1zM9 3h1v1h-1zM2 4h9v1h-9zM1 5h11v1h-11zM1 6h11v1h-11zM1 7h1v1h-1zM4 7h5v1h-5zM11 7h1v1h-1zM1 8h1v1h-1zM3 8h3v1h-3zM7 8h4v1h-4zM14 8h1v1h-1zM1 9h4v1h-4zM6 9h1v1h-1zM8 9h4v1h-4zM13 9h1v1h-1zM2 10h9v1h-9zM12 10h1v1h-1zM2 11h2v1h-2zM6 11h2v1h-2zM10 11h3v1h-3zM2 12h2v1h-2zM6 12h2v1h-2zM10 12h2v1h-2z\"/><path fill=\"#f7b6c8\" d=\"M2 8h1v1h-1zM11 8h1v1h-1z\"/><path fill=\"#e6dccd\" d=\"M5 11h1v1h-1zM8 11h1v1h-1zM5 12h1v1h-1zM8 12h1v1h-1z\"/>"],"mp_icon":["0 0 20 18","<path fill=\"#3a2a5c\" d=\"M3 0h14v1h-14zM1 1h2v1h-2zM17 1h2v1h-2zM1 2h1v1h-1zM18 2h1v1h-1zM0 3h1v1h-1zM3 3h14v1h-14zM19 3h1v1h-1zM0 4h1v1h-1zM3 4h1v1h-1zM16 4h1v1h-1zM19 4h1v1h-1zM0 5h1v1h-1zM3 5h1v1h-1zM16 5h1v1h-1zM19 5h1v1h-1zM0 6h1v1h-1zM3 6h1v1h-1zM16 6h1v1h-1zM19 6h1v1h-1zM0 7h1v1h-1zM3 7h1v1h-1zM16 7h1v1h-1zM19 7h1v1h-1zM0 8h1v1h-1zM3 8h1v1h-1zM16 8h1v1h-1zM19 8h1v1h-1zM0 9h1v1h-1zM3 9h1v1h-1zM16 9h1v1h-1zM19 9h1v1h-1zM0 10h1v1h-1zM3 10h1v1h-1zM16 10h1v1h-1zM19 10h1v1h-1zM0 11h1v1h-1zM3 11h1v1h-1zM16 11h1v1h-1zM19 11h1v1h-1zM0 12h1v1h-1zM3 12h1v1h-1zM16 12h1v1h-1zM19 12h1v1h-1zM0 13h1v1h-1zM3 13h1v1h-1zM16 13h1v1h-1zM19 13h1v1h-1zM0 14h1v1h-1zM3 14h14v1h-14zM19 14h1v1h-1zM0 15h1v1h-1zM19 15h1v1h-1zM1 16h2v1h-2zM17 16h2v1h-2zM3 17h14v1h-14z\"/><path fill=\"#b7b1f5\" d=\"M3 1h14v1h-14zM2 2h1v1h-1zM5 2h13v1h-13zM1 3h1v1h-1zM17 3h1v1h-1zM1 4h2v1h-2zM17 4h1v1h-1zM1 5h2v1h-2zM17 5h1v1h-1zM1 6h2v1h-2zM17 6h1v1h-1zM1 7h2v1h-2zM17 7h1v1h-1zM1 8h2v1h-2zM17 8h1v1h-1zM1 9h2v1h-2zM17 9h1v1h-1zM1 10h2v1h-2zM17 10h1v1h-1zM1 11h2v1h-2zM17 11h1v1h-1zM1 12h2v1h-2zM17 12h1v1h-1zM1 13h2v1h-2zM17 13h1v1h-1zM1 14h2v1h-2zM17 14h1v1h-1zM1 15h16v1h-16z\"/><path fill=\"#fffaf2\" d=\"M3 2h2v1h-2zM2 3h1v1h-1zM6 6h2v1h-2zM12 6h2v1h-2zM6 7h8v1h-8zM6 8h2v1h-2zM9 8h2v1h-2zM12 8h2v1h-2zM6 9h2v1h-2zM9 9h2v1h-2zM12 9h2v1h-2zM7 10h2v1h-2zM11 10h2v1h-2zM7 11h6v1h-6z\"/><path fill=\"#9a92e6\" d=\"M18 3h1v1h-1zM18 4h1v1h-1zM18 5h1v1h-1zM18 6h1v1h-1zM18 7h1v1h-1zM18 8h1v1h-1zM18 9h1v1h-1zM18 10h1v1h-1zM18 11h1v1h-1zM18 12h1v1h-1zM18 13h1v1h-1zM18 14h1v1h-1zM17 15h2v1h-2zM3 16h14v1h-14z\"/><path fill=\"#cdeee2\" d=\"M4 4h2v1h-2zM7 4h6v1h-6zM14 4h2v1h-2zM4 5h1v1h-1zM8 5h4v1h-4zM15 5h1v1h-1zM4 6h1v1h-1zM15 6h1v1h-1zM4 7h1v1h-1zM15 7h1v1h-1zM4 8h1v1h-1zM15 8h1v1h-1zM4 9h1v1h-1zM15 9h1v1h-1zM4 10h1v1h-1zM15 10h1v1h-1zM4 11h2v1h-2zM14 11h2v1h-2zM4 12h3v1h-3zM13 12h3v1h-3zM4 13h12v1h-12z\"/><path fill=\"#3a4a50\" d=\"M6 4h1v1h-1zM13 4h1v1h-1zM5 5h1v1h-1zM7 5h1v1h-1zM12 5h1v1h-1zM14 5h1v1h-1zM5 6h1v1h-1zM8 6h4v1h-4zM14 6h1v1h-1zM5 7h1v1h-1zM14 7h1v1h-1zM5 8h1v1h-1zM8 8h1v1h-1zM11 8h1v1h-1zM14 8h1v1h-1zM5 9h1v1h-1zM8 9h1v1h-1zM11 9h1v1h-1zM14 9h1v1h-1zM5 10h1v1h-1zM9 10h2v1h-2zM14 10h1v1h-1zM6 11h1v1h-1zM13 11h1v1h-1zM7 12h6v1h-6z\"/><path fill=\"#f5a3c7\" d=\"M6 5h1v1h-1zM13 5h1v1h-1z\"/><path fill=\"#f7c6d4\" d=\"M6 10h1v1h-1zM13 10h1v1h-1z\"/>"]};
+const SPR = {"inbox_env":["0 0 16 14","<path fill=\"#2b2d33\" d=\"M0 0h16v1h-16zM0 1h1v1h-1zM15 1h1v1h-1zM0 2h2v1h-2zM14 2h2v1h-2zM0 3h1v1h-1zM2 3h1v1h-1zM13 3h1v1h-1zM15 3h1v1h-1zM0 4h1v1h-1zM3 4h1v1h-1zM12 4h1v1h-1zM15 4h1v1h-1zM0 5h1v1h-1zM4 5h1v1h-1zM11 5h1v1h-1zM15 5h1v1h-1zM0 6h1v1h-1zM5 6h2v1h-2zM9 6h2v1h-2zM15 6h1v1h-1zM0 7h1v1h-1zM6 7h1v1h-1zM9 7h1v1h-1zM15 7h1v1h-1zM0 8h1v1h-1zM5 8h1v1h-1zM7 8h2v1h-2zM10 8h1v1h-1zM15 8h1v1h-1zM0 9h1v1h-1zM4 9h1v1h-1zM11 9h1v1h-1zM15 9h1v1h-1zM0 10h1v1h-1zM3 10h1v1h-1zM12 10h1v1h-1zM15 10h1v1h-1zM0 11h1v1h-1zM2 11h1v1h-1zM13 11h1v1h-1zM15 11h1v1h-1zM0 12h2v1h-2zM14 12h2v1h-2zM0 13h16v1h-16z\"/><path fill=\"#efe9d7\" d=\"M1 1h14v1h-14zM2 2h12v1h-12zM1 3h1v1h-1zM3 3h10v1h-10zM14 3h1v1h-1zM1 4h2v1h-2zM4 4h8v1h-8zM13 4h2v1h-2zM1 5h3v1h-3zM5 5h6v1h-6zM12 5h3v1h-3zM1 6h4v1h-4zM7 6h2v1h-2zM11 6h4v1h-4zM1 7h5v1h-5zM7 7h2v1h-2zM10 7h5v1h-5zM1 8h4v1h-4zM6 8h1v1h-1zM9 8h1v1h-1zM11 8h4v1h-4zM1 9h3v1h-3zM5 9h6v1h-6zM12 9h3v1h-3zM1 10h2v1h-2zM4 10h8v1h-8zM13 10h2v1h-2zM1 11h1v1h-1zM3 11h10v1h-10zM14 11h1v1h-1zM2 12h12v1h-12z\"/>"],"inbox_gear":["0 0 11 11","<path fill=\"#2b2d33\" d=\"M4 0h3v1h-3zM1 1h2v1h-2zM4 1h3v1h-3zM8 1h2v1h-2zM1 2h9v1h-9zM2 3h3v1h-3zM6 3h3v1h-3zM0 4h4v1h-4zM7 4h4v1h-4zM0 5h3v1h-3zM8 5h3v1h-3zM0 6h4v1h-4zM7 6h4v1h-4zM2 7h3v1h-3zM6 7h3v1h-3zM1 8h9v1h-9zM1 9h2v1h-2zM4 9h3v1h-3zM8 9h2v1h-2zM4 10h3v1h-3z\"/><path fill=\"#efe9d7\" d=\"M5 3h1v1h-1zM4 4h3v1h-3zM3 5h5v1h-5zM4 6h3v1h-3zM5 7h1v1h-1z\"/>"],"inbox_smile":["0 0 9 8","<path fill=\"#2b2d33\" d=\"M1 0h7v1h-7zM0 1h1v1h-1zM8 1h1v1h-1zM0 2h1v1h-1zM2 2h1v1h-1zM6 2h1v1h-1zM8 2h1v1h-1zM0 3h1v1h-1zM8 3h1v1h-1zM0 4h1v1h-1zM2 4h1v1h-1zM6 4h1v1h-1zM8 4h1v1h-1zM0 5h1v1h-1zM3 5h3v1h-3zM8 5h1v1h-1zM0 6h1v1h-1zM8 6h1v1h-1zM1 7h7v1h-7z\"/>"],"inbox_floppy":["0 0 9 8","<path fill=\"#2b2d33\" d=\"M0 0h9v1h-9zM0 1h1v1h-1zM2 1h1v1h-1zM6 1h1v1h-1zM8 1h1v1h-1zM0 2h1v1h-1zM2 2h1v1h-1zM6 2h1v1h-1zM8 2h1v1h-1zM0 3h1v1h-1zM2 3h5v1h-5zM8 3h1v1h-1zM0 4h1v1h-1zM8 4h1v1h-1zM0 5h1v1h-1zM2 5h5v1h-5zM8 5h1v1h-1zM0 6h1v1h-1zM2 6h1v1h-1zM6 6h1v1h-1zM8 6h1v1h-1zM0 7h9v1h-9z\"/><path fill=\"#efe9d7\" d=\"M1 1h1v1h-1zM3 1h3v1h-3zM7 1h1v1h-1zM1 2h1v1h-1zM3 2h3v1h-3zM7 2h1v1h-1zM1 3h1v1h-1zM7 3h1v1h-1zM1 4h7v1h-7zM1 5h1v1h-1zM7 5h1v1h-1zM1 6h1v1h-1zM3 6h3v1h-3zM7 6h1v1h-1z\"/>"],"inbox_moni":["0 0 16 14","<path fill=\"#2b2d33\" d=\"M0 0h16v1h-16zM0 1h1v1h-1zM15 1h1v1h-1zM0 2h1v1h-1zM2 2h12v1h-12zM15 2h1v1h-1zM0 3h1v1h-1zM2 3h1v1h-1zM13 3h1v1h-1zM15 3h1v1h-1zM0 4h1v1h-1zM2 4h1v1h-1zM4 4h1v1h-1zM11 4h1v1h-1zM13 4h1v1h-1zM15 4h1v1h-1zM0 5h1v1h-1zM2 5h1v1h-1zM13 5h1v1h-1zM15 5h1v1h-1zM0 6h1v1h-1zM2 6h1v1h-1zM5 6h1v1h-1zM10 6h1v1h-1zM13 6h1v1h-1zM15 6h1v1h-1zM0 7h1v1h-1zM2 7h1v1h-1zM6 7h4v1h-4zM13 7h1v1h-1zM15 7h1v1h-1zM0 8h1v1h-1zM2 8h1v1h-1zM13 8h1v1h-1zM15 8h1v1h-1zM0 9h1v1h-1zM2 9h12v1h-12zM15 9h1v1h-1zM0 10h1v1h-1zM13 10h3v1h-3zM0 11h16v1h-16zM5 12h1v1h-1zM10 12h1v1h-1zM4 13h8v1h-8z\"/><path fill=\"#efe9d7\" d=\"M1 1h14v1h-14zM1 2h1v1h-1zM14 2h1v1h-1zM1 3h1v1h-1zM3 3h10v1h-10zM14 3h1v1h-1zM1 4h1v1h-1zM3 4h1v1h-1zM5 4h6v1h-6zM12 4h1v1h-1zM14 4h1v1h-1zM1 5h1v1h-1zM3 5h10v1h-10zM14 5h1v1h-1zM1 6h1v1h-1zM3 6h2v1h-2zM6 6h4v1h-4zM11 6h2v1h-2zM14 6h1v1h-1zM1 7h1v1h-1zM3 7h3v1h-3zM10 7h3v1h-3zM14 7h1v1h-1zM1 8h1v1h-1zM3 8h10v1h-10zM14 8h1v1h-1zM1 9h1v1h-1zM14 9h1v1h-1zM1 10h12v1h-12zM6 12h4v1h-4z\"/>"],"hd_bat":["0 0 16 9","<path fill=\"#1c1428\" d=\"M5 1h1v1h-1zM10 1h1v1h-1zM5 2h2v1h-2zM9 2h2v1h-2zM4 3h1v1h-1zM11 3h1v1h-1zM1 4h3v1h-3zM12 4h3v1h-3zM0 5h1v1h-1zM15 5h1v1h-1zM0 6h1v1h-1zM3 6h2v1h-2zM11 6h2v1h-2zM15 6h1v1h-1zM0 7h1v1h-1zM2 7h1v1h-1zM5 7h2v1h-2zM9 7h2v1h-2zM13 7h1v1h-1zM15 7h1v1h-1zM0 8h2v1h-2zM7 8h2v1h-2zM14 8h2v1h-2z\"/><path fill=\"#6b5a8e\" d=\"M5 3h6v1h-6zM4 4h2v1h-2zM7 4h2v1h-2zM10 4h2v1h-2zM1 5h14v1h-14zM1 6h2v1h-2zM5 6h2v1h-2zM9 6h2v1h-2zM13 6h2v1h-2zM1 7h1v1h-1zM7 7h2v1h-2zM14 7h1v1h-1z\"/><path fill=\"#ffffff\" d=\"M6 4h1v1h-1zM9 4h1v1h-1z\"/><path fill=\"#f5a3c7\" d=\"M7 6h2v1h-2z\"/>"],"hd_ghost":["0 0 14 14","<path fill=\"#1c1428\" d=\"M4 0h6v1h-6zM3 1h1v1h-1zM10 1h1v1h-1zM2 2h1v1h-1zM11 2h1v1h-1zM1 3h1v1h-1zM12 3h1v1h-1zM1 4h1v1h-1zM12 4h1v1h-1zM1 5h1v1h-1zM4 5h1v1h-1zM9 5h1v1h-1zM12 5h1v1h-1zM1 6h1v1h-1zM4 6h1v1h-1zM9 6h1v1h-1zM12 6h1v1h-1zM1 7h1v1h-1zM12 7h1v1h-1zM1 8h1v1h-1zM6 8h2v1h-2zM12 8h1v1h-1zM1 9h1v1h-1zM12 9h1v1h-1zM1 10h1v1h-1zM12 10h1v1h-1zM1 11h1v1h-1zM12 11h1v1h-1zM1 12h1v1h-1zM3 12h2v1h-2zM7 12h2v1h-2zM11 12h2v1h-2zM1 13h2v1h-2zM5 13h2v1h-2zM9 13h2v1h-2z\"/><path fill=\"#ffffff\" d=\"M4 1h6v1h-6zM3 2h8v1h-8zM2 3h10v1h-10zM2 4h10v1h-10zM2 5h2v1h-2zM5 5h4v1h-4zM10 5h2v1h-2zM2 6h2v1h-2zM5 6h4v1h-4zM10 6h2v1h-2zM2 7h1v1h-1zM4 7h6v1h-6zM11 7h1v1h-1zM2 8h4v1h-4zM8 8h4v1h-4zM2 9h9v1h-9zM2 10h9v1h-9zM2 11h8v1h-8zM2 12h1v1h-1zM5 12h2v1h-2zM9 12h2v1h-2z\"/><path fill=\"#f5a3c7\" d=\"M3 7h1v1h-1zM10 7h1v1h-1z\"/><path fill=\"#d9cdea\" d=\"M11 9h1v1h-1zM11 10h1v1h-1zM10 11h2v1h-2z\"/>"],"hd_candle":["0 0 7 13","<path fill=\"#ffb84d\" d=\"M3 0h1v1h-1zM2 1h1v1h-1zM4 1h1v1h-1zM2 2h1v1h-1zM4 2h1v1h-1z\"/><path fill=\"#fff3b0\" d=\"M3 1h1v1h-1zM3 2h1v1h-1z\"/><path fill=\"#1c1428\" d=\"M3 3h1v1h-1zM1 4h5v1h-5zM1 5h1v1h-1zM5 5h1v1h-1zM1 6h1v1h-1zM5 6h1v1h-1zM1 7h1v1h-1zM5 7h1v1h-1zM1 8h1v1h-1zM5 8h1v1h-1zM1 9h1v1h-1zM5 9h1v1h-1zM0 10h7v1h-7zM0 11h1v1h-1zM6 11h1v1h-1zM1 12h5v1h-5z\"/><path fill=\"#b89be0\" d=\"M2 5h1v1h-1zM4 5h1v1h-1zM2 6h3v1h-3zM2 7h3v1h-3zM2 8h3v1h-3zM2 9h3v1h-3z\"/><path fill=\"#e2d4f7\" d=\"M3 5h1v1h-1z\"/><path fill=\"#8e8aa0\" d=\"M1 11h5v1h-5z\"/>"],"hd_potion":["0 0 9 12","<path fill=\"#1c1428\" d=\"M3 0h3v1h-3zM3 1h1v1h-1zM5 1h1v1h-1zM3 2h3v1h-3zM3 3h1v1h-1zM5 3h1v1h-1zM2 4h1v1h-1zM6 4h1v1h-1zM1 5h1v1h-1zM7 5h1v1h-1zM0 6h1v1h-1zM8 6h1v1h-1zM0 7h1v1h-1zM8 7h1v1h-1zM0 8h1v1h-1zM8 8h1v1h-1zM0 9h1v1h-1zM8 9h1v1h-1zM1 10h1v1h-1zM7 10h1v1h-1zM2 11h5v1h-5z\"/><path fill=\"#c98e5a\" d=\"M4 1h1v1h-1z\"/><path fill=\"#e8e0f4\" d=\"M4 3h1v1h-1zM3 4h3v1h-3zM2 5h5v1h-5zM1 6h1v1h-1zM7 6h1v1h-1zM1 7h1v1h-1zM7 7h1v1h-1zM1 8h1v1h-1zM7 8h1v1h-1zM1 9h1v1h-1zM7 9h1v1h-1zM2 10h1v1h-1zM6 10h1v1h-1z\"/><path fill=\"#b061d8\" d=\"M2 6h5v1h-5zM2 7h1v1h-1zM4 7h3v1h-3zM2 8h5v1h-5zM2 9h5v1h-5zM3 10h3v1h-3z\"/><path fill=\"#ffffff\" d=\"M3 7h1v1h-1z\"/>"],"hd_skull":["0 0 11 9","<path fill=\"#1c1428\" d=\"M2 0h7v1h-7zM1 1h1v1h-1zM9 1h1v1h-1zM0 2h1v1h-1zM10 2h1v1h-1zM0 3h1v1h-1zM2 3h2v1h-2zM7 3h2v1h-2zM10 3h1v1h-1zM0 4h1v1h-1zM2 4h2v1h-2zM7 4h2v1h-2zM10 4h1v1h-1zM0 5h1v1h-1zM5 5h1v1h-1zM10 5h1v1h-1zM1 6h1v1h-1zM9 6h1v1h-1zM2 7h1v1h-1zM4 7h1v1h-1zM6 7h1v1h-1zM8 7h1v1h-1zM2 8h7v1h-7z\"/><path fill=\"#f4efe6\" d=\"M2 1h7v1h-7zM1 2h8v1h-8zM1 3h1v1h-1zM4 3h3v1h-3zM1 4h1v1h-1zM4 4h3v1h-3zM1 5h4v1h-4zM6 5h3v1h-3zM2 6h6v1h-6zM3 7h1v1h-1zM5 7h1v1h-1zM7 7h1v1h-1z\"/><path fill=\"#cfc6b8\" d=\"M9 2h1v1h-1zM9 3h1v1h-1zM9 4h1v1h-1zM9 5h1v1h-1zM8 6h1v1h-1z\"/>"],"mp_heart":["0 0 7 6","<path fill=\"#3a4a50\" d=\"M1 0h2v1h-2zM4 0h2v1h-2zM0 1h7v1h-7zM0 2h7v1h-7zM1 3h5v1h-5zM2 4h3v1h-3zM3 5h1v1h-1z\"/>"],"mp_pen":["0 0 7 7","<path fill=\"#3a4a50\" d=\"M5 0h2v1h-2zM4 1h3v1h-3zM3 2h3v1h-3zM2 3h3v1h-3zM1 4h3v1h-3zM0 5h3v1h-3zM0 6h1v1h-1z\"/>"],"mp_moon":["0 0 7 7","<path fill=\"#3a4a50\" d=\"M2 0h3v1h-3zM1 1h2v1h-2zM0 2h2v1h-2zM0 3h2v1h-2zM0 4h2v1h-2zM1 5h2v1h-2zM2 6h3v1h-3z\"/>"],"mp_gear":["0 0 7 7","<path fill=\"#3a4a50\" d=\"M1 0h1v1h-1zM3 0h1v1h-1zM5 0h1v1h-1zM0 1h7v1h-7zM1 2h2v1h-2zM4 2h2v1h-2zM0 3h2v1h-2zM5 3h2v1h-2zM1 4h2v1h-2zM4 4h2v1h-2zM0 5h7v1h-7zM1 6h1v1h-1zM3 6h1v1h-1zM5 6h1v1h-1z\"/>"],"mp_cat_a":["0 0 16 14","<path fill=\"#3a2a5c\" d=\"M1 0h2v1h-2zM10 0h2v1h-2zM1 1h1v1h-1zM3 1h1v1h-1zM9 1h1v1h-1zM11 1h1v1h-1zM1 2h1v1h-1zM4 2h5v1h-5zM11 2h1v1h-1zM1 3h1v1h-1zM11 3h1v1h-1zM0 4h1v1h-1zM12 4h1v1h-1zM0 5h1v1h-1zM3 5h1v1h-1zM9 5h1v1h-1zM12 5h1v1h-1zM0 6h1v1h-1zM3 6h1v1h-1zM9 6h1v1h-1zM12 6h1v1h-1zM0 7h1v1h-1zM12 7h1v1h-1zM0 8h1v1h-1zM5 8h1v1h-1zM7 8h1v1h-1zM12 8h1v1h-1zM14 8h2v1h-2zM1 9h1v1h-1zM11 9h1v1h-1zM13 9h1v1h-1zM15 9h1v1h-1zM1 10h1v1h-1zM11 10h2v1h-2zM14 10h1v1h-1zM1 11h1v1h-1zM4 11h1v1h-1zM9 11h1v1h-1zM13 11h1v1h-1zM1 12h1v1h-1zM4 12h1v1h-1zM9 12h1v1h-1zM12 12h1v1h-1zM2 13h10v1h-10z\"/><path fill=\"#f5a3c7\" d=\"M2 1h1v1h-1zM10 1h1v1h-1zM2 2h1v1h-1zM10 2h1v1h-1zM6 7h1v1h-1z\"/><path fill=\"#fffaf2\" d=\"M3 2h1v1h-1zM9 2h1v1h-1zM2 3h9v1h-9zM1 4h11v1h-11zM1 5h2v1h-2zM4 5h5v1h-5zM10 5h2v1h-2zM1 6h2v1h-2zM4 6h5v1h-5zM10 6h2v1h-2zM1 7h1v1h-1zM3 7h3v1h-3zM7 7h4v1h-4zM1 8h4v1h-4zM6 8h1v1h-1zM8 8h4v1h-4zM2 9h9v1h-9zM14 9h1v1h-1zM2 10h9v1h-9zM13 10h1v1h-1zM2 11h2v1h-2zM6 11h2v1h-2zM10 11h3v1h-3zM2 12h2v1h-2zM6 12h2v1h-2zM10 12h2v1h-2z\"/><path fill=\"#f7b6c8\" d=\"M2 7h1v1h-1zM11 7h1v1h-1z\"/><path fill=\"#e6dccd\" d=\"M5 11h1v1h-1zM8 11h1v1h-1zM5 12h1v1h-1zM8 12h1v1h-1z\"/>"],"mp_cat_b":["0 0 16 14","<path fill=\"#3a2a5c\" d=\"M1 1h2v1h-2zM10 1h2v1h-2zM1 2h1v1h-1zM3 2h1v1h-1zM9 2h1v1h-1zM11 2h1v1h-1zM1 3h1v1h-1zM4 3h5v1h-5zM11 3h1v1h-1zM1 4h1v1h-1zM11 4h1v1h-1zM0 5h1v1h-1zM12 5h1v1h-1zM0 6h1v1h-1zM12 6h1v1h-1zM0 7h1v1h-1zM2 7h2v1h-2zM9 7h2v1h-2zM12 7h1v1h-1zM14 7h2v1h-2zM0 8h1v1h-1zM12 8h2v1h-2zM15 8h1v1h-1zM0 9h1v1h-1zM5 9h1v1h-1zM7 9h1v1h-1zM12 9h1v1h-1zM14 9h1v1h-1zM1 10h1v1h-1zM11 10h1v1h-1zM13 10h1v1h-1zM1 11h1v1h-1zM4 11h1v1h-1zM9 11h1v1h-1zM13 11h1v1h-1zM1 12h1v1h-1zM4 12h1v1h-1zM9 12h1v1h-1zM12 12h1v1h-1zM2 13h10v1h-10z\"/><path fill=\"#f5a3c7\" d=\"M2 2h1v1h-1zM10 2h1v1h-1zM2 3h1v1h-1zM10 3h1v1h-1zM6 8h1v1h-1z\"/><path fill=\"#fffaf2\" d=\"M3 3h1v1h-1zM9 3h1v1h-1zM2 4h9v1h-9zM1 5h11v1h-11zM1 6h11v1h-11zM1 7h1v1h-1zM4 7h5v1h-5zM11 7h1v1h-1zM1 8h1v1h-1zM3 8h3v1h-3zM7 8h4v1h-4zM14 8h1v1h-1zM1 9h4v1h-4zM6 9h1v1h-1zM8 9h4v1h-4zM13 9h1v1h-1zM2 10h9v1h-9zM12 10h1v1h-1zM2 11h2v1h-2zM6 11h2v1h-2zM10 11h3v1h-3zM2 12h2v1h-2zM6 12h2v1h-2zM10 12h2v1h-2z\"/><path fill=\"#f7b6c8\" d=\"M2 8h1v1h-1zM11 8h1v1h-1z\"/><path fill=\"#e6dccd\" d=\"M5 11h1v1h-1zM8 11h1v1h-1zM5 12h1v1h-1zM8 12h1v1h-1z\"/>"],"mp_icon":["0 0 20 18","<path fill=\"#3a2a5c\" d=\"M3 0h14v1h-14zM1 1h2v1h-2zM17 1h2v1h-2zM1 2h1v1h-1zM18 2h1v1h-1zM0 3h1v1h-1zM3 3h14v1h-14zM19 3h1v1h-1zM0 4h1v1h-1zM3 4h1v1h-1zM16 4h1v1h-1zM19 4h1v1h-1zM0 5h1v1h-1zM3 5h1v1h-1zM16 5h1v1h-1zM19 5h1v1h-1zM0 6h1v1h-1zM3 6h1v1h-1zM16 6h1v1h-1zM19 6h1v1h-1zM0 7h1v1h-1zM3 7h1v1h-1zM16 7h1v1h-1zM19 7h1v1h-1zM0 8h1v1h-1zM3 8h1v1h-1zM16 8h1v1h-1zM19 8h1v1h-1zM0 9h1v1h-1zM3 9h1v1h-1zM16 9h1v1h-1zM19 9h1v1h-1zM0 10h1v1h-1zM3 10h1v1h-1zM16 10h1v1h-1zM19 10h1v1h-1zM0 11h1v1h-1zM3 11h1v1h-1zM16 11h1v1h-1zM19 11h1v1h-1zM0 12h1v1h-1zM3 12h1v1h-1zM16 12h1v1h-1zM19 12h1v1h-1zM0 13h1v1h-1zM3 13h1v1h-1zM16 13h1v1h-1zM19 13h1v1h-1zM0 14h1v1h-1zM3 14h14v1h-14zM19 14h1v1h-1zM0 15h1v1h-1zM19 15h1v1h-1zM1 16h2v1h-2zM17 16h2v1h-2zM3 17h14v1h-14z\"/><path fill=\"#b7b1f5\" d=\"M3 1h14v1h-14zM2 2h1v1h-1zM5 2h13v1h-13zM1 3h1v1h-1zM17 3h1v1h-1zM1 4h2v1h-2zM17 4h1v1h-1zM1 5h2v1h-2zM17 5h1v1h-1zM1 6h2v1h-2zM17 6h1v1h-1zM1 7h2v1h-2zM17 7h1v1h-1zM1 8h2v1h-2zM17 8h1v1h-1zM1 9h2v1h-2zM17 9h1v1h-1zM1 10h2v1h-2zM17 10h1v1h-1zM1 11h2v1h-2zM17 11h1v1h-1zM1 12h2v1h-2zM17 12h1v1h-1zM1 13h2v1h-2zM17 13h1v1h-1zM1 14h2v1h-2zM17 14h1v1h-1zM1 15h16v1h-16z\"/><path fill=\"#fffaf2\" d=\"M3 2h2v1h-2zM2 3h1v1h-1zM6 6h2v1h-2zM12 6h2v1h-2zM6 7h8v1h-8zM6 8h2v1h-2zM9 8h2v1h-2zM12 8h2v1h-2zM6 9h2v1h-2zM9 9h2v1h-2zM12 9h2v1h-2zM7 10h2v1h-2zM11 10h2v1h-2zM7 11h6v1h-6z\"/><path fill=\"#9a92e6\" d=\"M18 3h1v1h-1zM18 4h1v1h-1zM18 5h1v1h-1zM18 6h1v1h-1zM18 7h1v1h-1zM18 8h1v1h-1zM18 9h1v1h-1zM18 10h1v1h-1zM18 11h1v1h-1zM18 12h1v1h-1zM18 13h1v1h-1zM18 14h1v1h-1zM17 15h2v1h-2zM3 16h14v1h-14z\"/><path fill=\"#cdeee2\" d=\"M4 4h2v1h-2zM7 4h6v1h-6zM14 4h2v1h-2zM4 5h1v1h-1zM8 5h4v1h-4zM15 5h1v1h-1zM4 6h1v1h-1zM15 6h1v1h-1zM4 7h1v1h-1zM15 7h1v1h-1zM4 8h1v1h-1zM15 8h1v1h-1zM4 9h1v1h-1zM15 9h1v1h-1zM4 10h1v1h-1zM15 10h1v1h-1zM4 11h2v1h-2zM14 11h2v1h-2zM4 12h3v1h-3zM13 12h3v1h-3zM4 13h12v1h-12z\"/><path fill=\"#3a4a50\" d=\"M6 4h1v1h-1zM13 4h1v1h-1zM5 5h1v1h-1zM7 5h1v1h-1zM12 5h1v1h-1zM14 5h1v1h-1zM5 6h1v1h-1zM8 6h4v1h-4zM14 6h1v1h-1zM5 7h1v1h-1zM14 7h1v1h-1zM5 8h1v1h-1zM8 8h1v1h-1zM11 8h1v1h-1zM14 8h1v1h-1zM5 9h1v1h-1zM8 9h1v1h-1zM11 9h1v1h-1zM14 9h1v1h-1zM5 10h1v1h-1zM9 10h2v1h-2zM14 10h1v1h-1zM6 11h1v1h-1zM13 11h1v1h-1zM7 12h6v1h-6z\"/><path fill=\"#f5a3c7\" d=\"M6 5h1v1h-1zM13 5h1v1h-1z\"/><path fill=\"#f7c6d4\" d=\"M6 10h1v1h-1zM13 10h1v1h-1z\"/>"]};
 
 function spr(name, w, h, cls = "") {
     const s = SPR[name];
@@ -470,30 +506,6 @@ const PANEL_TEMPLATES = {
         saved: () => "✓",
         retro: true,
     },
-    grimoire: {
-        html: () => `
-            <div class="cn-gm-cover">
-                <i class="cn-gm-corner cn-gm-tl"></i><i class="cn-gm-corner cn-gm-tr"></i><i class="cn-gm-corner cn-gm-bl"></i><i class="cn-gm-corner cn-gm-br"></i>
-                ${spr("gm_hat", 48, 36, "cn-gm-hat")}
-                <div class="cn-gm-page">
-                    <div id="cherry-note-header" class="cn-gm-head">
-                        <span class="cn-gm-titles"><b>✦ GRIMOIRE ✦</b><small>of <span id="cherry-note-char-name"></span> · 봉인된 주문 <span class="cn-count-chars">0자</span></small></span>
-                        ${spr("gm_book", 32, 30)}
-                    </div>
-                    <div class="cn-gm-mana"><b>MANA</b><span class="cn-inject-bar">${[0, 1, 2, 3, 4].map((i) => `<i>${spr("gm_moon" + i, 22, 22)}</i>`).join("")}</span></div>
-                    ${TEXTAREA_HTML}
-                    <div id="cherry-note-footer" class="cn-gm-foot">
-                        ${spr("gm_mandrake", 24, 26)}
-                        <span class="cn-gm-seal">~♪ <span class="cn-saved-date" data-fmt="time"></span> <span class="cn-gm-sealtext">봉인됨</span> <span id="cherry-note-status"></span></span>
-                        <button class="cn-gm-x cn-close" title="닫기">✕</button>
-                        <button id="cherry-note-save-btn" title="저장하기">${spr("gm_cauldron", 32, 28)}BREW</button>
-                    </div>
-                </div>
-            </div>`,
-        name: (n) => n,
-        saved: () => "✦",
-        retro: true,
-    },
     memopet: {
         html: () => `
             <div class="cn-mp-plate">
@@ -516,6 +528,128 @@ const PANEL_TEMPLATES = {
             </div>`,
         name: (n) => n,
         saved: () => "♥!",
+        retro: true,
+    },
+    flip: {
+        html: () => `
+            <div class="cn-fp-top">
+                <span class="cn-fp-ear"><i></i><i></i>${PX.heart("#f6bcd6", 5, false)}<i></i><i></i></span>
+                <div class="cn-fp-screen">
+                    <div id="cherry-note-header" class="cn-fp-status">
+                        <span class="cn-fp-sig">${CUTE.signal()}${PX.envelope(12, "#fff4f8")}</span>
+                        <span id="cherry-note-char-name"></span>
+                        <span class="cn-fp-batt"><i></i><i></i><i></i></span>
+                    </div>
+                    <div class="cn-fp-lcd">${TEXTAREA_HTML}</div>
+                    <div class="cn-fp-soft">
+                        <span id="cherry-note-status"></span>
+                        <span class="cn-fp-sms">✉ <span class="cn-count-chars">0자</span></span>
+                    </div>
+                </div>
+                <span class="cn-fp-gem cn-fp-g1">${CUTE.gemHeart(17)}</span>
+                <span class="cn-fp-gem cn-fp-g2">${CUTE.gemHeart(14, "#fde4ef", "#eaa4c4")}</span>
+                <span class="cn-fp-stone cn-fp-s1"></span>
+                <span class="cn-fp-stone cn-fp-s2"></span>
+                <span class="cn-fp-stone cn-fp-s3"></span>
+            </div>
+            <div class="cn-fp-hinge"><i></i></div>
+            <div id="cherry-note-footer" class="cn-fp-bottom">
+                <div class="cn-fp-nav">
+                    <span class="cn-fp-side">
+                        <span class="cn-fp-k">${PX.envelope(11, "#fff4f8")}</span>
+                        <span class="cn-fp-k cn-fp-call"><i></i></span>
+                    </span>
+                    <button id="cherry-note-save-btn" class="cn-fp-ok" title="저장하기">${CUTE.gemHeart(22)}</button>
+                    <span class="cn-fp-side">
+                        <span class="cn-fp-k"><b class="cn-fp-cam"></b></span>
+                        <button class="cn-fp-k cn-fp-end cn-close" title="닫기"><i></i></button>
+                    </span>
+                </div>
+                <div class="cn-fp-pad">${["1", "2<small>ABC</small>", "3<small>DEF</small>", "4<small>GHI</small>", "5<small>JKL</small>", "6<small>MNO</small>", "7<small>PQRS</small>", "8<small>TUV</small>", "9<small>WXYZ</small>", "*", "0<small>♡</small>", "#"].map((k) => `<span>${k}</span>`).join("")}</div>
+                <span class="cn-fp-foot"></span>
+                <span class="cn-fp-gem cn-fp-g3">${CUTE.gemHeart(15)}</span>
+                <span class="cn-fp-stone cn-fp-s4"></span>
+            </div>`,
+        name: (n) => n,
+        saved: () => "♡ 저장됨",
+        retro: true,
+    },
+    dreamds: {
+        html: () => `
+            <span class="cn-dd-charm"><i></i><i></i><i></i><i></i>${CUTE.sakura(18)}</span>
+            <div class="cn-dd-top">
+                <span class="cn-dd-spark">✦<br>·<br>✧</span>
+                <div id="cherry-note-header" class="cn-dd-screen cn-dd-title">
+                    <span class="cn-dd-cloud cn-dd-c1">${CUTE.cloud(40, "#fff2f5")}</span>
+                    <span class="cn-dd-cloud cn-dd-c2">${CUTE.cloud(30, "#fff2f5")}</span>
+                    <span class="cn-dd-petal cn-dd-p1">${CUTE.sakura(8, "#f7b7c6", "#e38aa1")}</span>
+                    <span class="cn-dd-petal cn-dd-p2">${CUTE.sakura(7, "#f7b7c6", "#e38aa1")}</span>
+                    <b class="cn-dd-logo">DREAM NOTE</b>
+                    <span class="cn-dd-sub">- <span id="cherry-note-char-name"></span> -</span>
+                    <span class="cn-dd-menu">
+                        <span><i>▷</i>MEMO <span class="cn-count-chars">0자</span></span>
+                        <span><i>▷</i>SAVE <span class="cn-saved-date" data-fmt="time">--:--</span></span>
+                    </span>
+                </div>
+                <span class="cn-dd-spark">✧<br>·<br>✦</span>
+            </div>
+            <div class="cn-dd-hinge"><i></i></div>
+            <div class="cn-dd-bottom">
+                <span class="cn-dd-left">
+                    <span class="cn-dd-stick"></span>
+                    <span class="cn-dd-cross"></span>
+                </span>
+                <div class="cn-dd-screen cn-dd-low">
+                    ${TEXTAREA_HTML}
+                    <div id="cherry-note-footer" class="cn-dd-bar">
+                        <span id="cherry-note-status"></span>
+                        <button class="cn-dd-btn cn-close" title="닫기">⌂HOME</button>
+                        <button id="cherry-note-save-btn" class="cn-dd-btn" title="저장하기">START</button>
+                    </div>
+                </div>
+                <span class="cn-dd-right">
+                    <span class="cn-dd-abxy"><i></i><i></i><i></i><i></i></span>
+                    <span class="cn-dd-power"><i></i>POWER</span>
+                </span>
+                <span class="cn-dd-leds"><i></i><i></i></span>
+            </div>
+            <span class="cn-dd-stylus"></span>`,
+        name: (n) => n,
+        saved: () => "✿ saved",
+        retro: true,
+    },
+    journal: {
+        html: () => `
+            <div class="cn-jr-book">
+                <span class="cn-jr-corner cn-jr-tl"></span><span class="cn-jr-corner cn-jr-tr"></span>
+                <span class="cn-jr-corner cn-jr-bl"></span><span class="cn-jr-corner cn-jr-br"></span>
+                <div class="cn-jr-page">
+                    <div id="cherry-note-header" class="cn-jr-head">
+                        <span class="cn-jr-htitle">${CUTE.shirt(13)}<b>Character Memo</b></span>
+                        <button class="cn-jr-x cn-close" title="닫기">${PX.x("#b0567a", 8)}</button>
+                    </div>
+                    <div class="cn-jr-rows">
+                        <span class="cn-jr-row">${PX.cherry(12)}<span id="cherry-note-char-name"></span>${CUTE.pencil(11)}</span>
+                        <span class="cn-jr-row cn-jr-pink">${PX.heart("#e8708f", 11, false)}<span class="cn-count-chars">0자</span><em>주입 대기</em></span>
+                        <span class="cn-jr-row cn-jr-teal">${CUTE.mail(11)}<span class="cn-saved-date" data-fmt="dot">—</span></span>
+                    </div>
+                    ${TEXTAREA_HTML}
+                    <div id="cherry-note-footer" class="cn-jr-foot">
+                        <span id="cherry-note-status"></span>
+                        <button id="cherry-note-save-btn" class="cn-jr-save" title="저장하기">${PX.heart("#ffffff", 10, false)} SAVE</button>
+                    </div>
+                </div>
+            </div>
+            <div class="cn-jr-tabs" aria-hidden="true">
+                <span class="cn-jr-tab" style="--t:#f08a9b">${CUTE.mail(10)}</span>
+                <span class="cn-jr-tab cn-on" style="--t:#fff4f8">${CUTE.shirt(10)}</span>
+                <span class="cn-jr-tab" style="--t:#f9a9bf">${PX.heart("#ffffff", 10, false)}</span>
+                <span class="cn-jr-tab" style="--t:#9dcff0">${CUTE.snow(10)}</span>
+                <span class="cn-jr-tab" style="--t:#c7b3ee">${PX.sparkle("#ffffff", 10)}</span>
+                <span class="cn-jr-tab" style="--t:#dcd8dc">${CUTE.gear(10)}</span>
+            </div>`,
+        name: (n) => n,
+        saved: () => "♥ Saved!",
         retro: true,
     },
 };
@@ -589,7 +723,11 @@ function getConfig() {
     }
     // 이전 버전 호환: 누락된 필드 채워넣기
     extension_settings[EXT_NAME].config = { ...DEFAULT_CONFIG, ...extension_settings[EXT_NAME].config };
-    return extension_settings[EXT_NAME].config;
+    const cfg = extension_settings[EXT_NAME].config;
+    // 삭제된 테마(예: 마녀 주문서)를 쓰던 설정은 기본 테마로 되돌림
+    if (!PANEL_THEMES.some((t) => t.id === cfg.panelTheme)) cfg.panelTheme = DEFAULT_CONFIG.panelTheme;
+    if (!ICON_THEMES.some((t) => t.id === cfg.iconTheme)) cfg.iconTheme = DEFAULT_CONFIG.iconTheme;
+    return cfg;
 }
 
 function saveConfig() {
