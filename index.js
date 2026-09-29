@@ -122,6 +122,9 @@ const CUTE = {
     // 픽셀 연필 (농장 다이어리 편집 아이콘)
     pencil: (w = 12) =>
         `<svg class="cn-px" width="${w}" height="${w}" viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><rect x="5" y="0" width="2" height="1" fill="#e98fae"/><rect x="4" y="1" width="3" height="1" fill="#c9a24a"/><rect x="3" y="2" width="3" height="1" fill="#f4c95d"/><rect x="2" y="3" width="3" height="1" fill="#f4c95d"/><rect x="1" y="4" width="3" height="1" fill="#f4c95d"/><rect x="0" y="5" width="3" height="1" fill="#f1dcb2"/><rect x="0" y="6" width="2" height="1" fill="#f1dcb2"/><rect x="0" y="7" width="1" height="1" fill="#5b4348"/><rect x="6" y="2" width="1" height="1" fill="#c9a24a"/></svg>`,
+    // 픽셀 수화기 (폴더폰 통화/종료키)
+    handset: (fill, w = 13) =>
+        `<svg class="cn-px" width="${w}" height="${Math.round((w * 5) / 9)}" viewBox="0 0 9 5" shape-rendering="crispEdges" fill="${fill}" aria-hidden="true"><rect x="1" y="0" width="7" height="1"/><rect x="0" y="1" width="9" height="1"/><rect x="0" y="2" width="3" height="2"/><rect x="6" y="2" width="3" height="2"/><rect x="1" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/></svg>`,
     // 픽셀 셔츠 (탭 아이콘)
     shirt: (w = 12, fill = "#e8708f") =>
         `<svg class="cn-px" width="${w}" height="${w}" viewBox="0 0 8 8" shape-rendering="crispEdges" fill="${fill}" aria-hidden="true"><rect x="0" y="1" width="3" height="2"/><rect x="5" y="1" width="3" height="2"/><rect x="2" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="2" y="1" width="4" height="7"/><rect x="3" y="1" width="2" height="1" fill="#ffffff"/></svg>`,
@@ -557,12 +560,12 @@ const PANEL_TEMPLATES = {
                 <div class="cn-fp-nav">
                     <span class="cn-fp-side">
                         <span class="cn-fp-k">${PX.envelope(11, "#fff4f8")}</span>
-                        <span class="cn-fp-k cn-fp-call"><i></i></span>
+                        <button class="cn-fp-k cn-fp-call cn-save" title="저장하기">${CUTE.handset("#4fb07c")}</button>
                     </span>
                     <button id="cherry-note-save-btn" class="cn-fp-ok" title="저장하기">${CUTE.gemHeart(22)}</button>
                     <span class="cn-fp-side">
                         <span class="cn-fp-k"><b class="cn-fp-cam"></b></span>
-                        <button class="cn-fp-k cn-fp-end cn-close" title="닫기"><i></i></button>
+                        <button class="cn-fp-k cn-fp-end cn-close" title="닫기">${CUTE.handset("#ec3f6f")}</button>
                     </span>
                 </div>
                 <div class="cn-fp-pad">${["1", "2<small>ABC</small>", "3<small>DEF</small>", "4<small>GHI</small>", "5<small>JKL</small>", "6<small>MNO</small>", "7<small>PQRS</small>", "8<small>TUV</small>", "9<small>WXYZ</small>", "*", "0<small>♡</small>", "#"].map((k) => `<span>${k}</span>`).join("")}</div>
@@ -1369,6 +1372,11 @@ function buildUI() {
     $panel.on("input", "#cherry-note-textarea", () => {
         updateCounter();
         scheduleAutoSave();
+    });
+
+    // 보조 저장 버튼 (예: 폴더폰 통화키)
+    $panel.on("click", ".cn-save", () => {
+        if (!$("#cherry-note-save-btn").prop("disabled")) doSave(true);
     });
 
     $panel.on("click", "#cherry-note-save-btn", () => {
