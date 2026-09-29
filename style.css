@@ -2721,7 +2721,7 @@
     display: none;
 }
 #cherry-note-panel.cn-retro[data-theme="flip"] {
-    width: 184px;
+    width: 168px;
     display: grid;
     grid-template-rows: 1fr auto 1fr; /* 위·아래 반쪽 높이를 항상 똑같이 */
     grid-template-columns: minmax(0, 1fr); /* SillyTavern textarea 폭 때문에 옆으로 커지는 것 방지 */
@@ -2740,8 +2740,8 @@
     position: relative;
     background: #fbd3e4;
     border: 2px solid #e59ec0;
-    border-radius: 30px 30px 10px 10px;
-    padding: 8px 9px 12px;
+    border-radius: 28px 28px 10px 10px;
+    padding: 8px 8px 12px;
     box-shadow: inset 0 2px 0 #fff0f6;
     display: flex;
     flex-direction: column;
@@ -2889,7 +2889,7 @@
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
-    padding: 11px 10px 9px;
+    padding: 11px 9px 9px;
     background: #fde2ee;
     border: 2px solid #e59ec0;
     border-radius: 10px 10px 28px 28px;
