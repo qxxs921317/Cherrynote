@@ -24,7 +24,7 @@ const ICON_THEMES = [
     { id: "pinkreceipt", label: "🧾 핑크 미니 영수증", html: () => '<span class="cn-ic-pr-paper"><i></i><i></i><b></b></span>' },
     { id: "cafe", label: "🍒 체리 카페 깅엄", html: () => `<span class="cn-ic-cf-inner">${SVG.cherry(15)}</span>` },
     { id: "inbox", label: "🖥️ 1비트 모니터", html: () => spr("inbox_moni", 32, 28) },
-    { id: "haunted", label: "👻 으스스 유령", html: () => spr("hd_ghost", 28, 28) },
+    { id: "haunted", label: "👻 으스스 유령", html: () => spr("hd_ghost", 21, 21) },
     { id: "grimoire", label: "📖 마녀 주문서", html: () => spr("gm_book", 32, 30) },
     { id: "memopet", label: "🐱 메모 펫 액정", html: () => spr("mp_icon", 40, 36) },
 ];

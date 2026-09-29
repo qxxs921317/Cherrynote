@@ -2828,8 +2828,8 @@
 #cherry-note-icon[data-icon-theme="memopet"]:hover { box-shadow: none; }
 #cherry-note-icon[data-icon-theme="haunted"] {
     box-sizing: border-box;
-    width: 36px;
-    height: 36px;
+    width: 30px;
+    height: 30px;
     border-radius: 0;
     background: #3b2d55;
     box-shadow: 0 -2px 0 #1c1428, 0 2px 0 #1c1428, -2px 0 0 #1c1428, 2px 0 0 #1c1428, inset -2px -2px 0 #2d2340, inset 2px 2px 0 #5b4a7a;
