@@ -1207,191 +1207,226 @@
     transform: none;
 }
 
-/* ---------------- 05 핑크 듀얼 ---------------- */
-#cherry-note-panel[data-theme="dual"] {
+/* ---------------- 05 핑크 듀얼 (위아래 같은 크기의 폴더형 게임기) ---------------- */
+#cherry-note-panel.cn-retro[data-theme="dual"] {
+    width: 320px;
+    max-width: calc(100vw - 16px);
     background: transparent;
     border: none;
     border-radius: 0;
     padding: 0;
     gap: 0;
     box-shadow: none;
-    filter: drop-shadow(0 10px 18px rgba(200, 90, 140, 0.25));
+    filter: drop-shadow(0 10px 16px rgba(200, 90, 140, 0.28));
     color: #8a2f62;
 }
-#cherry-note-panel[data-theme="dual"] .cn-du-top {
+#cherry-note-panel[data-theme="dual"] .cn-du-top,
+#cherry-note-panel[data-theme="dual"] .cn-du-bottom {
+    position: relative;
     background: #f8c3db;
     border: 2px solid #d98bb1;
-    border-radius: 16px 16px 6px 6px;
-    padding: 10px;
+    box-shadow: inset 0 3px 0 #fde0ec, inset 0 -3px 0 #f2aecd;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 7px;
 }
+#cherry-note-panel[data-theme="dual"] .cn-du-top { border-radius: 20px 20px 7px 7px; padding: 14px 9px 10px; }
+#cherry-note-panel[data-theme="dual"] .cn-du-bottom { border-radius: 7px 7px 20px 20px; padding: 10px 8px 12px; align-items: flex-start; }
+#cherry-note-panel[data-theme="dual"] .cn-du-cam {
+    position: absolute;
+    left: 50%;
+    top: 4px;
+    width: 6px;
+    height: 6px;
+    margin-left: -3px;
+    border-radius: 50%;
+    background: #fde0ec;
+    box-shadow: 0 0 0 1.5px #d98bb1;
+}
+#cherry-note-panel[data-theme="dual"] .cn-du-sticker { position: absolute; z-index: 1; filter: drop-shadow(0 0 0 #fff) drop-shadow(1px 1px 0 #ffffff) drop-shadow(-1px -1px 0 #ffffff); }
+#cherry-note-panel[data-theme="dual"] .cn-du-st1 { left: 7px; top: -6px; transform: rotate(-14deg); }
+#cherry-note-panel[data-theme="dual"] .cn-du-st2 { right: 6px; bottom: -7px; transform: rotate(12deg); }
 #cherry-note-panel[data-theme="dual"] .cn-du-spk {
     display: grid;
     grid-template-columns: repeat(2, 3px);
     gap: 3px;
     flex-shrink: 0;
 }
-#cherry-note-panel[data-theme="dual"] .cn-du-spk i { display: block; width: 3px; height: 3px; background: #d98bb1; }
+#cherry-note-panel[data-theme="dual"] .cn-du-spk i { display: block; width: 3px; height: 3px; border-radius: 1px; background: #d98bb1; }
 #cherry-note-panel[data-theme="dual"] .cn-du-bezel {
     flex-grow: 1;
     min-width: 0;
     background: #fde8f1;
     border: 2px solid #d98bb1;
-    border-radius: 5px;
+    border-radius: 6px;
     padding: 5px;
 }
-#cherry-note-panel[data-theme="dual"] #cherry-note-header {
-    height: 76px;
+
+/* 위 화면: 작은 게임 화면 */
+#cherry-note-panel[data-theme="dual"] #cherry-note-header.cn-du-screen {
+    position: relative;
+    height: 132px;
     padding: 7px 9px;
-    background: #fff7fb;
+    overflow: hidden;
+    background: linear-gradient(180deg, #fff7fb 0%, #ffeaf3 70%, #ffe1ee 100%);
     border: 1.5px solid #eab2cb;
+    display: flex;
     flex-direction: column;
-    align-items: stretch;
-    justify-content: space-between;
-    font-size: 12px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 4px;
     color: #8a2f62;
 }
 #cherry-note-panel[data-theme="dual"] .cn-du-line {
+    align-self: stretch;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-#cherry-note-panel[data-theme="dual"] .cn-du-label {
+#cherry-note-panel[data-theme="dual"] .cn-du-label,
+#cherry-note-panel[data-theme="dual"] .cn-du-score,
+#cherry-note-panel[data-theme="dual"] .cn-du-legend,
+#cherry-note-panel[data-theme="dual"] .cn-du-power,
+#cherry-note-panel[data-theme="dual"] .cn-du-mic {
     font-family: "CN Galmuri9", monospace !important;
     font-size: 10px;
+}
+#cherry-note-panel[data-theme="dual"] .cn-du-label { color: #c46a97; letter-spacing: 1px; }
+#cherry-note-panel[data-theme="dual"] #cherry-note-status { color: #e0559a; font-weight: 700; }
+#cherry-note-panel[data-theme="dual"] #cherry-note-char-name { max-width: 150px; font-size: 13px; font-weight: 700; color: #8a2f62; }
+#cherry-note-panel[data-theme="dual"] .cn-du-hp { display: flex; gap: 2px; }
+#cherry-note-panel[data-theme="dual"] .cn-du-sky i { position: absolute; display: block; animation: cn-du-tw 1.6s steps(2) infinite; }
+#cherry-note-panel[data-theme="dual"] .cn-du-tw1 { right: 34px; top: 30px; }
+#cherry-note-panel[data-theme="dual"] .cn-du-tw2 { right: 14px; top: 46px; animation-delay: 0.5s !important; }
+#cherry-note-panel[data-theme="dual"] .cn-du-tw3 { right: 58px; top: 58px; animation-delay: 1s !important; }
+@keyframes cn-du-tw { 50% { opacity: 0.25; } }
+#cherry-note-panel[data-theme="dual"] .cn-du-ground {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 12px;
+    background: repeating-conic-gradient(#f7c6da 0% 25%, #fbe0ec 0% 50%) 0 0 / 8px 8px;
+    border-top: 2px solid #eab2cb;
+}
+#cherry-note-panel[data-theme="dual"] .cn-du-cloud { position: absolute; display: block; filter: drop-shadow(0 1.5px 0 #f3c2d8); }
+#cherry-note-panel[data-theme="dual"] .cn-du-cl1 { left: 92px; top: 62px; }
+#cherry-note-panel[data-theme="dual"] .cn-du-cl2 { left: 150px; top: 40px; }
+#cherry-note-panel[data-theme="dual"] .cn-du-bun { position: absolute; left: 12px; bottom: 11px; width: 28px; height: 28px; animation: cn-du-hop 2.4s steps(1) infinite; }
+#cherry-note-panel[data-theme="dual"] .cn-du-bun svg { position: absolute; left: 0; top: 0; }
+#cherry-note-panel[data-theme="dual"] .cn-du-fa { animation: cn-du-a 4s steps(1) infinite; }
+#cherry-note-panel[data-theme="dual"] .cn-du-fb { animation: cn-du-b 4s steps(1) infinite; }
+@keyframes cn-du-hop { 0% { transform: translateY(0); } 45% { transform: translateY(-3px); } 55% { transform: translateY(0); } }
+@keyframes cn-du-a { 0% { opacity: 1; } 88% { opacity: 0; } 94% { opacity: 1; } }
+@keyframes cn-du-b { 0% { opacity: 0; } 88% { opacity: 1; } 94% { opacity: 0; } }
+#cherry-note-panel[data-theme="dual"] .cn-du-score {
+    position: absolute;
+    right: 8px;
+    bottom: 18px;
+    padding: 1px 5px;
+    background: #ffffff;
+    border: 1.5px solid #eab2cb;
+    border-radius: 3px;
     color: #c46a97;
-    letter-spacing: 1px;
 }
-#cherry-note-panel[data-theme="dual"] #cherry-note-status { color: #e0559a; }
-#cherry-note-panel[data-theme="dual"] #cherry-note-char-name {
-    max-width: none;
-    font-weight: 700;
-}
-#cherry-note-panel[data-theme="dual"] .cn-count-score { letter-spacing: 1px; }
+#cherry-note-panel[data-theme="dual"] .cn-du-score b { font-family: "CN Galmuri11", monospace !important; font-size: 11px; color: #8a2f62; }
 
+/* 힌지 */
 #cherry-note-panel[data-theme="dual"] .cn-du-hinge {
-    margin: 0 8px;
-    height: 16px;
-    padding: 0 10px;
-    background: #f3a9ca;
+    height: 14px;
+    margin: 0 12px;
+    padding: 0 6px;
+    background: #f2a9c8;
     border-left: 2px solid #d98bb1;
     border-right: 2px solid #d98bb1;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-#cherry-note-panel[data-theme="dual"] .cn-du-slot { width: 22px; height: 4px; background: #e58fb7; border-radius: 2px; }
-#cherry-note-panel[data-theme="dual"] .cn-du-mic {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-family: "CN Galmuri9", monospace !important;
-    font-size: 10px;
-    color: #a8467a;
-}
-#cherry-note-panel[data-theme="dual"] .cn-du-mic i { display: block; width: 3px; height: 6px; background: #a8467a; }
-#cherry-note-panel[data-theme="dual"] .cn-du-leds { display: flex; gap: 3px; }
-#cherry-note-panel[data-theme="dual"] .cn-du-leds i { display: block; width: 4px; height: 7px; background: #ff6fae; }
-#cherry-note-panel[data-theme="dual"] .cn-du-leds i + i { background: #ffd66b; }
-#cherry-note-panel[data-theme="dual"].cn-dirty .cn-du-leds i:first-child { animation: cn-led-blink 0.5s steps(1) infinite; }
-@keyframes cn-led-blink {
-    50% { opacity: 0.25; }
-}
+#cherry-note-panel[data-theme="dual"] .cn-du-knob { width: 26px; height: 6px; border-radius: 3px; background: #e58db6; }
+#cherry-note-panel[data-theme="dual"] .cn-du-mic { display: flex; align-items: center; gap: 3px; color: #a8467a; margin-left: auto; }
+#cherry-note-panel[data-theme="dual"] .cn-du-mic i { width: 3px; height: 6px; background: #a8467a; }
+#cherry-note-panel[data-theme="dual"] .cn-du-leds { display: flex; gap: 3px; margin: 0 8px 0 auto; }
+#cherry-note-panel[data-theme="dual"] .cn-du-leds i { width: 5px; height: 5px; border-radius: 1px; background: #f07ab4; }
+#cherry-note-panel[data-theme="dual"] .cn-du-leds i + i { background: #ffd36b; }
 
-#cherry-note-panel[data-theme="dual"] .cn-du-bottom {
-    background: #f8c3db;
-    border: 2px solid #d98bb1;
-    border-radius: 6px 6px 16px 16px;
-    padding: 10px 12px 12px;
+/* 아래: 십자키 · 메모 화면 · 버튼 */
+#cherry-note-panel[data-theme="dual"] .cn-du-side {
+    width: 46px;
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    align-items: center;
+    gap: 12px;
+    padding-top: 12px;
 }
+#cherry-note-panel[data-theme="dual"] #cherry-note-footer.cn-du-side { padding: 8px 0 0; justify-content: flex-start; }
+#cherry-note-panel[data-theme="dual"] .cn-du-pills { display: flex; gap: 4px; }
+#cherry-note-panel[data-theme="dual"] .cn-du-pills i { display: block; width: 14px; height: 5px; border-radius: 3px; background: #fde0ec; box-shadow: 0 0 0 1.5px #d98bb1; }
+#cherry-note-panel[data-theme="dual"] .cn-du-mid { flex-grow: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+#cherry-note-panel[data-theme="dual"] .cn-du-low { align-self: stretch; }
 #cherry-note-panel[data-theme="dual"] #cherry-note-textarea {
     display: block;
     width: 100%;
     height: 132px;
-    padding: 7px 9px;
+    min-height: 90px;
+    resize: none;
+    padding: 6px 8px;
     border: 1.5px solid #eab2cb;
     border-radius: 0;
-    background: #fff7fb;
-    color: #8a2f62;
+    background-color: #fff9fc;
+    background-image: repeating-linear-gradient(transparent 0 19px, #fbe0ec 19px 20px);
+    background-position: 0 5px;
+    background-attachment: local;
     box-shadow: none;
+    color: #8a2f62;
+    line-height: 20px;
 }
-#cherry-note-panel[data-theme="dual"] #cherry-note-textarea:focus { border-color: #f07ab4; }
+#cherry-note-panel[data-theme="dual"] #cherry-note-textarea:focus { border-color: #f07ab4; box-shadow: none; }
 #cherry-note-panel[data-theme="dual"] #cherry-note-textarea::placeholder { color: #e2a9c4; }
-
-#cherry-note-panel[data-theme="dual"] #cherry-note-footer { padding: 0; }
-#cherry-note-panel[data-theme="dual"] .cn-du-legend {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    font-family: "CN Galmuri9", monospace !important;
-    font-size: 10px;
-    color: #a8467a;
-    white-space: pre;
-}
-#cherry-note-panel[data-theme="dual"] .cn-du-legend span { display: flex; align-items: center; gap: 5px; }
-#cherry-note-panel[data-theme="dual"] .cn-du-legend i {
-    display: block;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    border: 1.5px solid #a8467a;
-}
+#cherry-note-panel[data-theme="dual"] #cherry-note-textarea:disabled { background-color: #f7eaf0; color: #c9a0b6; }
+#cherry-note-panel[data-theme="dual"] .cn-du-legend { color: #c46a97; letter-spacing: 1px; }
 #cherry-note-panel[data-theme="dual"] .cn-du-abxy {
-    width: 64px;
-    height: 64px;
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-template-rows: repeat(3, minmax(0, 1fr));
-    place-items: center;
+    grid-template-columns: repeat(3, 16px);
+    grid-template-rows: repeat(3, 16px);
+    gap: 0;
 }
 #cherry-note-panel[data-theme="dual"] .cn-du-key {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #ffffff;
-    border: 1.5px solid #d98bb1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: "CN Galmuri9", monospace !important;
-    font-size: 10px;
-    color: #c46a97;
-}
-#cherry-note-panel[data-theme="dual"] .cn-du-a,
-#cherry-note-panel[data-theme="dual"] .cn-du-b {
-    width: 22px;
-    height: 22px;
+    width: 16px;
+    height: 16px;
     padding: 0;
+    border: 1.5px solid #d98bb1;
     border-radius: 50%;
-    font-family: "CN Galmuri9", monospace !important;
-    font-size: 10px;
-    line-height: 1;
+    box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.12);
     display: flex;
     align-items: center;
     justify-content: center;
-}
-#cherry-note-panel[data-theme="dual"] .cn-du-a {
-    background: #f07ab4;
-    border: 1.5px solid #c4568d;
-    box-shadow: inset 0 -2px 0 #d9579a;
+    font-family: "CN Galmuri9", monospace !important;
+    font-size: 8px;
+    line-height: 1;
     color: #ffffff;
 }
-#cherry-note-panel[data-theme="dual"] .cn-du-b {
-    background: #ffd3e6;
-    border: 1.5px solid #d98bb1;
-    box-shadow: inset 0 -2px 0 #f3a9ca;
-    color: #a8467a;
+#cherry-note-panel[data-theme="dual"] .cn-du-x { background: #ffe08a; color: #b8862a; }
+#cherry-note-panel[data-theme="dual"] .cn-du-y { background: #d5c8f7; color: #7b67c4; }
+#cherry-note-panel[data-theme="dual"] #cherry-note-save-btn.cn-du-a {
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    border: 1.5px solid #c4568d;
+    border-radius: 50%;
+    background: #f07ab4;
+    box-shadow: inset 0 -2px 0 #d9579a;
+    font-size: 8px;
+    color: #ffffff;
 }
-#cherry-note-panel[data-theme="dual"] .cn-du-a:hover,
-#cherry-note-panel[data-theme="dual"] .cn-du-b:hover { transform: translateY(-1px); }
-#cherry-note-panel[data-theme="dual"] .cn-du-a:active,
-#cherry-note-panel[data-theme="dual"] .cn-du-b:active { transform: translateY(1px); box-shadow: none; }
-#cherry-note-panel[data-theme="dual"] .cn-du-a:disabled { background: #eac6d7; box-shadow: none; transform: none; }
+#cherry-note-panel[data-theme="dual"] .cn-du-b { background: #a8e6d6; border-color: #6fbfa9; color: #3f8f7a; }
+#cherry-note-panel[data-theme="dual"] .cn-du-key:hover { transform: translateY(-1px); }
+#cherry-note-panel[data-theme="dual"] .cn-du-key:active,
+#cherry-note-panel[data-theme="dual"] #cherry-note-save-btn.cn-du-a:active { transform: translateY(1px); box-shadow: none; }
+#cherry-note-panel[data-theme="dual"] #cherry-note-save-btn.cn-du-a:disabled { background: #eac6d7; box-shadow: none; transform: none; }
+#cherry-note-panel[data-theme="dual"] .cn-du-power { display: flex; align-items: center; gap: 2px; color: #c46a97; font-size: 8px !important; }
+#cherry-note-panel[data-theme="dual"] .cn-du-power i { width: 6px; height: 6px; border-radius: 50%; border: 1.5px solid #c46a97; }
 
 /* ---------------- 06 러브레터 ---------------- */
 #cherry-note-panel[data-theme="letter"] {
