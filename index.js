@@ -1674,7 +1674,7 @@ function applyPanelTheme(themeId) {
     renderInjectToggle();
 
     if (!$panel.hasClass("cherry-note-hidden")) {
-        positionPanelNearIcon();
+        placePanel();
     }
 }
 
@@ -1837,11 +1837,12 @@ function buildUI() {
     function togglePanel() {
         $panel.toggleClass("cherry-note-hidden");
         if (!$panel.hasClass("cherry-note-hidden")) {
-            positionPanelNearIcon();
+            placePanel();
         }
     }
 
     makeDraggable($icon, "cherry-note-icon-pos", togglePanel);
+    makePanelDraggable($panel);
 
     // 패널 내부는 테마 바뀔 때마다 새로 그려지므로 이벤트는 위임으로 연결
     $panel.on("click", ".cn-close", () => {
@@ -1850,7 +1851,7 @@ function buildUI() {
 
     $panel.on("click", ".cn-expand", () => {
         $panel.toggleClass("cn-expanded");
-        positionPanelNearIcon();
+        placePanel();
     });
 
     $panel.on("input", "#cherry-note-textarea", function () {
@@ -1884,11 +1885,91 @@ function buildUI() {
     $(window).on("resize", () => {
         reclampIconToViewport($icon, "cherry-note-icon-pos");
         if (!$panel.hasClass("cherry-note-hidden")) {
-            positionPanelNearIcon();
+            placePanel();
         }
     });
 
     applyAllThemes();
+}
+
+// ---------- 메모장 패널 드래그 (위치 기억) ----------
+// 입력창/버튼/탭/토글을 뺀 빈 곳(테두리, 제목줄, 장식) 어디든 잡고 끌 수 있음.
+// 옮긴 위치는 브라우저(기기)마다 localStorage에 따로 저장 → PC/폰이 각자 기억.
+// 저장된 위치가 없으면 예전처럼 아이콘 옆에서 열림.
+
+const PANEL_POS_KEY = "cherry-note-panel-pos";
+const PANEL_NO_DRAG = "textarea, input, select, button, a, label, [contenteditable], .cn-close, .cn-expand, .cn-tab, .cn-save, .cn-inj, #cherry-note-save-btn";
+const PANEL_DRAG_THRESHOLD = 6;
+
+function getSavedPanelPos() {
+    try {
+        const v = JSON.parse(localStorage.getItem(PANEL_POS_KEY));
+        if (v && Number.isFinite(v.x) && Number.isFinite(v.y)) return v;
+    } catch (e) { /* 무시 */ }
+    return null;
+}
+
+// 패널을 열거나 크기가 바뀔 때 위치 잡기 (저장된 위치 우선, 화면 밖으로는 안 나가게)
+// 화면에 맞추느라 밀려나도 저장값은 그대로 둠 → 화면이 다시 커지면 원래 자리로
+function placePanel() {
+    const $panel = $("#cherry-note-panel");
+    const saved = getSavedPanelPos();
+    if (!saved) {
+        positionPanelNearIcon();
+        return;
+    }
+    const c = clampToViewport($panel, saved.x, saved.y);
+    $panel.css({ left: `${c.x}px`, top: `${c.y}px`, right: "auto", bottom: "auto" });
+}
+
+function makePanelDraggable($panel) {
+    const el = $panel[0];
+    let start = null;
+    let dragging = false;
+
+    function down(e) {
+        if (e.type === "mousedown" && e.button !== 0) return;
+        if ($(e.target).closest(PANEL_NO_DRAG).length) return; // 입력/버튼은 원래 동작대로
+        const p = e.touches ? e.touches[0] : e;
+        const r = el.getBoundingClientRect();
+        start = { x: p.clientX, y: p.clientY, left: r.left, top: r.top };
+        dragging = false;
+        if (e.type === "mousedown") e.preventDefault(); // PC에서 끌 때 글자 선택되는 것 방지
+    }
+
+    function move(e) {
+        if (!start) return;
+        const p = e.touches ? e.touches[0] : e;
+        const dx = p.clientX - start.x;
+        const dy = p.clientY - start.y;
+        if (!dragging) {
+            if (Math.abs(dx) < PANEL_DRAG_THRESHOLD && Math.abs(dy) < PANEL_DRAG_THRESHOLD) return;
+            dragging = true;
+            $panel.addClass("cn-dragging");
+        }
+        e.preventDefault(); // 모바일에서 끄는 동안 화면이 같이 스크롤되지 않게
+        const c = clampToViewport($panel, start.left + dx, start.top + dy);
+        $panel.css({ left: `${c.x}px`, top: `${c.y}px`, right: "auto", bottom: "auto" });
+    }
+
+    function up() {
+        if (!start) return;
+        if (dragging) {
+            const r = el.getBoundingClientRect();
+            localStorage.setItem(PANEL_POS_KEY, JSON.stringify({ x: Math.round(r.left), y: Math.round(r.top) }));
+            $panel.removeClass("cn-dragging");
+        }
+        start = null;
+        dragging = false;
+    }
+
+    el.addEventListener("mousedown", down);
+    el.addEventListener("touchstart", down, { passive: true });
+    document.addEventListener("mousemove", move);
+    document.addEventListener("touchmove", move, { passive: false });
+    document.addEventListener("mouseup", up);
+    document.addEventListener("touchend", up);
+    document.addEventListener("touchcancel", up);
 }
 
 function positionPanelNearIcon() {

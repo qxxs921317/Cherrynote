@@ -3759,3 +3759,8 @@
 
 /* 확장 설정 패널 안내문 */
 .cherry-note-settings-inner .cherry-note-hint { display:block; opacity:.7; font-size:.85em; margin:2px 0 8px; }
+
+/* 메모장 패널 드래그 */
+#cherry-note-panel #cherry-note-header { cursor: grab; }
+#cherry-note-panel #cherry-note-header :is(button, .cn-close, .cn-expand, .cn-tab, input, label) { cursor: pointer; }
+#cherry-note-panel.cn-dragging, #cherry-note-panel.cn-dragging * { cursor: grabbing !important; user-select: none !important; -webkit-user-select: none !important; }
