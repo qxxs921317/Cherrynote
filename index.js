@@ -578,7 +578,6 @@ const PANEL_TEMPLATES = {
                 <span class="cn-fp-gem cn-fp-g2">${CUTE.gemHeart(14, "#fde4ef", "#eaa4c4")}</span>
                 <span class="cn-fp-stone cn-fp-s1"></span>
                 <span class="cn-fp-stone cn-fp-s2"></span>
-                <span class="cn-fp-stone cn-fp-s3"></span>
             </div>
             <div class="cn-fp-hinge"><i></i></div>
             <div id="cherry-note-footer" class="cn-fp-bottom">
@@ -596,6 +595,7 @@ const PANEL_TEMPLATES = {
                 <div class="cn-fp-pad">${["1", "2<small>ABC</small>", "3<small>DEF</small>", "4<small>GHI</small>", "5<small>JKL</small>", "6<small>MNO</small>", "7<small>PQRS</small>", "8<small>TUV</small>", "9<small>WXYZ</small>", "*", "0<small>♡</small>", "#"].map((k) => `<span>${k}</span>`).join("")}</div>
                 <span class="cn-fp-foot"></span>
                 <span class="cn-fp-gem cn-fp-g3">${CUTE.gemHeart(15)}</span>
+                <span class="cn-fp-stone cn-fp-s3"></span>
                 <span class="cn-fp-stone cn-fp-s4"></span>
             </div>`,
         name: (n) => n,

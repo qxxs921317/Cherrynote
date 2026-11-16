@@ -2897,10 +2897,11 @@
     background: radial-gradient(circle at 35% 35%, #ffffff 0 25%, #fde4ef 45%, #f3b3cf 100%);
     pointer-events: none;
 }
-#cherry-note-panel[data-theme="flip"] .cn-fp-s1 { left: 12px; top: 10px; }
-#cherry-note-panel[data-theme="flip"] .cn-fp-s2 { right: 14px; top: 8px; width: 6px; height: 6px; }
-#cherry-note-panel[data-theme="flip"] .cn-fp-s3 { right: -4px; bottom: 34px; }
-#cherry-note-panel[data-theme="flip"] .cn-fp-s4 { left: 8px; bottom: 7px; width: 6px; height: 6px; }
+/* 진주 4개: 윗판 좌우 위 / 아랫판 좌우 아래 대칭 */
+#cherry-note-panel[data-theme="flip"] .cn-fp-s1 { left: 14px; top: 12px; }
+#cherry-note-panel[data-theme="flip"] .cn-fp-s2 { right: 14px; top: 12px; }
+#cherry-note-panel[data-theme="flip"] .cn-fp-s3 { left: 14px; bottom: 12px; }
+#cherry-note-panel[data-theme="flip"] .cn-fp-s4 { right: 14px; bottom: 12px; }
 #cherry-note-panel[data-theme="flip"] .cn-fp-hinge {
     display: flex;
     align-items: center;
