@@ -3764,3 +3764,10 @@
 #cherry-note-panel #cherry-note-header { cursor: grab; }
 #cherry-note-panel #cherry-note-header :is(button, .cn-close, .cn-expand, .cn-tab, input, label) { cursor: pointer; }
 #cherry-note-panel.cn-dragging, #cherry-note-panel.cn-dragging * { cursor: grabbing !important; user-select: none !important; -webkit-user-select: none !important; }
+
+/* 메모 초기화 버튼 (확장탭) */
+.cherry-note-settings-inner .cherry-note-reset-btns { display:flex; flex-wrap:wrap; gap:6px; }
+.cherry-note-settings-inner .cherry-note-reset-btns .menu_button { flex:1 1 auto; margin:0; white-space:nowrap; }
+.cherry-note-settings-inner .cherry-note-reset-btns .menu_button.disabled { opacity:.5; pointer-events:none; }
+.cherry-note-confirm h3 { margin:0 0 8px; }
+.cherry-note-confirm p { margin:4px 0; }

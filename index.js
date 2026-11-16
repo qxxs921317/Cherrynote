@@ -1217,6 +1217,135 @@ function applyTabLayout() {
     if (!isLoading) showActiveSlot();
 }
 
+// ---------- 메모 초기화 (확장탭) ----------
+// 지운 건 되돌릴 수 없으니 반드시 확인 팝업을 거침
+
+function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+// ST 기본 팝업(없으면 브라우저 confirm)으로 한 번 더 묻기
+async function confirmDanger(title, bodyHtml, okLabel) {
+    try {
+        const { callGenericPopup, POPUP_TYPE, POPUP_RESULT } = await import("../../../popup.js");
+        const html = `<div class="cherry-note-confirm"><h3>⚠️ ${title}</h3>${bodyHtml}</div>`;
+        const result = await callGenericPopup(html, POPUP_TYPE.CONFIRM, "", { okButton: okLabel, cancelButton: "취소" });
+        return result === POPUP_RESULT.AFFIRMATIVE;
+    } catch (e) {
+        console.warn("[Aggressive Notepad] ST 팝업을 못 불러와서 기본 확인창 사용:", e);
+        const text = `⚠️ ${title}\n\n${bodyHtml.replace(/<br\s*\/?>/g, "\n").replace(/<[^>]+>/g, "")}`;
+        return window.confirm(text);
+    }
+}
+
+// 대기중인 자동저장을 멈추고, 지울 대상은 저장하지 않게 표시
+function cancelPendingCharSave() {
+    if (saveTimer) {
+        clearTimeout(saveTimer);
+        saveTimer = null;
+    }
+    charDirty = false;
+}
+
+let isResetting = false;
+
+async function resetCurrentCharacterNotes() {
+    if (isResetting) return;
+    const reason = getEditBlockReason();
+    if (reason) {
+        toastr.warning(reason, TOAST_TITLE);
+        return;
+    }
+    const avatar = currentAvatar;
+    const name = charNameState.kind === "char" ? charNameState.name : avatar;
+    const ok = await confirmDanger(
+        "이 캐릭터 메모 초기화",
+        `<p><b>${escapeHtml(name)}</b>의 메모 탭 내용과 탭별 AI 주입 ON/OFF가 전부 지워져요.</p>
+         <p>공통 탭 내용과 다른 캐릭터 메모는 그대로예요.</p>
+         <p><b>지운 메모는 되돌릴 수 없어요.</b></p>`,
+        "초기화",
+    );
+    if (!ok) return;
+    if (avatar !== currentAvatar) {
+        toastr.warning("그 사이 캐릭터가 바뀌어서 취소했어요", TOAST_TITLE);
+        return;
+    }
+
+    isResetting = true;
+    try {
+        cancelPendingCharSave();
+        await flushPendingSave(); // 공통 탭에 쓰던 내용은 저장해 둠
+        await queueJob(() => deleteJsonFile(noteFileName(avatar)));
+        if (avatar === currentAvatar) {
+            charData = emptyCharData();
+            lastSavedAt = null;
+            showActiveSlot();
+            renderSavedDate();
+        }
+        toastr.success(`${name} 메모를 초기화했어요`, TOAST_TITLE);
+    } catch (e) {
+        console.error("[Aggressive Notepad] 캐릭터 메모 초기화 실패:", e);
+        toastr.error("초기화하지 못했어요. 잠시 후 다시 시도해주세요", TOAST_TITLE);
+    } finally {
+        isResetting = false;
+    }
+}
+
+async function resetAllNotes() {
+    if (isResetting) return;
+    const context = getContext();
+    const avatars = new Set((context.characters || []).map((c) => c?.avatar).filter(Boolean));
+    if (currentAvatar) avatars.add(currentAvatar);
+
+    const ok = await confirmDanger(
+        "모든 메모 초기화",
+        `<p>모든 캐릭터(${avatars.size}명)의 Aggressive Notepad 메모와 공통 탭, 탭별 AI 주입 ON/OFF가 <b>전부</b> 지워져요.</p>
+         <p>테마, 탭 개수, 모드, 메모장 위치 같은 설정은 그대로 남아요.</p>
+         <p><b>지운 메모는 되돌릴 수 없어요.</b></p>`,
+        "전부 초기화",
+    );
+    if (!ok) return;
+
+    isResetting = true;
+    const $btns = $("#cherry-note-reset-char, #cherry-note-reset-all").addClass("disabled");
+    showStatus("초기화 중...", true);
+    let failed = 0;
+    try {
+        cancelPendingCharSave();
+        commonDirty = false;
+        // 앞서 줄 서 있던 저장이 다 끝난 뒤 한꺼번에 삭제 (그 사이 새 저장은 뒤로 밀림)
+        await queueJob(async () => {
+            const names = [...avatars].map(noteFileName);
+            names.push(COMMON_FILE);
+            const CONCURRENCY = 6;
+            for (let i = 0; i < names.length; i += CONCURRENCY) {
+                const results = await Promise.allSettled(names.slice(i, i + CONCURRENCY).map((n) => deleteJsonFile(n)));
+                failed += results.filter((r) => r.status === "rejected").length;
+            }
+        });
+        // settings.json에 남아 있을 수 있는 아주 옛날 메모도 정리
+        if (extension_settings[EXT_NAME]?.notes) {
+            delete extension_settings[EXT_NAME].notes;
+            saveSettingsDebounced();
+        }
+        charData = emptyCharData();
+        commonData = { notes: {}, updatedAt: null };
+        lastSavedAt = null;
+        showActiveSlot();
+        renderSavedDate();
+        $("#cherry-note-status").stop(true, true).css("opacity", 0);
+        if (failed) toastr.warning(`초기화했지만 파일 ${failed}개는 지우지 못했어요. 다시 시도해주세요`, TOAST_TITLE);
+        else toastr.success("모든 메모를 초기화했어요", TOAST_TITLE);
+    } catch (e) {
+        console.error("[Aggressive Notepad] 전체 초기화 실패:", e);
+        toastr.error("초기화하지 못했어요. 잠시 후 다시 시도해주세요", TOAST_TITLE);
+        showStatus("", false);
+    } finally {
+        isResetting = false;
+        $btns.removeClass("disabled");
+    }
+}
+
 // ---------- 슬래시 명령어 ----------
 // /cherrynote [on|off|toggle|status]  - 지금 탭의 AI 주입 ON/OFF (이 캐릭터만). 결과로 "on"/"off" 반환
 // /cherrynote memo <번호>             - 탭 전환
@@ -1747,6 +1876,15 @@ function buildSettingsPanel() {
 
                     <label for="cherry-note-panel-theme-select">패널 테마 (저장 버튼 색상 포함)</label>
                     <select id="cherry-note-panel-theme-select" class="text_pole">${panelOptions}</select>
+
+                    <hr class="sysHR">
+
+                    <label>메모 초기화</label>
+                    <div class="cherry-note-reset-btns">
+                        <div id="cherry-note-reset-char" class="menu_button">이 캐릭터 메모 초기화</div>
+                        <div id="cherry-note-reset-all" class="menu_button redWarningBG">모든 메모 초기화</div>
+                    </div>
+                    <small class="cherry-note-hint">지운 메모는 되돌릴 수 없어요. 테마·탭 개수·모드 같은 설정은 그대로 남아요.</small>
                 </div>
             </div>
         </div>
@@ -1794,6 +1932,9 @@ function buildSettingsPanel() {
         saveConfig();
         applyPanelTheme(themeId);
     });
+
+    $("#cherry-note-reset-char").on("click", resetCurrentCharacterNotes);
+    $("#cherry-note-reset-all").on("click", resetAllNotes);
 }
 
 // ---------- 상단 요술봉(확장) 메뉴에 ON/OFF 토글 항목 추가 ----------
