@@ -156,6 +156,8 @@ function spr(name, w, h, cls = "") {
 
 const NOTE_PLACEHOLDER = "여기 적으면 진짜 맨 끝에 강제로 박아넣어요...";
 const TEXTAREA_HTML = `<textarea id="cherry-note-textarea" placeholder="${NOTE_PLACEHOLDER}"></textarea>`;
+// AI 주입 ON/OFF 토글 (캐릭터별). 모든 템플릿에 같은 마크업을 넣고 테마별 색/모양은 CSS로.
+const INJECT_TOGGLE_HTML = `<label class="cn-inj" title="AI 주입 켜기/끄기 (이 캐릭터만)"><input type="checkbox" id="cherry-note-inject-toggle" checked><span class="cn-inj-label">AI</span><span class="cn-inj-track"></span></label>`;
 const INJECT_SEGMENTS = 10;
 const CHARS_PER_SEGMENT = 30;
 
@@ -175,7 +177,7 @@ const PANEL_TEMPLATES = {
             ${TEXTAREA_HTML}
             <div id="cherry-note-footer">
                 <span id="cherry-note-status"></span>
-                <button id="cherry-note-save-btn" title="저장하기">💾</button>
+                ${INJECT_TOGGLE_HTML}<button id="cherry-note-save-btn" title="저장하기">💾</button>
             </div>`,
         name: (n) => `📝 ${n}`,
         saved: () => "저장됨 ✓",
@@ -202,7 +204,7 @@ const PANEL_TEMPLATES = {
             <div class="cn-ar-controls">
                 <span class="cn-ar-dpad"><span>${PX.arrow("up")}</span><span>${PX.arrow("down")}</span></span>
                 <span class="cn-ar-grill"><i></i><i></i><i></i><i></i><i></i></span>
-                <button id="cherry-note-save-btn" title="저장하기">${PX.heart("#ffe0ef", 21)}</button>
+                ${INJECT_TOGGLE_HTML}<button id="cherry-note-save-btn" title="저장하기">${PX.heart("#ffe0ef", 21)}</button>
             </div>`,
         name: (n) => n,
         saved: () => "♥ SAVED!",
@@ -233,7 +235,7 @@ const PANEL_TEMPLATES = {
             </div>
             <div id="cherry-note-footer" class="cn-po-foot">
                 <span id="cherry-note-status"></span>
-                <button id="cherry-note-save-btn" title="저장하기">Save ${PX.heart("#f27bb0", 10, false)}</button>
+                ${INJECT_TOGGLE_HTML}<button id="cherry-note-save-btn" title="저장하기">Save ${PX.heart("#f27bb0", 10, false)}</button>
             </div>`,
         name: (n) => `${n} ♡`,
         saved: () => `♡ 자동 저장됨 · ${formatTime()}`,
@@ -255,7 +257,7 @@ const PANEL_TEMPLATES = {
                 <div id="cherry-note-footer" class="cn-cd-foot">
                     <span id="cherry-note-status"></span>
                     <span class="cn-cd-btns">
-                        <button id="cherry-note-save-btn" class="cn-cd-btn cn-cd-default" title="저장하기"><u>S</u>ave</button>
+                        ${INJECT_TOGGLE_HTML}<button id="cherry-note-save-btn" class="cn-cd-btn cn-cd-default" title="저장하기"><u>S</u>ave</button>
                         <button class="cn-cd-btn cn-close" title="닫기"><u>C</u>lose</button>
                     </span>
                 </div>
@@ -288,6 +290,7 @@ const PANEL_TEMPLATES = {
                 </div>
                 <div id="cherry-note-footer" class="cn-dg-foot">
                     <span id="cherry-note-status"></span>
+                    ${INJECT_TOGGLE_HTML}
                     <span class="cn-dg-btns">
                         <button class="cn-dg-btn cn-close" title="닫기">CLOSE</button>
                         <button id="cherry-note-save-btn" class="cn-dg-btn cn-dg-primary" title="저장하기">SAVE</button>
@@ -342,6 +345,7 @@ const PANEL_TEMPLATES = {
                         <span></span><button class="cn-du-key cn-du-b cn-close" title="닫기 (B)">B</button><span></span>
                     </div>
                     <span class="cn-du-power"><i></i>POWER</span>
+                    ${INJECT_TOGGLE_HTML}
                 </div>
             </div>`,
         name: (n) => n,
@@ -370,7 +374,7 @@ const PANEL_TEMPLATES = {
                 ${PX.bow(33)}
                 <span class="cn-lt-stamp">${PX.heart("#ffffff", 14, false)}</span>
                 ${PX.star(27)}
-                <button id="cherry-note-save-btn" class="cn-lt-floppy" title="저장하기"><span class="cn-lt-shutter"><i></i></span><span class="cn-lt-label">SAVE</span></button>
+                ${INJECT_TOGGLE_HTML}<button id="cherry-note-save-btn" class="cn-lt-floppy" title="저장하기"><span class="cn-lt-shutter"><i></i></span><span class="cn-lt-label">SAVE</span></button>
             </div>`,
         name: (n) => n,
         saved: () => `· Draft saved ${formatTime()}`,
@@ -396,7 +400,7 @@ const PANEL_TEMPLATES = {
                 <div class="cn-sg-rule"></div>
                 <div class="cn-sg-method">Order Method:</div>
                 <div id="cherry-note-footer" class="cn-sg-opts">
-                    <button id="cherry-note-save-btn" class="cn-sg-opt" title="저장하기"><i></i><span>Save</span></button>
+                    ${INJECT_TOGGLE_HTML}<button id="cherry-note-save-btn" class="cn-sg-opt" title="저장하기"><i></i><span>Save</span></button>
                     <button class="cn-sg-opt cn-close" title="닫기"><i></i><span>Close</span></button>
                 </div>
                 <span id="cherry-note-status"></span>
@@ -423,7 +427,7 @@ const PANEL_TEMPLATES = {
                 <div class="cn-pr-total"><span class="cn-pr-script">Total:</span><span class="cn-count-chars">0자</span></div>
                 <div class="cn-pr-rule"></div>
                 <div id="cherry-note-footer" class="cn-pr-opts">
-                    <button id="cherry-note-save-btn" class="cn-pr-opt cn-pr-save" title="저장하기">SAVE</button>
+                    ${INJECT_TOGGLE_HTML}<button id="cherry-note-save-btn" class="cn-pr-opt cn-pr-save" title="저장하기">SAVE</button>
                     <button class="cn-pr-opt cn-close" title="닫기">♡ CLOSE</button>
                 </div>
                 <span id="cherry-note-status"></span>
@@ -453,7 +457,7 @@ const PANEL_TEMPLATES = {
                 <div class="cn-cf-row"><span>PAYMENT</span><span class="cn-cf-love">♥ LOVE</span></div>
                 <div class="cn-cf-rule cn-cf-double"></div>
                 <div id="cherry-note-footer" class="cn-cf-btns">
-                    <button id="cherry-note-save-btn" class="cn-cf-btn cn-cf-primary" title="저장하기">[ SAVE ]</button>
+                    ${INJECT_TOGGLE_HTML}<button id="cherry-note-save-btn" class="cn-cf-btn cn-cf-primary" title="저장하기">[ SAVE ]</button>
                     <button class="cn-cf-btn cn-close" title="닫기">[ CLOSE ]</button>
                 </div>
                 <span id="cherry-note-status"></span>
@@ -484,7 +488,7 @@ const PANEL_TEMPLATES = {
                     </div>
                     <div id="cherry-note-footer" class="cn-ib-dialog">
                         <span class="cn-ib-dtext"><b>Memo of the Night</b><small><span class="cn-count-chars">0자</span> 메모 · 다음 턴<br>맨 끝에 강제 주입됩니다. ▼</small></span>
-                        <button id="cherry-note-save-btn" title="저장하기">${spr("inbox_floppy", 14, 13)}SAVE</button>
+                        ${INJECT_TOGGLE_HTML}<button id="cherry-note-save-btn" title="저장하기">${spr("inbox_floppy", 14, 13)}SAVE</button>
                     </div>
                     <div class="cn-ib-task">
                         ${spr("inbox_smile", 12, 11)}<span class="cn-ib-tag">MEMO ▶</span>${spr("inbox_floppy", 11, 10)}<span class="cn-count-score">000000</span>
@@ -517,7 +521,7 @@ const PANEL_TEMPLATES = {
                 <div id="cherry-note-footer" class="cn-hd-kb">
                     <button class="cn-hd-esc cn-close" title="닫기">ESC</button>
                     <span class="cn-hd-keys">${"<i></i>".repeat(12)}</span>
-                    <button id="cherry-note-save-btn" title="저장하기">SAVE ↵</button>
+                    ${INJECT_TOGGLE_HTML}<button id="cherry-note-save-btn" title="저장하기">SAVE ↵</button>
                 </div>
             </div>`,
         name: (n) => `▶ ${n}.memo`,
@@ -539,7 +543,7 @@ const PANEL_TEMPLATES = {
                             <span class="cn-mp-time">♥ <span class="cn-saved-date" data-fmt="time"></span></span>
                             <span id="cherry-note-status"></span>
                             <button class="cn-mp-btn cn-close" title="닫기">닫기</button>
-                            <button id="cherry-note-save-btn" class="cn-mp-btn" title="저장하기">▶ 저장</button>
+                            ${INJECT_TOGGLE_HTML}<button id="cherry-note-save-btn" class="cn-mp-btn" title="저장하기">▶ 저장</button>
                         </div>
                     </div>
                 </div>
@@ -562,6 +566,7 @@ const PANEL_TEMPLATES = {
                     <div class="cn-fp-soft">
                         <span id="cherry-note-status"></span>
                         <span class="cn-fp-sms">✉ <span class="cn-count-chars">0자</span></span>
+                        ${INJECT_TOGGLE_HTML}
                     </div>
                 </div>
                 <span class="cn-fp-gem cn-fp-g1">${CUTE.gemHeart(17)}</span>
@@ -621,6 +626,7 @@ const PANEL_TEMPLATES = {
                     ${TEXTAREA_HTML}
                     <div id="cherry-note-footer" class="cn-dd-bar">
                         <span id="cherry-note-status"></span>
+                        ${INJECT_TOGGLE_HTML}
                         <button class="cn-dd-btn cn-close" title="닫기">⌂HOME</button>
                         <button id="cherry-note-save-btn" class="cn-dd-btn" title="저장하기">START</button>
                     </div>
@@ -654,7 +660,7 @@ const PANEL_TEMPLATES = {
                     ${TEXTAREA_HTML}
                     <div id="cherry-note-footer" class="cn-jr-foot">
                         <span id="cherry-note-status"></span>
-                        <button id="cherry-note-save-btn" class="cn-jr-save" title="저장하기">${PX.heart("#ffffff", 10, false)} SAVE</button>
+                        ${INJECT_TOGGLE_HTML}<button id="cherry-note-save-btn" class="cn-jr-save" title="저장하기">${PX.heart("#ffffff", 10, false)} SAVE</button>
                     </div>
                 </div>
             </div>
@@ -728,6 +734,7 @@ let saveTimer = null;
 let currentAvatar = null; // 현재 메모가 속한 캐릭터의 아바타 파일명
 let isDirty = false;
 let currentNoteBlock = ""; // <system_override_note>로 감싼, 주입 준비된 텍스트
+let currentInject = true; // 현재 캐릭터의 AI 주입 ON/OFF (캐릭터 파일에 저장, 기본 ON)
 let charNameState = { kind: "none", name: "" }; // 헤더에 표시할 이름 상태 (테마별 포맷용)
 
 // ---------- 설정(테마/플로팅 on-off) 헬퍼 ----------
@@ -792,20 +799,22 @@ async function readNoteFile(avatar) {
         cache: "no-store",
         headers: getRequestHeaders(),
     });
-    if (res.status === 404) return { text: "", updatedAt: null };
+    if (res.status === 404) return { text: "", updatedAt: null, inject: true };
     if (!res.ok) throw new Error(`읽기 실패 (HTTP ${res.status})`);
     const data = await res.json();
     return {
         text: typeof data?.text === "string" ? data.text : "",
         updatedAt: typeof data?.updatedAt === "string" ? data.updatedAt : null,
+        inject: data?.inject !== false, // 값이 없으면(예전 파일 포함) ON
     };
 }
 
-async function writeNoteFile(avatar, text, { keepalive = false } = {}) {
+async function writeNoteFile(avatar, text, inject = true, { keepalive = false } = {}) {
     const name = noteFileName(avatar);
 
-    // 메모를 다 지웠으면 파일도 삭제 (빈 파일 쌓이지 않게)
-    if (!text) {
+    // 메모를 다 지웠고 주입도 기본값(ON)이면 파일 삭제 (빈 파일 쌓이지 않게)
+    // 주입 OFF는 메모가 비어 있어도 파일로 남겨야 다시 쓸 때 OFF가 유지됨
+    if (!text && inject) {
         const res = await fetch("/api/files/delete", {
             method: "POST",
             headers: getRequestHeaders(),
@@ -816,7 +825,9 @@ async function writeNoteFile(avatar, text, { keepalive = false } = {}) {
         return;
     }
 
-    const payload = JSON.stringify({ v: 1, avatar, text, updatedAt: new Date().toISOString() });
+    const data = { v: 1, avatar, text, updatedAt: new Date().toISOString() };
+    if (!inject) data.inject = false;
+    const payload = JSON.stringify(data);
     const res = await fetch("/api/files/upload", {
         method: "POST",
         headers: getRequestHeaders(),
@@ -828,8 +839,8 @@ async function writeNoteFile(avatar, text, { keepalive = false } = {}) {
 
 // 쓰기 요청이 순서 뒤바뀌지 않게 한 줄로 세움
 let writeChain = Promise.resolve();
-function queueWrite(avatar, text, opts) {
-    const job = writeChain.then(() => writeNoteFile(avatar, text, opts));
+function queueWrite(avatar, text, inject, opts) {
+    const job = writeChain.then(() => writeNoteFile(avatar, text, inject, opts));
     writeChain = job.catch(() => {});
     return job;
 }
@@ -843,7 +854,7 @@ async function migrateLegacyNotes() {
     let failed = 0;
     for (const [avatar, text] of entries) {
         try {
-            if (text) await queueWrite(avatar, text);
+            if (text) await queueWrite(avatar, text, true);
             delete legacy[avatar];
         } catch (e) {
             failed++;
@@ -888,6 +899,7 @@ function isInjectionAllowed() {
     // 그룹챗 미지원 + 메모 없으면 스킵
     const context = getContext();
     if (context.groupId) return false;
+    if (!currentInject) return false; // 이 캐릭터는 주입 OFF
     if (!currentNoteBlock) return false;
     return true;
 }
@@ -942,6 +954,138 @@ function registerInjectionHooks() {
     }
 }
 
+// ---------- AI 주입 ON/OFF (캐릭터별) ----------
+
+function renderInjectToggle() {
+    $("#cherry-note-inject-toggle").prop("checked", currentInject);
+    $("#cherry-note-panel .cn-inj").toggleClass("off", !currentInject);
+    $("#cherry-note-panel").toggleClass("cn-inject-off", !currentInject);
+}
+
+// 지금 캐릭터에서 토글을 바꿀 수 있는 상태인지 (안 되면 이유 문자열)
+function getInjectBlockReason() {
+    if (getContext().groupId) return "그룹챗에서는 사용할 수 없어요";
+    if (!currentAvatar || currentAvatar !== getCurrentAvatar()) return "캐릭터를 먼저 선택해주세요";
+    if (isLoading) return "메모를 불러오는 중이에요";
+    if ($("#cherry-note-textarea").prop("disabled")) return "메모를 불러오지 못해 잠겨 있어요";
+    return null;
+}
+
+// 패널 토글 / 슬래시 명령어가 모두 여기를 거침
+async function setInjectEnabled(enabled) {
+    const reason = getInjectBlockReason();
+    if (reason) {
+        renderInjectToggle(); // 체크박스가 먼저 바뀌었으면 되돌림
+        return { ok: false, reason };
+    }
+    currentInject = !!enabled;
+    renderInjectToggle();
+    showStatus(currentInject ? "AI 주입 ON" : "AI 주입 OFF");
+
+    // 메모 내용과 함께 바로 파일에 기록 (대기중이던 자동저장도 같이 처리)
+    if (saveTimer) {
+        clearTimeout(saveTimer);
+        saveTimer = null;
+    }
+    await doSave(false);
+    return { ok: true };
+}
+
+// ---------- 슬래시 명령어 ----------
+// /cherrynote [on|off|toggle|status] (alias /cn) - 현재 캐릭터의 AI 주입 ON/OFF. 결과로 "on"/"off" 반환
+
+const SLASH_NAME = "cherrynote";
+const SLASH_ALIASES = ["cn"];
+
+async function runInjectCommand(namedArgs, value) {
+    const quiet = ["true", "on", "1", "yes"].includes(String(namedArgs?.quiet ?? "").toLowerCase());
+    const mode = String(value ?? "").trim().toLowerCase() || "toggle";
+
+    await loadingPromise;
+
+    if (mode === "status") {
+        const state = currentInject ? "on" : "off";
+        if (!quiet) toastr.info(`이 캐릭터 AI 주입: ${state.toUpperCase()}`, "Aggressive Notepad");
+        return state;
+    }
+
+    let next;
+    if (["on", "true", "1", "enable"].includes(mode)) next = true;
+    else if (["off", "false", "0", "disable"].includes(mode)) next = false;
+    else if (mode === "toggle") next = !currentInject;
+    else {
+        toastr.warning(`알 수 없는 값: ${mode} (on / off / toggle / status)`, "Aggressive Notepad");
+        return "";
+    }
+
+    const res = await setInjectEnabled(next);
+    if (!res.ok) {
+        toastr.warning(res.reason, "Aggressive Notepad");
+        return "";
+    }
+    if (!quiet) toastr.success(`이 캐릭터 AI 주입: ${next ? "ON" : "OFF"}`, "Aggressive Notepad");
+    return next ? "on" : "off";
+}
+
+async function registerSlashCommands() {
+    try {
+        const { SlashCommandParser } = await import("../../../slash-commands/SlashCommandParser.js");
+        const { SlashCommand } = await import("../../../slash-commands/SlashCommand.js");
+        const { SlashCommandArgument, SlashCommandNamedArgument, ARGUMENT_TYPE } = await import("../../../slash-commands/SlashCommandArgument.js");
+
+        const existing = SlashCommandParser.commands || {};
+        if (existing[SLASH_NAME]) {
+            console.warn(`[Aggressive Notepad] /${SLASH_NAME} 명령어가 이미 있어서 등록하지 않음`);
+            return;
+        }
+        // 다른 확장/기본 명령어와 겹치는 alias는 빼고 등록 (남의 명령어 덮어쓰지 않게)
+        const aliases = SLASH_ALIASES.filter((a) => {
+            if (existing[a]) {
+                console.warn(`[Aggressive Notepad] /${a} 는 이미 쓰이고 있어서 alias에서 제외`);
+                return false;
+            }
+            return true;
+        });
+
+        SlashCommandParser.addCommandObject(SlashCommand.fromProps({
+            name: SLASH_NAME,
+            aliases,
+            callback: runInjectCommand,
+            returns: "on / off",
+            namedArgumentList: [
+                SlashCommandNamedArgument.fromProps({
+                    name: "quiet",
+                    description: "알림(토스트) 숨기기",
+                    typeList: [ARGUMENT_TYPE.BOOLEAN],
+                    defaultValue: "false",
+                    enumList: ["true", "false"],
+                }),
+            ],
+            unnamedArgumentList: [
+                SlashCommandArgument.fromProps({
+                    description: "on / off / toggle / status (비우면 toggle)",
+                    typeList: [ARGUMENT_TYPE.STRING],
+                    isRequired: false,
+                    enumList: ["on", "off", "toggle", "status"],
+                }),
+            ],
+            helpString: `
+                <div>현재 캐릭터의 Aggressive Notepad 메모 <b>AI 주입</b>을 켜거나 끕니다. 캐릭터마다 따로 저장되고 기본값은 ON입니다.</div>
+                <div>결과로 <code>on</code> / <code>off</code>를 반환합니다.</div>
+                <div><strong>예시:</strong>
+                    <ul>
+                        <li><pre><code>/${SLASH_NAME} off</code></pre></li>
+                        <li><pre><code>/${SLASH_NAME}</code></pre> (토글)</li>
+                        <li><pre><code>/${SLASH_NAME} status</code></pre></li>
+                    </ul>
+                </div>`,
+        }));
+        console.log(`[Aggressive Notepad] /${SLASH_NAME} 등록됨${aliases.length ? ` (alias: ${aliases.map((a) => "/" + a).join(", ")})` : ""}`);
+    } catch (e) {
+        console.warn("[Aggressive Notepad] 슬래시 명령어 등록 실패 (ST 버전이 오래됐을 수 있음):", e);
+    }
+}
+
 // ---------- 저장 로직 (자동저장 + 수동저장 겸용, 안전장치 포함) ----------
 
 // 입력창 내용은 항상 "currentAvatar"(불러올 때 정해진 캐릭터)의 메모.
@@ -960,7 +1104,7 @@ function doSave(showFeedback = true, { keepalive = false } = {}) {
     isDirty = false;
     $("#cherry-note-panel").removeClass("cn-dirty");
 
-    return queueWrite(avatar, text, { keepalive })
+    return queueWrite(avatar, text, currentInject, { keepalive })
         .then(() => {
             if (avatar === currentAvatar) {
                 lastSavedAt = new Date().toISOString();
@@ -1076,7 +1220,9 @@ async function loadNoteInternal() {
     updateNoteBlock("");
     $("#cherry-note-textarea").val("");
     lastSavedAt = null;
+    currentInject = true;
     renderSavedDate();
+    renderInjectToggle();
 
     let text = "";
     if (avatar) {
@@ -1088,6 +1234,7 @@ async function loadNoteInternal() {
             const data = await readNoteFile(avatar);
             text = data.text;
             lastSavedAt = data.updatedAt;
+            if (myToken === loadToken) currentInject = data.inject;
         } catch (e) {
             failed = true;
             console.error("[Aggressive Notepad] 메모 불러오기 실패:", e);
@@ -1107,6 +1254,7 @@ async function loadNoteInternal() {
     setGroupChatState(isGroup || !avatar);
     updateCounter();
     renderSavedDate();
+    renderInjectToggle();
 
     if (isGroup) {
         charNameState = { kind: "group", name: "" };
@@ -1122,6 +1270,7 @@ async function loadNoteInternal() {
 function setGroupChatState(disabled) {
     $("#cherry-note-textarea").prop("disabled", disabled);
     $("#cherry-note-save-btn").prop("disabled", disabled);
+    $("#cherry-note-inject-toggle").prop("disabled", disabled);
     $("#cherry-note-panel").toggleClass("cherry-note-disabled", disabled);
 }
 
@@ -1247,11 +1396,13 @@ function applyPanelTheme(themeId) {
     }
     $("#cherry-note-textarea").prop("disabled", disabled);
     $("#cherry-note-save-btn").prop("disabled", disabled);
+    $("#cherry-note-inject-toggle").prop("disabled", disabled);
     $("#cherry-note-status").css("opacity", 0);
 
     renderCharName();
     updateCounter();
     renderSavedDate();
+    renderInjectToggle();
 
     if (!$panel.hasClass("cherry-note-hidden")) {
         positionPanelNearIcon();
@@ -1398,6 +1549,11 @@ function buildUI() {
         doSave(true);
     });
 
+    $panel.on("change", "#cherry-note-inject-toggle", async function () {
+        const res = await setInjectEnabled(this.checked);
+        if (!res.ok) showStatus(res.reason);
+    });
+
     // 창 크기 변할 때 아이콘/패널이 화면 밖으로 안 나가게
     $(window).on("resize", () => {
         reclampIconToViewport($icon, "cherry-note-icon-pos");
@@ -1493,6 +1649,7 @@ jQuery(async () => {
     buildSettingsPanel();
     buildExtensionsMenuToggle();
     registerInjectionHooks();
+    registerSlashCommands();
 
     eventSource.on(event_types.CHAT_CHANGED, () => {
         loadNoteForCurrentCharacter();

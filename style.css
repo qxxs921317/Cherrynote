@@ -3547,3 +3547,112 @@
     border-left: none;
     border-radius: 0 3px 3px 0;
 }
+
+/* ========================================================= */
+/* 🔌 AI 주입 ON/OFF 토글 (캐릭터별, 모든 테마 공통 슬롯)        */
+/* ========================================================= */
+#cherry-note-panel .cn-inj {
+    --cn-tg-on: #f27bb0;
+    --cn-tg-ink: #c05f92;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+    margin-right: 6px;
+    cursor: pointer;
+    user-select: none;
+    line-height: 1;
+    flex: 0 0 auto;
+}
+#cherry-note-panel .cn-inj input { display: none; }
+#cherry-note-panel .cn-inj-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--cn-tg-ink);
+    transition: opacity .15s;
+}
+#cherry-note-panel .cn-inj-track {
+    position: relative;
+    width: 22px;
+    height: 12px;
+    border-radius: 99px;
+    background: var(--cn-tg-on);
+    transition: background .15s;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.06);
+}
+#cherry-note-panel .cn-inj-track::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 12px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--cn-tg-knob, #fff);
+    box-shadow: 0 1px 2px rgba(0,0,0,.18);
+    transition: left .15s;
+}
+/* OFF */
+#cherry-note-panel .cn-inj.off .cn-inj-track { background: rgba(140,140,140,.35); }
+#cherry-note-panel .cn-inj.off .cn-inj-track::after { left: 2px; }
+#cherry-note-panel .cn-inj.off .cn-inj-label { opacity: .45; text-decoration: line-through; }
+
+/* 픽셀 테마: 각진 트랙 + 각진 노브 */
+#cherry-note-panel.cn-retro .cn-inj-label { font-family: "CN Galmuri9", monospace; font-weight: 400; font-size: 9px; }
+#cherry-note-panel.cn-retro .cn-inj-track {
+    border-radius: 0;
+    width: 22px; height: 12px;
+    box-shadow: 0 0 0 1px var(--cn-tg-ink);
+    transition: none;
+}
+#cherry-note-panel.cn-retro .cn-inj-track::after {
+    border-radius: 0; box-shadow: none; transition: none; background: var(--cn-tg-knob, #fff);
+    top: 2px; width: 8px; height: 8px;
+}
+
+/* 영수증 테마: 라인아트 (얇은 테두리 + 잉크색 노브) */
+#cherry-note-panel.cn-receipt .cn-inj-label { font-family: "CN Nanum Coding", monospace; font-weight: 700; }
+#cherry-note-panel.cn-receipt .cn-inj-track {
+    background: transparent;
+    box-shadow: inset 0 0 0 1px var(--cn-tg-ink);
+}
+#cherry-note-panel.cn-receipt .cn-inj-track::after { background: var(--cn-tg-ink); box-shadow: none; }
+#cherry-note-panel.cn-receipt .cn-inj.off .cn-inj-track { background: transparent; opacity: .45; }
+
+/* OFF일 때 주입 게이지도 꺼진 느낌 */
+#cherry-note-panel.cn-inject-off .cn-inject-bar,
+#cherry-note-panel.cn-inject-off .cn-progress-fill { filter: grayscale(1); opacity: .4; }
+
+/* 테마별 색 */
+#cherry-note-panel[data-theme="pink"] .cn-inj { --cn-tg-on:#f27bb0; --cn-tg-ink:#c05f92; }
+#cherry-note-panel[data-theme="mint"] .cn-inj { --cn-tg-on:#4cc9a0; --cn-tg-ink:#2f9e7c; }
+#cherry-note-panel[data-theme="lavender"] .cn-inj { --cn-tg-on:#a78bfa; --cn-tg-ink:#7c5fc9; }
+#cherry-note-panel[data-theme="dark"] .cn-inj { --cn-tg-on:#8b7cf6; --cn-tg-ink:#b9b3d9; }
+#cherry-note-panel[data-theme="sunset"] .cn-inj { --cn-tg-on:#ff8a65; --cn-tg-ink:#d9634a; }
+#cherry-note-panel[data-theme="white"] .cn-inj { --cn-tg-on:#666; --cn-tg-ink:#888; }
+#cherry-note-panel[data-theme="arcade"] .cn-inj { --cn-tg-on:#ff5fa2; --cn-tg-ink:#b8336a; }
+#cherry-note-panel[data-theme="pastelos"] .cn-inj { --cn-tg-on:#8c7cf0; --cn-tg-ink:#6d5fd0; }
+#cherry-note-panel[data-theme="classic"] .cn-inj { --cn-tg-on:#000080; --cn-tg-ink:#222; }
+#cherry-note-panel[data-theme="digi"] .cn-inj { --cn-tg-on:#e84b8a; --cn-tg-ink:#7a4a8c; }
+#cherry-note-panel[data-theme="dual"] .cn-inj { --cn-tg-on:#f07ab4; --cn-tg-ink:#a8457a; }
+#cherry-note-panel[data-theme="letter"] .cn-inj { --cn-tg-on:#e8708f; --cn-tg-ink:#8a4b3c; }
+#cherry-note-panel[data-theme="sage"] .cn-inj { --cn-tg-on:#4e5a2a; --cn-tg-ink:#4e5a2a; }
+#cherry-note-panel[data-theme="pinkreceipt"] .cn-inj { --cn-tg-on:#d94f8a; --cn-tg-ink:#d94f8a; }
+#cherry-note-panel[data-theme="cafe"] .cn-inj { --cn-tg-on:#c9283a; --cn-tg-ink:#333; }
+#cherry-note-panel[data-theme="inbox"] .cn-inj { --cn-tg-on:#efe9d7; --cn-tg-ink:#efe9d7; --cn-tg-knob:#2b2d33; }
+#cherry-note-panel[data-theme="haunted"] .cn-inj { --cn-tg-on:#c9b6ff; --cn-tg-ink:#e6dcff; --cn-tg-knob:#2a2140; }
+#cherry-note-panel[data-theme="memopet"] .cn-inj { --cn-tg-on:#6a5acd; --cn-tg-ink:#3a3a6a; }
+#cherry-note-panel[data-theme="flip"] .cn-inj { --cn-tg-on:#f06292; --cn-tg-ink:#c2185b; }
+#cherry-note-panel[data-theme="dreamds"] .cn-inj { --cn-tg-on:#f48fb1; --cn-tg-ink:#c06080; }
+#cherry-note-panel[data-theme="journal"] .cn-inj { --cn-tg-on:#e8708f; --cn-tg-ink:#8a4b3c; }
+
+/* 비활성 (그룹챗 / 캐릭터 없음 / 불러오기 실패) */
+#cherry-note-panel .cn-inj:has(input:disabled) { cursor: default; opacity: .5; }
+
+/* 테마별 위치 보정 */
+#cherry-note-panel[data-theme="dual"] .cn-inj { margin: 8px auto 0; }
+#cherry-note-panel[data-theme="digi"] .cn-inj { margin-right: 8px; }
+#cherry-note-panel[data-theme="dreamds"] .cn-inj { margin: 0 3px 0 0; }
+#cherry-note-panel[data-theme="flip"] .cn-inj { margin: 0 0 0 6px; }
+#cherry-note-panel[data-theme="flip"] .cn-inj-label { font-size: 8px; }
